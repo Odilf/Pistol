@@ -3,9 +3,11 @@
 </script>
 
 <script lang="ts">
-	// import Caca from '$lib/Caca.svelte';
+	import Timer from '$lib/timer/Timer.svelte';
 </script>
 
 <svelte:head>
 	<title>Odilf Timer</title>
 </svelte:head>
+
+<Timer/>
