@@ -3,9 +3,8 @@
 </script>
 
 <script lang="ts">
-import EventSelect from '$lib/managing/EventSelect.svelte';
-
-	import Solve from '$lib/managing/Solve.svelte';
+	import EventSelect from '$lib/managing/EventSelect.svelte';
+	import SolveList from '$lib/managing/SolveList.svelte';
 	import Timer from '$lib/timer/Timer.svelte';
 </script>
 
@@ -17,4 +16,4 @@ import EventSelect from '$lib/managing/EventSelect.svelte';
 
 <Timer/>
 
-<Solve solve={{id: 6999, time: 4.2, date: new Date(), scramble: "R U R' U'", reconstruction: ''}}/>
+<SolveList/>
