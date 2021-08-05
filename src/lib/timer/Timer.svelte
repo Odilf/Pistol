@@ -67,7 +67,7 @@
 		font-weight: 300;
 		font-size: 15vw;
 
-		flex-grow: 15;
+		cursor:default ;
 
 		/* Text centering */
 		display: flex;
