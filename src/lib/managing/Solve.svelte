@@ -4,4 +4,12 @@
 	export let solve: Solve;
 </script>
 
-Id is {solve.id}, time is {solve.time.toFixed(2)}, date is {solve.date.getTime()}, scrmable is {solve.scramble}
+<div>
+	Time is {solve.time.toFixed(2)}, date is {solve.date.getDate()}th, {solve.date.getMonth()} {solve.date.getFullYear()}, scrmable is {solve.scramble}
+</div>
+
+<style>
+	div {
+		cursor: pointer;
+	}
+</style>
