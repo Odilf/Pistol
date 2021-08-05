@@ -1,7 +1,10 @@
 <svelte:window on:keydown={handleKeydown} on:keyup={handleKeyup}/>
 
-<script>
+<script lang='ts'>
 	import { createEventDispatcher } from 'svelte';
+	import { addSolve, selection } from '$lib/storage/time_db'
+	import type { Solve } from '$lib/storage/time_db'
+	// import Solve from '$lib/managing/Solve.svelte';
 	
 	const dispatch = createEventDispatcher();
 	
@@ -24,9 +27,11 @@
 			
 			timerState = 'released'
 			clearInterval(interval)
-			//TODO: #2 Add time to array
-			// times_store.update(n => [...n, {id: n.length + 1, time: time, penalty: 0}])
-			
+
+			let solve: Solve = {time: time, penalty: 0, date: null, scramble: 'I h8 our l1f3', reconstruction: null}
+			// $database[0].sessions[0].solves.push(solve)
+			//TODO: #6 Is the selection store a good idea?
+			addSolve(solve, $selection.event, $selection.sessions[$selection.event])
 		}
 	}
 	
@@ -38,7 +43,8 @@
 				dispatch('timerStart', { time: time });
 				timerState = 'running'
 				startTime = new Date()
-				interval = setInterval(() => time = getTime(startTime, new Date()), 42) //Change here for updating timer refresh rate
+				//TODO: #5 Add option to change timer refresh rate
+				interval = setInterval(() => time = getTime(startTime, new Date()), 42)
 			}
 		}
 	}
@@ -54,6 +60,7 @@
 		<!-- TODO: #1 Add optionally more decimals -->
 		{time.toFixed(2)} 
 	</div>
+
 </div>
 
 <head>

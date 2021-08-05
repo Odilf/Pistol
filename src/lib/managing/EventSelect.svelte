@@ -1,29 +1,28 @@
 <script lang='ts'>
-	import { database } from "$lib/storage/time_db";
+	import { writable } from "svelte/store";
+	import { active_event, active_session, selection, wca_events } from "$lib/storage/time_db";
 	import { Tabs, Tab, Menu, List, ListItem, Button } from 'svelte-materialify'
-	import { onMount } from 'svelte'
 
 	//Get events and add a option for a custom one
-	let selectable_events: String[] = [...$database.map(v => v.name), 'Add custom...']
+	//TODO: #4 Add custom events
+	let selectable_events: String[] = [...wca_events, 'Add custom...']
 
-	let event_id = 0
-	$: selectable_sessions = $database[event_id].sessions.map(v => v.name)
-	let session_id = selectable_events.map(() => 0)
-
+	$: selectable_sessions = $active_event.sessions.map(v => v.name)
+	
 </script>
 
 <div class="caca">
-	<Tabs centerActive bind:value={event_id}>
+	<Tabs centerActive bind:value={$selection.event}>
 		<div slot='tabs'>
 			{#each selectable_events as event }
-				<Tab>{event}</Tab>
-				<!-- <Tab on:click={() => session_id[event_id]=0}>{event}</Tab> -->
+			<Tab>{event}</Tab>
 			{/each}
 		</div>
 	</Tabs>
 </div>
 
-Selected event is {$database[event_id].name}. Available sessions are: {selectable_sessions}
+<!-- Selected event is {$active_event.name}. Available sessions are: {selectable_sessions}
+Selected session is {$active_session.name} -->
 
 <div>
 	<Menu hover>
@@ -32,10 +31,8 @@ Selected event is {$database[event_id].name}. Available sessions are: {selectabl
 		</div>
 		<List>
 			{#each selectable_sessions as session, i}
-				<ListItem on:click={e => session_id[event_id] = i}>{session}</ListItem> 
+				<ListItem on:click={() => $selection.sessions[$selection.event] = i}>{session}</ListItem> 
 			{/each}
 		</List>
 	</Menu>
 </div>
-
-Selected session is {$database[event_id].sessions[session_id[event_id]].name}
