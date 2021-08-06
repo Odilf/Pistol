@@ -3,6 +3,7 @@
 </script>
 
 <script lang="ts">
+	import Footer from '$lib/footer.svelte';
 	import EventSelect from '$lib/managing/EventSelect.svelte';
 	import SolveList from '$lib/managing/SolveList.svelte';
 	import Timer from '$lib/timer/Timer.svelte';
@@ -13,7 +14,6 @@
 </svelte:head>
 
 <EventSelect/>
-
 <Timer/>
-
 <SolveList/>
+<Footer/>
