@@ -25,9 +25,9 @@
 Selected session is {$active_session.name} -->
 
 <div>
-	<Menu hover>
+	<Menu >
 		<div slot="activator">
-			<Button>Session</Button>
+			<Button>{$active_session.name}</Button>
 		</div>
 		<List>
 			{#each selectable_sessions as session, i}

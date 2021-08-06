@@ -8,28 +8,21 @@
 	--secondary-color: #810000;
 	--tertiary-color: #630000;
 	--accent-color: #EEEBDD;
-	/* --text-color: var(--accent-color); */
-	color:#EEEBDD
-	/* --background-without-opacity: rgba(255, 255, 255, 0.7); */
-	/* --column-width: 42rem; */
-	/* --column-margin-top: 4rem; */
+	color: var(--accent-color);
 }
 
 body {
 	height: 100vh;
+	width: 100vw;
 	margin: 0;
 	background-color: var(--primary-color);
+	/* background-color: aqua; */
 }
 
-#svelte {
-	min-height: 100vh;
-	display: flex;
-	flex-direction: column;
-}
-
+/* 
 h1, h2, p {
 	font-weight: 400;
-	color: var(--heading-color);
+	color: var(--accent-color);
 }
 
 a {
@@ -49,9 +42,9 @@ h1 {
 
 h2 {
 	font-size: 1rem;
-}
+} 
 
-/* pre {
+pre {
 	font-size: 16px;
 	font-family: var(--font-mono);
 	background-color: rgba(255, 255, 255, 0.45);
@@ -60,7 +53,7 @@ h2 {
 	padding: 0.5em;
 	overflow-x: auto;
 	color: var(--text-color);
-} */
+}
 
 input,
 button {
@@ -70,10 +63,10 @@ button {
 
 button:focus:not(:focus-visible) {
 	outline: none;
-}
+} */
 
-@media (min-width: 720px) {
+/* @media (min-width: 720px) {
 	h1 {
 		font-size: 2.4rem;
 	}
-}
+} */
