@@ -77,7 +77,7 @@ export function addSolve(solve: Solve, event: number, session: number): void {
 	}
 
 	database.update(db => {
-		db[event].sessions[session].solves = [...db[event].sessions[session].solves, solve]
+		db[event].sessions[session].solves.push(solve)
 		return db
 	})
 }
