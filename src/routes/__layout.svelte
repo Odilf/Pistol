@@ -13,9 +13,10 @@
 		flex: 1;
 		display: flex;
 		flex-direction: column;
-		padding: 1rem;
+		box-sizing: border-box;
 		width: 100vw;
 		height: 100vh;
+		padding: 0, 10rem;
 		margin: 0;
 	}
 
