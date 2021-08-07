@@ -1,20 +1,34 @@
-<script>
-	import { ListItem } from 'svelte-materialify'
+<script lang='ts'>
 	import { selection, database } from '$lib/storage/time_db'
+	import { List } from 'svelte-materialify'
 	import Solve from './Solve.svelte'
+	import { flip } from 'svelte/animate';
+	import { fade } from 'svelte/transition'
 
+	//TODO: #34 Maybe optimize this for hundreds of thousands of solves
 	$: solves = $database[$selection.event].sessions[$selection.sessions[$selection.event]].solves.slice().reverse()
+	// $: id_solves = solves.map( (v, i) => { return {id: i, solve: v} } )
+
+	let windowHeight: number;
 </script>
 
-<div>
-	{#each solves as solve}
-		<Solve solve={solve}/> <br>
-	{/each}
-</div>
+<svelte:window bind:innerHeight={windowHeight}/>
+
+<body>
+	<List class="elevation-2" style="width:fit-content">
+		{#each solves as solve }
+			<div>
+				<Solve solve={solve}/>
+			</div>
+		{/each}
+	</List>
+</body>
 
 <style>
-	div {
+	body {
 		overflow: scroll;
-		height: 20em;
+		flex-shrink: 1;
+		/* TODO: #33 Make solves actually not go off screen according to parent size */
+		height: 69vh;
 	}
 </style>
