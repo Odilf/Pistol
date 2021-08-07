@@ -1,5 +1,5 @@
 {
-  "name": "~TODO~",
+  "name": "odilf-timer",
   "version": "0.0.1",
   "scripts": {
     "dev": "svelte-kit dev",
@@ -19,10 +19,8 @@
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-svelte3": "^3.2.0",
     "node-sass": "^6.0.1",
-    "postcss": "^8.3.6",
     "prettier": "~2.2.1",
     "prettier-plugin-svelte": "^2.2.0",
-    "sass": "^1.37.5",
     "svelte": "^3.34.0",
     "svelte-check": "^2.0.0",
     "svelte-materialify": "^0.3.11",
@@ -36,6 +34,8 @@
     "@lukeed/uuid": "^2.0.0",
     "cookie": "^0.4.1",
     "cubing": "^0.19.1",
-    "jshint": "^2.13.0"
+    "jshint": "^2.13.0",
+    "postcss": "^8.3.6",
+    "sass": "^1.37.5"
   }
 }
