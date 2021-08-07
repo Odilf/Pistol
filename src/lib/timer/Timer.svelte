@@ -4,14 +4,15 @@
 	import { createEventDispatcher } from 'svelte';
 	import { addSolve, selection } from '$lib/storage/time_db'
 	import type { Solve } from '$lib/storage/time_db'
+	
 	// import Solve from '$lib/managing/Solve.svelte';
 	
 	const dispatch = createEventDispatcher();
 	
 	let timerState = 'released'
 	let time = 0
-	let interval
-	let startTime		
+	let interval: ReturnType<typeof setInterval>
+	let startTime: Date
 	
 	function handleKeydown(e) {
 		
@@ -49,46 +50,61 @@
 		}
 	}
 	
-	function getTime(start, end) {
-		return (end - start) / 1000
+	function getTime(start: Date, end: Date) {
+		return (end.getTime() - start.getTime())/ 1000
 	}
+
+	$: seconds = Math.floor(time)
+
+	//TODO: #1 Add optionally more decimals
+	const decimals_display = 2 //TODO: #31 Find better name for `decimals_display`
+	$: decimals = time.toFixed(decimals_display).substr(-decimals_display)
 	
 </script>
 
-<div class="timer">
-	<div class={timerState} >
-		<!-- TODO: #1 Add optionally more decimals -->
-		{time.toFixed(2)} 
+<body>
+	<div class={timerState}>
+		<div class="timer">
+			<div class="seconds">{seconds}.</div>
+			<div class="decimals">{decimals}</div>
+		</div>
 	</div>
-
-</div>
+</body>
 
 <head>
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100&display=swap" rel="stylesheet">
 </head>
 
-<style>
-	.timer {
-		font-family: 'Roboto Mono', monospace;
-		font-weight: 300;
-		font-size: 15vw;
-
+<style lang='scss'>
+	body {
+		flex-grow: 1;
 		cursor: default;
+		width: 100%;
 
-		/* Text centering */
 		display: flex;
 		justify-content: center;
 		align-items: center;
 	}
+	.timer {
+		font-family: 'Roboto';
+		font-weight: 100;
+		font-size: 15vw;
 
+		display: flex;
+		align-items: baseline;
+		.decimals {
+			font-size: 0.69em;
+		}
+	}
 	.pressed {
 			color: red; 
-		}
-		.released {
-			color: whitesmoke; 
-		}
-		.running {
-			color: lightblue; 
-		}
+	}
+	.released {
+		color: whitesmoke; 
+	}
+	.running {
+		color: lightblue; 
+	}
+	
 </style>
