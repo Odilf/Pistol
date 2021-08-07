@@ -15,14 +15,17 @@
 </script>
 
 <script lang='ts'>
-	import { Tabs, Tab, TabContent, Menu, Button, Switch, List, ListItem, Slider } from 'svelte-materialify'
+	import { Tabs, Tab, TabContent, ListItem, } from 'svelte-materialify'
 	import { settings } from '$lib/settings'
-import Setting from '$lib/settings/Setting.svelte'
+	import Setting from '$lib/settings/Setting.svelte'
+import Back from '$lib/managing/Back.svelte'
 </script>
 
 <svelte:head>
 	<title>About</title>
 </svelte:head>
+
+<Back></Back>
 
 <h1>Settings</h1>
 
