@@ -11,11 +11,11 @@
 	<Footer class="center">
 			<div class="buttons">
 				<Button on:click={() => location.href = '/settings'}> Settings </Button>
-				<Button on:click={() => location.href = '/about'}> About </Button>
 				<Button on:click={() => window.open('https://github.com/Odilf/Odilf-Timer','_blank')}> <img src='static/github.svg' alt='GitHub'/> </Button>
+				<Button on:click={() => location.href = '/about'}> About</Button>
 			</div>
 		<p class="center" style="width:100%">
-			2021 - <b>Odilf</b>
+			2021&nbsp;-&nbsp;<b>Odilf</b>
 		</p>
 	</Footer>
 </div>
