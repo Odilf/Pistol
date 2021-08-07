@@ -14,36 +14,69 @@
 	export const prerender = true;
 </script>
 
+<script lang='ts'>
+	import { Tabs, Tab, TabContent, Menu, Button, Switch, List, ListItem, Slider } from 'svelte-materialify'
+	import { settings } from '$lib/settings'
+import Setting from '$lib/settings/Setting.svelte'
+</script>
+
 <svelte:head>
 	<title>About</title>
 </svelte:head>
 
-<div class="content">
-	<h1>Odilf Timer</h1>
+<h1>Settings</h1>
 
-	<p>
-		And open source speedcubing timer, built with Svelte. 
-	<hr>
-	<p>
-		Still in development.
-	</p>
+<Tabs vertical >
+	<div slot='tabs'>
+		{#each $settings as category}
+			<Tab> {category.name} </Tab>
+		{/each}
+	</div>
 
-</div>
+	{#each $settings as category}
+		<TabContent>
+			<div class='content'>
+				<h2>{category.description}</h2>
+					{#each category.settings as setting}
+					<ListItem>
+						{setting.name}
+						<span slot="subtitle"> {setting.description} </span>
+						
+						<span slot="append">
+							<div class="setting">
+								<Setting bind:setting={setting}/>
+							</div>
+						</span>
+					</ListItem>
+					{/each}
+			</div>
+		</TabContent>
+	{/each}
+</Tabs>
+
 
 <style>
+	h1 {
+		display: flex;
+		justify-content: center;
+		font-size: 3.5em;
+		margin: 1rem;
+		font-weight: 700;
+	}
+
+	h2 {
+		font-size: 2em;
+		font-weight: 400;
+	}
+
 	.content {
-		width: 100%;
-		max-width: var(--column-width);
-		margin: var(--column-margin-top) auto 0 auto;
+		margin: 2em;
+		margin-top: 0;
+		color: whitesmoke;
+		width: fit-content;
 	}
 
-	p {
-		text-align: center;
-	}
-
-	hr {
-		border-width: 0;
-		background-color: black;
-		height: 0.1em;
+	.setting {
+		color: whitesmoke;
 	}
 </style>
