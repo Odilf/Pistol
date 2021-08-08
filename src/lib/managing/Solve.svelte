@@ -2,14 +2,10 @@
 	import type { Solve } from '$lib/storage/time_db'
 	import { Card, CardText, CardActions, Button } from 'svelte-materialify'
 	export let solve: Solve;
-
-	let active: boolean;
-	let open = () => active = true
+	export let decimals = 3;
 
 	let penalty_name
-	if (solve.penalty === 0) {
-		penalty_name = 'None'
-	} if (solve.penalty === 2) {
+	if (solve.penalty === 2) {
 		penalty_name = '+2'
 	} if (solve.penalty === 'DNF') {
 		penalty_name = 'DNF'
@@ -22,11 +18,10 @@
 		<Card outlined style="max-width:300px;">
 		  <div class="pl-4 pr-4 pt-3">
 			  {#if solve.penalty !== 0}
-				  
-			  <span class="text-overline"> OVERLINE </span>
+			  <span class="text-overline"> {penalty_name} </span>
 			  {/if}
 			<br />
-			<span class="text-h5 mb-2">{solve.time.toFixed(3)}</span>
+			<span class="text-h5 mb-2">{solve.time.toFixed(decimals)}</span>
 			<br />
 		  </div>
 		</Card>
