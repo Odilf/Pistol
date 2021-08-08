@@ -6,8 +6,6 @@
 	<slot />
 </main>
 
-<!-- <footer></footer> -->
-
 <style>
 	main {
 		flex: 1;
