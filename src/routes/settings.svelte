@@ -15,19 +15,20 @@
 </script>
 
 <script lang='ts'>
-	import { Tabs, Tab, TabContent, ListItem, } from 'svelte-materialify'
-	import { settings } from '$lib/settings'
+	import { Tabs, Tab, TabContent, ListItem, Button, } from 'svelte-materialify'
+	import { settings, resetSettings } from '$lib/settings'
 	import Setting from '$lib/settings/Setting.svelte'
-import Back from '$lib/managing/Back.svelte'
+	import Back from '$lib/managing/Back.svelte'
 </script>
 
 <svelte:head>
 	<title>About</title>
 </svelte:head>
 
-<Back></Back>
-
-<h1>Settings</h1>
+<header>
+	<Back></Back>
+	<h1>Settings</h1>
+</header>
 
 <Tabs vertical >
 	<div slot='tabs'>
@@ -57,8 +58,14 @@ import Back from '$lib/managing/Back.svelte'
 	{/each}
 </Tabs>
 
+<Button on:click={resetSettings}>Reset settings</Button>
+
 
 <style>
+	header {
+		display: flex;
+		align-items: center;
+	}
 	h1 {
 		display: flex;
 		justify-content: center;
