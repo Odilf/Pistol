@@ -2,11 +2,9 @@
 
 <script lang='ts'>
 	import { createEventDispatcher } from 'svelte';
-	import { addSolve, database, selection } from '$lib/storage/time_db'
+	import { addSolve, selection } from '$lib/storage/time_db'
 	import type { Solve } from '$lib/storage/time_db'
-	import { settings, getSettingByName } from '$lib/settings'
-	
-	// import Solve from '$lib/managing/Solve.svelte';
+	import RunningTime from './RunningTime.svelte';
 	
 	const dispatch = createEventDispatcher();
 	
@@ -31,7 +29,6 @@
 			clearInterval(interval)
 
 			let solve: Solve = {time: time, penalty: 0, date: null, scramble: 'I h8 our l1f3', reconstruction: null}
-			// $database[0].sessions[0].solves.push(solve)
 			//TODO: #6 Is the selection store a good idea?
 			addSolve(solve, $selection.event, $selection.sessions[$selection.event])
 		}
@@ -54,24 +51,13 @@
 	function getTime(start: Date, end: Date) {
 		return (end.getTime() - start.getTime())/ 1000
 	}
-
-	$: seconds = Math.floor(time)
-
-	//TODO: #1 Add optionally more decimals
-	let decimals = parseInt(getSettingByName('Decimals')) 
-	$: decimals_value = time.toFixed(decimals).substr(-decimals)
 	
 </script>
 
 
 <body>
 	<div class={timerState}>
-		<div class="timer">
-			<div class="seconds">{seconds}</div>
-			{#if decimals !== 0}
-			<div class="decimals">.{decimals_value}</div>
-			{/if}
-		</div>
+		<RunningTime {time}/>
 	</div>
 </body>
 
@@ -84,17 +70,6 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-	}
-	.timer {
-		font-family: 'Roboto';
-		font-weight: 100;
-		font-size: 15vw;
-
-		display: flex;
-		align-items: baseline;
-		.decimals {
-			font-size: 0.69em;
-		}
 	}
 	.pressed {
 			color: red; 
