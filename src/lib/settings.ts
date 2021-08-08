@@ -39,7 +39,7 @@ const default_settings: Category[] = [
 
 		{ name: 'Visual', description: 'How the timer looks', settings: [
 			{name: 'Theme', description: 'What the colors look like', value: 0, options: ['Dark', 'Light', 'Estonia']},
-			{name: 'Welp', description: 'This is a checkbox', value: false},
+			{name: 'Small decimals', description: 'Make decimals look smaller', value: true},
 		]},
 
 		{ name: 'Accesibility', description: 'Peepee poopoo idk what to put here', settings: [
@@ -57,11 +57,22 @@ export function getSettingByName(name: string) {
 	for (const category of settings) {
 		for (const setting of category.settings) {
 			if (setting.name === name) {
-				if ('options' in setting) { return setting.options[setting.value] }
-				else { return setting.value }
+				return getSettingValue(setting)
+			}
+
+			if ('child' in setting) {
+				if (setting.child.name === name) {
+					return getSettingValue(setting.child)
+				}
 			}
 		}
 	}
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function getSettingValue(setting: GeneralSetting): any  {
+	if ('options' in setting) { return setting.options[setting.value] }
+	else { return setting.value }
 }
 
 export function resetSettings(): void {
