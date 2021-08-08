@@ -36,6 +36,7 @@
     "cubing": "^0.19.1",
     "jshint": "^2.13.0",
     "postcss": "^8.3.6",
-    "sass": "^1.37.5"
+    "sass": "^1.37.5",
+    "svelte-local-storage-store": "^0.2.3"
   }
 }
