@@ -12,7 +12,7 @@
 </script>
 
 {#if 'options' in setting }
-	<Menu active={false} offsetX offsetY={false} nudgeY={-10} hover>
+	<Menu offsetX offsetY={false} nudgeY={-10} hover>
 	<div slot="activator">
 		<Button {disabled} active={false}>{setting.options[setting.value]}</Button>
 	</div>
@@ -34,7 +34,7 @@
 
 {#if setting.child}
 	<div class:disable={disable_child}>
-		<svelte:self disabled={disable_child} setting={setting.child}/>
+		<svelte:self disabled={disable_child} bind:setting={setting.child}/>
 	</div>
 {/if}
 
