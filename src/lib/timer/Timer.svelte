@@ -2,8 +2,9 @@
 
 <script lang='ts'>
 	import { createEventDispatcher } from 'svelte';
-	import { addSolve, selection } from '$lib/storage/time_db'
+	import { addSolve, database, selection } from '$lib/storage/time_db'
 	import type { Solve } from '$lib/storage/time_db'
+	import { settings, getSettingByName } from '$lib/settings'
 	
 	// import Solve from '$lib/managing/Solve.svelte';
 	
@@ -57,24 +58,22 @@
 	$: seconds = Math.floor(time)
 
 	//TODO: #1 Add optionally more decimals
-	const decimals_display = 2 //TODO: #31 Find better name for `decimals_display`
-	$: decimals = time.toFixed(decimals_display).substr(-decimals_display)
+	let decimals = parseInt(getSettingByName('Decimals')) 
+	$: decimals_value = time.toFixed(decimals).substr(-decimals)
 	
 </script>
+
 
 <body>
 	<div class={timerState}>
 		<div class="timer">
-			<div class="seconds">{seconds}.</div>
-			<div class="decimals">{decimals}</div>
+			<div class="seconds">{seconds}</div>
+			{#if decimals !== 0}
+			<div class="decimals">.{decimals_value}</div>
+			{/if}
 		</div>
 	</div>
 </body>
-
-<head>
-	<link rel="preconnect" href="https://fonts.gstatic.com">
-	<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100&display=swap" rel="stylesheet">
-</head>
 
 <style lang='scss'>
 	body {
