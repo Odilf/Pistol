@@ -9,11 +9,12 @@ import SessionSelect from '$lib/managing/SessionSelect.svelte';
 import SolveList from '$lib/managing/SolveList.svelte';
 import QuickStats from '$lib/timer/QuickStats.svelte';
 import Scramble from '$lib/timer/Scramble.svelte';
+import TimeInput from '$lib/timer/TimeInput.svelte';
 import Timer from '$lib/timer/Timer.svelte';
 </script>
 
 <svelte:head>
-	<title>Odilf Timer</title>
+	<title>Pistol</title>
 </svelte:head>
 
 <header>
@@ -28,6 +29,7 @@ import Timer from '$lib/timer/Timer.svelte';
 	<div class="center">
 		<Scramble/>
 		<Timer/>
+		<!-- <TimeInput/> -->
 		<QuickStats/>
 	</div>
 	
