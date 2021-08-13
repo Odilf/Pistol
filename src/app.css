@@ -5,10 +5,11 @@
 		Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 	--font-mono: 'Fira Mono', monospace;
 	--primary-color: #1B1717;
-	--secondary-color: #810000;
-	--tertiary-color: #630000;
-	--accent-color: #EEEBDD;
-	color: var(--accent-color);
+	--secondary-color: #414141;
+	--tertiary-color: #414141;
+	--accent-color: #FF0000;
+	--text-color: whitesmoke;
+	/* color: var(--accent-color); */
 }
 
 body {
