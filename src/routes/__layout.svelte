@@ -1,10 +1,14 @@
 <script lang="ts">
 	import '../app.css';
+
+	import { MaterialApp } from 'svelte-materialify'
 </script>
 
-<main>
-	<slot />
-</main>
+<MaterialApp theme=dark>
+	<main>
+		<slot />
+	</main>
+</MaterialApp>
 
 <style>
 	main {
