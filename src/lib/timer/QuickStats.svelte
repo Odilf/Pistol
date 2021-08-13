@@ -1,3 +1,7 @@
+<script>
+	import "../../app.css";
+</script>
+
 <p>
 	Yee-haaaaaaa going fast :sungals:
 </p>
@@ -8,6 +12,6 @@
 		margin-top: 0;
 		margin-bottom: 1em;
 
-		color: darken(whitesmoke, 50%);
+		color: var(--tertiary-color)
 	}
 </style>
