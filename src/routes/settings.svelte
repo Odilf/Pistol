@@ -15,14 +15,16 @@
 </script>
 
 <script lang='ts'>
-	import { Tabs, Tab, TabContent, ListItem, Button, } from 'svelte-materialify'
+	import { Tabs, Tab, TabContent, ListItem, } from 'svelte-materialify'
 	import { settings, resetSettings } from '$lib/settings'
 	import Setting from '$lib/settings/Setting.svelte'
-	import Back from '$lib/managing/Back.svelte'
+	import Back from '$lib/utils/Back.svelte'
+	import { deleteSolves } from '$lib/storage/time_db'
+	import ConfirmationButton from '$lib/utils/ConfirmationButton.svelte'
 </script>
 
 <svelte:head>
-	<title>About</title>
+	<title>Settings</title>
 </svelte:head>
 
 <header>
@@ -35,6 +37,7 @@
 		{#each $settings as category}
 			<Tab> {category.name} </Tab>
 		{/each}
+		<Tab>User</Tab>
 	</div>
 
 	{#each $settings as category}
@@ -56,9 +59,38 @@
 			</div>
 		</TabContent>
 	{/each}
-</Tabs>
 
-<Button on:click={resetSettings}>Reset settings</Button>
+		<TabContent>
+			<div class='content'>
+				<h2>User configuration</h2>
+					<ListItem>
+						Reset settings
+						<span slot="subtitle"> Revert settings to default. This can't be undone </span>
+						
+						<span slot="append">
+							<div class="setting">
+								<ConfirmationButton button_text='Reset settings' 
+								dialog_text='This will permantly revert your settings. Are you sure you want to do this?'
+								on:confirmation={resetSettings}/>
+							</div>
+						</span>
+					</ListItem>
+					<ListItem>
+						Delete solves
+						<span slot="subtitle"> Completely remove all your solves. This can't be undone </span>
+						
+						<span slot="append">
+							<div class="setting">
+								<ConfirmationButton  button_text='Delete all solves' 
+								dialog_text="This will permantly and irreversably delete forever all your solves in all events. Are you sure you want to do this?"
+								on:confirmation={deleteSolves}/>
+							</div>
+						</span>
+					</ListItem>
+			</div>
+			
+		</TabContent>
+</Tabs>
 
 
 <style>
