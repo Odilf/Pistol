@@ -1,4 +1,6 @@
-import { writable, derived } from "svelte/store";
+import { browser } from "$app/env";
+import { writable as LS_writable } from "svelte-local-storage-store";
+import { writable, derived } from 'svelte/store'
 
 export const wca_events = ['3x3', '2x2', '4x4', '5x5', '6x6', '7x7', '3BLD', 'FMC', 'OH', 'Clock', 
 'Megaminx', 'Pyraminx', 'Skewb', 'Sq-1', '4BLD', '5BLD', 'MLBD']
@@ -52,22 +54,23 @@ function build_default_database(): Event[] {
 	return events
 }
 
-const events = build_default_database()
+const default_events = build_default_database()
 
-export const database = writable(events)
+export const database = LS_writable('database', default_events)
 
 //Object with selected event id and array of selected sessions id for each event (defaults to 0)
 export const selection = writable({event: 0, sessions: wca_events.map(() => 0)})
 
 //Get active event and session from the selection store
+//Right now, only used in `SessionSelect.svelte`
 export const active_event = derived(
 	selection,
-	$selection => events[$selection.event]
+	$selection => default_events[$selection.event]
 )
 
 export const active_session = derived(
 	selection,
-	$selection => events[$selection.event].sessions[$selection.sessions[$selection.event]]
+	$selection => default_events[$selection.event].sessions[$selection.sessions[$selection.event]]
 )
 
 export function addSolve(solve: Solve, event: number, session: number): void {
@@ -80,4 +83,10 @@ export function addSolve(solve: Solve, event: number, session: number): void {
 		db[event].sessions[session].solves.push(solve)
 		return db
 	})
+}
+
+export function deleteSolves(): void {
+	if (!browser) return 
+	console.warn('Reseting settings')
+	localStorage.removeItem('database')
 }
