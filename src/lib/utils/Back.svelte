@@ -1,9 +1,9 @@
 <script>
-	import { Button, Icon, MaterialApp } from 'svelte-materialify';
+	import { Button } from 'svelte-materialify';
 </script>
 
 <div>
-	<Button on:click={() => location.href = '/'} fab color=white>
+	<Button on:click={() => location.href = '/'} fab>
 		<img src='static/back.svg' alt=back-button />
 	</Button>
 </div>
