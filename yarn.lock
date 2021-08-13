@@ -69,6 +69,126 @@
   dependencies:
     "@lukeed/csprng" "^1.0.0"
 
+"@material/animation@^11.0.0":
+  "integrity" "sha512-pAJRl0ySvfOzqyGUme27tPf1LbqrjSTK4g5kngpXOPAIQdYYx89QLAfcqHONSpvXO7/WP+Kc9zJ3WWxbUaG8Wg=="
+  "resolved" "https://registry.npmjs.org/@material/animation/-/animation-11.0.0.tgz"
+  "version" "11.0.0"
+  dependencies:
+    "tslib" "^2.1.0"
+
+"@material/base@^11.0.0":
+  "integrity" "sha512-GTybYdiWBoEyYQ3he8cEeuXe5mPq2peFX41rBsMrs516TGDxrVJrEAKNedydhtpfRBsZRreTXMLZtbGrZzfIFQ=="
+  "resolved" "https://registry.npmjs.org/@material/base/-/base-11.0.0.tgz"
+  "version" "11.0.0"
+  dependencies:
+    "tslib" "^2.1.0"
+
+"@material/button@^11.0.0":
+  "integrity" "sha512-KqqxEcsj8jBkV1yNEiPoHiB1AJBa/1OGm7H+hF+C3RUTIrRLew8IuRL1ZY38ukdHvhno1/qmVMKOs6ui0mxjlg=="
+  "resolved" "https://registry.npmjs.org/@material/button/-/button-11.0.0.tgz"
+  "version" "11.0.0"
+  dependencies:
+    "@material/density" "^11.0.0"
+    "@material/dom" "^11.0.0"
+    "@material/elevation" "^11.0.0"
+    "@material/feature-targeting" "^11.0.0"
+    "@material/ripple" "^11.0.0"
+    "@material/rtl" "^11.0.0"
+    "@material/shape" "^11.0.0"
+    "@material/theme" "^11.0.0"
+    "@material/touch-target" "^11.0.0"
+    "@material/typography" "^11.0.0"
+    "tslib" "^2.1.0"
+
+"@material/density@^11.0.0":
+  "integrity" "sha512-FuSx0UukH7p9cIAxEg78zwL5iYuoa/YovyHuuEEudyhWsRH+u0KBSQlYWr+ykg//qZF6urlDrVmu7WAKi1SiCw=="
+  "resolved" "https://registry.npmjs.org/@material/density/-/density-11.0.0.tgz"
+  "version" "11.0.0"
+  dependencies:
+    "tslib" "^2.1.0"
+
+"@material/dom@^11.0.0":
+  "integrity" "sha512-LZdg6VmYnMXc/Ct/GdQ22o4m3UgjhZYQIrwu9Iebqchx0Vd2OTmcFN5nArHSCSgUEhpjpPlkbZmjOpeOAwiKZg=="
+  "resolved" "https://registry.npmjs.org/@material/dom/-/dom-11.0.0.tgz"
+  "version" "11.0.0"
+  dependencies:
+    "@material/feature-targeting" "^11.0.0"
+    "tslib" "^2.1.0"
+
+"@material/elevation@^11.0.0":
+  "integrity" "sha512-mgrUSBAdXJ1+VS/SWnu/gr9/nq7P1q5X3aDmoom2EPKauEeKhuAHjABI5duxHOrliZM3mK9VLO56D/tszb7spw=="
+  "resolved" "https://registry.npmjs.org/@material/elevation/-/elevation-11.0.0.tgz"
+  "version" "11.0.0"
+  dependencies:
+    "@material/animation" "^11.0.0"
+    "@material/base" "^11.0.0"
+    "@material/feature-targeting" "^11.0.0"
+    "@material/theme" "^11.0.0"
+    "tslib" "^2.1.0"
+
+"@material/feature-targeting@^11.0.0":
+  "integrity" "sha512-7/jdaHm7C16Eq02tDQ1iI+giWKgk+QRNWFrmGKzHfXbU604XwY/eSLSiVS8QI01vx9QZ0aO9K84m0yhQQNQQtg=="
+  "resolved" "https://registry.npmjs.org/@material/feature-targeting/-/feature-targeting-11.0.0.tgz"
+  "version" "11.0.0"
+  dependencies:
+    "tslib" "^2.1.0"
+
+"@material/ripple@^11.0.0":
+  "integrity" "sha512-672zAsYaL8aS861VgfEPL4sFMkFe0psiSc+4DfUTq7Nanl4e1gcarzzHZAn5IExUNk3/5QybDiXV+dbaL/0NjQ=="
+  "resolved" "https://registry.npmjs.org/@material/ripple/-/ripple-11.0.0.tgz"
+  "version" "11.0.0"
+  dependencies:
+    "@material/animation" "^11.0.0"
+    "@material/base" "^11.0.0"
+    "@material/dom" "^11.0.0"
+    "@material/feature-targeting" "^11.0.0"
+    "@material/theme" "^11.0.0"
+    "tslib" "^2.1.0"
+
+"@material/rtl@^11.0.0":
+  "integrity" "sha512-FcS8+N9MhnC0Wdd34O2yCC/5ylIwkfHjV5pbmHyEtb4YXoWngnPIxgpOr5PsUv95WSQBmeqWCRJDwS+sGZHoKQ=="
+  "resolved" "https://registry.npmjs.org/@material/rtl/-/rtl-11.0.0.tgz"
+  "version" "11.0.0"
+  dependencies:
+    "@material/theme" "^11.0.0"
+    "tslib" "^2.1.0"
+
+"@material/shape@^11.0.0":
+  "integrity" "sha512-O9/Dt/9Nbum1IvxRd4u8gCF4ghk9E55UNp2TGe+RN43zpTUbChh2raOFr3sQeRwLIzlb4wstUG9AxmdktrkDUQ=="
+  "resolved" "https://registry.npmjs.org/@material/shape/-/shape-11.0.0.tgz"
+  "version" "11.0.0"
+  dependencies:
+    "@material/feature-targeting" "^11.0.0"
+    "@material/rtl" "^11.0.0"
+    "@material/theme" "^11.0.0"
+    "tslib" "^2.1.0"
+
+"@material/theme@^11.0.0":
+  "integrity" "sha512-GnQI8sd2wHFD3AvmhpyRaH5o9D5Shobs1xDH4FdRU9+c+FNNqouZMDzyM6UpCX4700DzqvE7l0/1LjzB7ve7Lg=="
+  "resolved" "https://registry.npmjs.org/@material/theme/-/theme-11.0.0.tgz"
+  "version" "11.0.0"
+  dependencies:
+    "@material/feature-targeting" "^11.0.0"
+    "tslib" "^2.1.0"
+
+"@material/touch-target@^11.0.0":
+  "integrity" "sha512-S1XPYj3Bnkw26nFdYRZ0BHcNLfizF8HBeX9+OR7KuJUKaFB6CN01CtyEmDU3XNI0n140KjMtJnsZykWZommolQ=="
+  "resolved" "https://registry.npmjs.org/@material/touch-target/-/touch-target-11.0.0.tgz"
+  "version" "11.0.0"
+  dependencies:
+    "@material/base" "^11.0.0"
+    "@material/feature-targeting" "^11.0.0"
+    "tslib" "^2.1.0"
+
+"@material/typography@^11.0.0":
+  "integrity" "sha512-i9IGO/ZsF+YnqC2+PpJapt/8hSXOKFXaqv6B9uUr+iQ8GD4bEFpxm5kChzH918wJpCHvxbTYbnR6buaF9nkjCQ=="
+  "resolved" "https://registry.npmjs.org/@material/typography/-/typography-11.0.0.tgz"
+  "version" "11.0.0"
+  dependencies:
+    "@material/feature-targeting" "^11.0.0"
+    "@material/theme" "^11.0.0"
+    "tslib" "^2.1.0"
+
 "@nodelib/fs.scandir@2.1.5":
   "integrity" "sha512-vq24Bq3ym5HEQm2NKCr3yXDwjc7vTsEThRDnkp2DK9p1uqLR+DHurm/NOTo0KG7HYHU7eppKZj3MyqYuMBf62g=="
   "resolved" "https://registry.npmjs.org/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz"
@@ -97,6 +217,35 @@
   dependencies:
     "estree-walker" "^2.0.1"
     "picomatch" "^2.2.2"
+
+"@smui/button@^4.2.0":
+  "integrity" "sha512-impnVMXWHLqBXUyjo+GKRuLOgICv2bX//JVKKV3oba8msIimdOi0BR1Ds7ecti6248eXuFlwrE4GM/oc/57G1A=="
+  "resolved" "https://registry.npmjs.org/@smui/button/-/button-4.2.0.tgz"
+  "version" "4.2.0"
+  dependencies:
+    "@material/button" "^11.0.0"
+    "@material/elevation" "^11.0.0"
+    "@material/feature-targeting" "^11.0.0"
+    "@material/ripple" "^11.0.0"
+    "@material/theme" "^11.0.0"
+    "@smui/common" "^4.2.0"
+    "@smui/ripple" "^4.2.0"
+
+"@smui/common@^4.2.0":
+  "integrity" "sha512-ersYpoqvb0hGP2lFdOtNlue5m74H/eOEtpbb5r4Sk8lmwaDh+Gj8xbX93AAE2Jfq/p6XcEmHB6CsGoATi5JHOQ=="
+  "resolved" "https://registry.npmjs.org/@smui/common/-/common-4.2.0.tgz"
+  "version" "4.2.0"
+  dependencies:
+    "@material/dom" "^11.0.0"
+    "svelte" "^3.35.0"
+
+"@smui/ripple@^4.2.0":
+  "integrity" "sha512-oTaPC/6FAYwifth9AvkUuIC5SenMPITg1yZSdD9B1Wcgi2NRAWuMDV2j6Kc+yYgv6iUCKlQ26fCxK2xmYwqhug=="
+  "resolved" "https://registry.npmjs.org/@smui/ripple/-/ripple-4.2.0.tgz"
+  "version" "4.2.0"
+  dependencies:
+    "@material/dom" "^11.0.0"
+    "@material/ripple" "^11.0.0"
 
 "@sveltejs/kit@next":
   "integrity" "sha512-MxoQz/kxlYOXVHETlxh8+wIvfZ4N2EScDqyuaWwFHqWg6fj6FHADJfZ7JCniqvAe8ME2jA9Om/gVR8e1oY04+w=="
@@ -523,6 +672,15 @@
     "strip-ansi" "^5.2.0"
     "wrap-ansi" "^5.1.0"
 
+"cliui@^7.0.2":
+  "integrity" "sha512-OcRE68cOsVMXp1Yvonl/fzkQOyjLSu/8bhPDfQt0e0/Eb283TKP20Fs2MqoPsr9SwA595rRCA+QMzYc9nBP+JQ=="
+  "resolved" "https://registry.npmjs.org/cliui/-/cliui-7.0.4.tgz"
+  "version" "7.0.4"
+  dependencies:
+    "string-width" "^4.2.0"
+    "strip-ansi" "^6.0.0"
+    "wrap-ansi" "^7.0.0"
+
 "code-point-at@^1.0.0":
   "integrity" "sha1-DQcLTQQ6W+ozovGkDi7bPZpMz3c="
   "resolved" "https://registry.npmjs.org/code-point-at/-/code-point-at-1.1.0.tgz"
@@ -765,6 +923,11 @@
   "integrity" "sha512-arWhBQSy+oiBAp8VRRCFvAU+3jyf0gGacABLO3haMHboXCDjzq4WUqyQklst2XRuFS8MXgap+9uvODqj9Iygpg=="
   "resolved" "https://registry.npmjs.org/esbuild/-/esbuild-0.12.18.tgz"
   "version" "0.12.18"
+
+"escalade@^3.1.1":
+  "integrity" "sha512-k0er2gUkLf8O0zKJiAhmkTnJlTvINGv7ygDNPbeIsX/TJjGJZHuh9B2UxbsaEkmlEo9MfhrSzmhIlhRlI2GXnw=="
+  "resolved" "https://registry.npmjs.org/escalade/-/escalade-3.1.1.tgz"
+  "version" "3.1.1"
 
 "escape-string-regexp@^1.0.2":
   "integrity" "sha1-G2HAViGQqN/2rjuyzwIAyhMLhtQ="
@@ -1079,7 +1242,7 @@
   dependencies:
     "globule" "^1.0.0"
 
-"get-caller-file@^2.0.1":
+"get-caller-file@^2.0.1", "get-caller-file@^2.0.5":
   "integrity" "sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg=="
   "resolved" "https://registry.npmjs.org/get-caller-file/-/get-caller-file-2.0.5.tgz"
   "version" "2.0.5"
@@ -1624,6 +1787,11 @@
   "resolved" "https://registry.npmjs.org/natural-compare/-/natural-compare-1.4.0.tgz"
   "version" "1.4.0"
 
+"node-fetch@^2.6.1":
+  "integrity" "sha512-V4aYg89jEoVRxRb2fJdAg8FHvI7cEyYdVAh94HH0UIK8oJxUfkjlDQN9RbMx+bEjP7+ggMiFRprSti032Oipxw=="
+  "resolved" "https://registry.npmjs.org/node-fetch/-/node-fetch-2.6.1.tgz"
+  "version" "2.6.1"
+
 "node-gyp@^7.1.0":
   "integrity" "sha512-CbpcIo7C3eMu3dL1c3d0xw449fHIGALIJsRP4DDPHpyiW8vcriNY7ubh9TE4zEKfSxscY7PjeFnshE7h75ynjQ=="
   "resolved" "https://registry.npmjs.org/node-gyp/-/node-gyp-7.1.2.tgz"
@@ -2071,7 +2239,7 @@
     "scss-tokenizer" "^0.2.3"
     "yargs" "^13.3.2"
 
-"sass@^1.26.8", "sass@^1.37.5":
+"sass@^1.26.8", "sass@^1.32.8", "sass@^1.37.5":
   "integrity" "sha512-Cx3ewxz9QB/ErnVIiWg2cH0kiYZ0FPvheDTVC6BsiEGBTZKKZJ1Gq5Kq6jy3PKtL6+EJ8NIoaBW/RSd2R6cZOA=="
   "resolved" "https://registry.npmjs.org/sass/-/sass-1.37.5.tgz"
   "version" "1.37.5"
@@ -2138,6 +2306,15 @@
     "ansi-styles" "^4.0.0"
     "astral-regex" "^2.0.0"
     "is-fullwidth-code-point" "^3.0.0"
+
+"smui-theme@^4.2.0":
+  "integrity" "sha512-jC0KVYX4O3CSuz7iWBnDs+zFOTwzC3OW/INGJNFvvaALPLNTlSe4uDQC3/qeVUmL8GIU2wSFm6o6kPrgOZtCEg=="
+  "resolved" "https://registry.npmjs.org/smui-theme/-/smui-theme-4.2.0.tgz"
+  "version" "4.2.0"
+  dependencies:
+    "node-fetch" "^2.6.1"
+    "sass" "^1.32.8"
+    "yargs" "^16.2.0"
 
 "source-map-js@^0.6.2":
   "integrity" "sha512-/3GptzWzu0+0MBQFrDKzw/DvvMTUORvgY6k6jd/VS6iCR4RDTKWH6v6WPwQoUO8667uQEf9Oe38DxAYWY5F/Ug=="
@@ -2253,7 +2430,7 @@
     "is-fullwidth-code-point" "^2.0.0"
     "strip-ansi" "^5.1.0"
 
-"string-width@^4.2.0":
+"string-width@^4.1.0", "string-width@^4.2.0":
   "integrity" "sha512-XBJbT3N4JhVumXE0eoLU9DCjcaF92KLNqTmFCnG1pf8duUxFGwtP6AD6nkjw9a3IdiRtL3E2w3JDiE/xi3vOeA=="
   "resolved" "https://registry.npmjs.org/string-width/-/string-width-4.2.2.tgz"
   "version" "4.2.2"
@@ -2366,7 +2543,7 @@
     "detect-indent" "^6.0.0"
     "strip-indent" "^3.0.0"
 
-"svelte@^3.2.0", "svelte@^3.23.0", "svelte@^3.24.0", "svelte@^3.34.0", "svelte@^3.38.2", "svelte@>=3.19.0", "svelte@>=3.29.4":
+"svelte@^3.2.0", "svelte@^3.23.0", "svelte@^3.24.0", "svelte@^3.34.0", "svelte@^3.35.0", "svelte@^3.38.2", "svelte@>=3.19.0", "svelte@>=3.29.4":
   "integrity" "sha512-XtExLd2JAU3T7M2g/DkO3UNj/3n1WdTXrfL63OZ5nZq7nAqd9wQw+lR4Pv/wkVbrWbAIPfLDX47UjFdmnY+YtQ=="
   "resolved" "https://registry.npmjs.org/svelte/-/svelte-3.42.1.tgz"
   "version" "3.42.1"
@@ -2437,7 +2614,7 @@
   "resolved" "https://registry.npmjs.org/tslib/-/tslib-1.14.1.tgz"
   "version" "1.14.1"
 
-"tslib@^2.0.0":
+"tslib@^2.0.0", "tslib@^2.1.0":
   "integrity" "sha512-N82ooyxVNm6h1riLCoyS9e3fuJ3AMG2zIZs2Gd1ATcSFjSA23Q0fzjjZeh0jbJvWVDZ0cJT8yaNNaaXHzueNjg=="
   "resolved" "https://registry.npmjs.org/tslib/-/tslib-2.3.0.tgz"
   "version" "2.3.0"
@@ -2577,6 +2754,15 @@
     "string-width" "^3.0.0"
     "strip-ansi" "^5.0.0"
 
+"wrap-ansi@^7.0.0":
+  "integrity" "sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q=="
+  "resolved" "https://registry.npmjs.org/wrap-ansi/-/wrap-ansi-7.0.0.tgz"
+  "version" "7.0.0"
+  dependencies:
+    "ansi-styles" "^4.0.0"
+    "string-width" "^4.1.0"
+    "strip-ansi" "^6.0.0"
+
 "wrappy@1":
   "integrity" "sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8="
   "resolved" "https://registry.npmjs.org/wrappy/-/wrappy-1.0.2.tgz"
@@ -2586,6 +2772,11 @@
   "integrity" "sha512-JKhqTOwSrqNA1NY5lSztJ1GrBiUodLMmIZuLiDaMRJ+itFd+ABVE8XBjOvIWL+rSqNDC74LCSFmlb/U4UZ4hJQ=="
   "resolved" "https://registry.npmjs.org/y18n/-/y18n-4.0.3.tgz"
   "version" "4.0.3"
+
+"y18n@^5.0.5":
+  "integrity" "sha512-0pfFzegeDWJHJIAmTLRP2DwHjdF5s7jo9tuztdQxAhINCdvS+3nGINqPd00AphqJR/0LhANUS6/+7SCb98YOfA=="
+  "resolved" "https://registry.npmjs.org/y18n/-/y18n-5.0.8.tgz"
+  "version" "5.0.8"
 
 "yallist@^4.0.0":
   "integrity" "sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A=="
@@ -2600,7 +2791,7 @@
     "camelcase" "^5.0.0"
     "decamelize" "^1.2.0"
 
-"yargs-parser@^20.2.3":
+"yargs-parser@^20.2.2", "yargs-parser@^20.2.3":
   "integrity" "sha512-y11nGElTIV+CT3Zv9t7VKl+Q3hTQoT9a1Qzezhhl6Rp21gJ/IVTW7Z3y9EWXhuUBC2Shnf+DX0antecpAwSP8w=="
   "resolved" "https://registry.npmjs.org/yargs-parser/-/yargs-parser-20.2.9.tgz"
   "version" "20.2.9"
@@ -2620,3 +2811,16 @@
     "which-module" "^2.0.0"
     "y18n" "^4.0.0"
     "yargs-parser" "^13.1.2"
+
+"yargs@^16.2.0":
+  "integrity" "sha512-D1mvvtDG0L5ft/jGWkLpG1+m0eQxOfaBvTNELraWj22wSVUMWxZUvYgJYcKh6jGGIkJFhH4IZPQhR4TKpc8mBw=="
+  "resolved" "https://registry.npmjs.org/yargs/-/yargs-16.2.0.tgz"
+  "version" "16.2.0"
+  dependencies:
+    "cliui" "^7.0.2"
+    "escalade" "^3.1.1"
+    "get-caller-file" "^2.0.5"
+    "require-directory" "^2.1.1"
+    "string-width" "^4.2.0"
+    "y18n" "^5.0.5"
+    "yargs-parser" "^20.2.2"
