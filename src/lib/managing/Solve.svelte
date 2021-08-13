@@ -1,8 +1,10 @@
 <script lang='ts'>
-	import type { Solve } from '$lib/storage/time_db'
-	import { Card, CardText, CardActions, Button } from 'svelte-materialify'
+	import { Card, CardText, CardActions, Button, TextField } from "svelte-materialify";
+	import CubeVisualizer from "$lib/managing/CubeVisualizer.svelte";
+	import type { Solve } from '$lib/storage/time_db';
+
 	export let solve: Solve;
-	export let decimals = 3;
+	let dialog = false
 
 	let penalty_name
 	if (solve.penalty === 2) {
@@ -11,25 +13,46 @@
 		penalty_name = 'DNF'
 	}
 
+	let temp_reconstruction
+
+	function handleKeydown(e) {
+		if (e.key === 'Enter') {
+			solve.reconstruction = temp_reconstruction
+			temp_reconstruction = ''
+		}
+	}
+
+	$: hasReconstruction = solve.reconstruction as unknown as boolean
+
 </script>
 
 <div>
 	<div class="d-flex justify-center mt-4 mb-4">
-		<Card outlined style="max-width:300px;">
-		  <div class="pl-4 pr-4 pt-3">
-			  {#if solve.penalty !== 0}
-			  <span class="text-overline"> {penalty_name} </span>
-			  {/if}
-			<br />
-			<span class="text-h5 mb-2">{solve.time.toFixed(decimals)}</span>
-			<br />
-		  </div>
-		</Card>
-	  </div>
-</div>
+		<Card style=height:fit-content>
+			<CardText>
+				{#if penalty_name}
+					<div class='text-h4'>{penalty_name}</div>
+				{/if}
+			<div class="text--primary text-h2">{solve.time.toFixed(3)}</div>
+			<div class="text--primary">
+				Scramble: {solve.scramble} <br>
+				{#if hasReconstruction}
+					Reconstruction: {solve.reconstruction} <br>
+				{/if}
+				<!-- <hr> -->
 
-<style>
-	div {
-		cursor: pointer;
-	}
-</style>
+				Solved on: {new Date(solve.date).toDateString()}
+			</div>
+			<CubeVisualizer {solve}/>
+			
+		</CardText>
+		<CardActions>
+			<!-- <Button disabled={hasReconstruction} text on:click={() => dialog = true}> Add reconstruction</Button> -->
+			<Button disabled text on:click={() => dialog = true}> (Reconstructions coming soon!)</Button>
+			{#if dialog}
+				<TextField disabled={hasReconstruction} on:keydown={handleKeydown} bind:value={temp_reconstruction} placeholder="Reconstruction" solo color=red clearable/>
+			{/if}
+		</CardActions>
+	</Card>
+	</div>
+</div>
