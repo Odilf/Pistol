@@ -1,18 +1,15 @@
 <script>
 	import '../app.css'
 	import { Footer, Button } from 'svelte-materialify'
-	const links = [
-		{name: 'Settings', url: '/settings'},
-		{name: 'About', url: '/about'},
-		{name: 'GitHub', url: 'https://github.com/Odilf/Odilf-Timer'},
-		]
+
+	let wide = 'width:10em'
 </script>
 
 <Footer class='justify-center flex-column'>
 		<div class="buttons">
-			<Button on:click={() => location.href = '/settings'}> Settings </Button>
+			<Button style={wide} on:click={() => location.href = '/settings'}> Settings </Button>
 			<Button on:click={() => window.open('https://github.com/Odilf/Odilf-Timer','_blank')}> <img src='static/github.svg' alt='GitHub'/> </Button>
-			<Button on:click={() => location.href = '/about'}> About</Button>
+			<Button style={wide} on:click={() => location.href = '/about'}> About</Button>
 		</div>
 	<p class="text-center" style="width:100%">
 		2021&nbsp;-&nbsp;<b>Odilf</b>
