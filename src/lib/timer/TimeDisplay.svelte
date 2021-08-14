@@ -1,5 +1,6 @@
 <script lang=ts>
 	import { getSettingByName } from '$lib/settings'
+	import '../../app.css'
 
 	export let time: string
 	export let decimals: string
