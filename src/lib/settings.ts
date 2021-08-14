@@ -36,6 +36,7 @@ const default_settings: Category[] = [
 			{name: 'Decimals', description: 'Decimals to display in big timer', value: 2, options: ['0', '1', '2', '3']},
 			{name: 'Solve decimals', description: 'Decimals to display in solve list', value: 2, options: ['1', '2', '3']},
 			{name: 'Timer delay', description: 'Time to press down the timer before it starts', value: 2, options: ['0', '0.1', '0.3', '0.55', '1']},
+			{name: 'Refresh rate', description: 'How often the time gets updated when timer is running', value: 1, options: ['1ms', '69ms', '0.1s', '0.5s', '1s']},
 		]},
 
 		{ name: 'Visual', description: 'How the timer looks', settings: [

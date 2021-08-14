@@ -16,6 +16,28 @@
 	let time = 0
 	let interval: ReturnType<typeof setInterval>
 	let startTime: Date
+
+	let refresh_rate
+	$: refresh_rate_option = getSettingByName('Refresh rate')
+	$: switch (refresh_rate_option) {
+		case '1ms':
+			refresh_rate = 1
+			break;
+		case '69ms':
+			refresh_rate = 69 
+			break;
+		case '0.1s':
+			refresh_rate = 100
+			break;
+		case '0.5s':
+			refresh_rate = 500
+			break;
+		case '1s':
+			refresh_rate = 1000
+			break;
+		default:
+			break;
+	}
 	
 	function handleKeydown(e) {
 		//Pressed to prepare timer
@@ -49,7 +71,7 @@
 				timerState = 'running'
 				startTime = new Date()
 				//TODO: #5 Add option to change timer refresh rate
-				interval = setInterval(() => time = getTime(startTime), 42)
+				interval = setInterval(() => time = getTime(startTime), refresh_rate)
 			} else {
 				timerState = 'released'
 			}
