@@ -34,6 +34,7 @@
 			<h1>Pistol</h1>
 			<p>Pistol is an open source speedcubing timer that brings a modern aproach and desing. <br>
 				Focused on the best possible user expirience: elegancy, simplicity, ease of use, performance and customization. <br> 
+				<br>
 				Built with <a href='https://kit.svelte.dev'>SvelteKit</a>, still under development.
 			</p>
 
