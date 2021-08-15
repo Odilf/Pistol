@@ -17,40 +17,50 @@ import Timer from '$lib/timer/Timer.svelte';
 	<title>Pistol</title>
 </svelte:head>
 
-<header>
-	<EventSelect/>
-</header>
-
-<body>
-	<div class="column">
-		<SessionSelect/>
-	</div>
-
-	<div class="center">
-		<Scramble/>
-		<Timer/>
-		<!-- <TimeInput/> -->
-		<QuickStats/>
-	</div>
+<main>
+	<header>
+		<EventSelect/>
+	</header>
 	
-	<div class="column">
-		<SolveList/>
-	</div>
-</body>
-
-<footer>
-	<Footer/>
-</footer>
+	<body>
+		<div class="column">
+			<SessionSelect/>
+		</div>
+		
+		<div class="center">
+			<Scramble/>
+			<Timer/>
+			<!-- <TimeInput/> -->
+			<QuickStats/>
+		</div>
+		
+		<div class="column">
+			<SolveList/>	
+		</div>
+	</body>
+	
+	<footer>
+		<Footer/>
+	</footer>
+</main>
 
 <style lang="scss">
 
 	$column-width: 200px;
+	main {
+		height: 100vh;
+		width: 100vw;
+		display: flex;
+		flex-direction: column;
+	}
 	header {
 		height: fit-content;
 	}
 	body {
 		flex-grow: 1;
 		display: flex;
+		// height: 100%;
+		overflow: scroll;
 	}
 	.column {
 		width: $column-width;
