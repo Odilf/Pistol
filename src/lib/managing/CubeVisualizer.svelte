@@ -1,6 +1,6 @@
 <script lang='ts'>
 	import type { Solve } from '$lib/storage/time_db'
-	import { TwistyPlayer } from "cubing/twisty";
+	import { TwistyPlayer } from "cubing/twisty"; //Necessary for cube visualization
 	export let solve: Solve;
 	import '../../app.css'
 
@@ -11,7 +11,7 @@
 </script>
 
 <twisty-player
-	experimental-setup-alg={`x2 ${solve.scramble}`}
+	experimental-setup-alg={`x2 y2 ${solve.scramble}`}
 	background="none"
 	control-panel="none"
 	hint-facelets="none"
