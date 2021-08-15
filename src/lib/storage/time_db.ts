@@ -62,15 +62,14 @@ export const database = LS_writable('database', default_events)
 export const selection = writable({event: 0, sessions: wca_events.map(() => 0)})
 
 //Get active event and session from the selection store
-//Right now, only used in `SessionSelect.svelte`
 export const active_event = derived(
-	selection,
-	$selection => default_events[$selection.event]
+	[selection, database],
+	([$selection, $database]) => $database[$selection.event]
 )
 
 export const active_session = derived(
-	selection,
-	$selection => default_events[$selection.event].sessions[$selection.sessions[$selection.event]]
+	[selection, database],	
+	([$selection, $database]) => $database[$selection.event].sessions[$selection.sessions[$selection.event]]
 )
 
 export function addSolve(solve: Solve, event: number, session: number): void {
