@@ -763,10 +763,10 @@
     "shebang-command" "^2.0.0"
     "which" "^2.0.1"
 
-"cubing@^0.19.1":
-  "integrity" "sha512-zRQ/IHXt92fj+8830t3t2e/hj/0tEmQqG0ik4EQceXXCuezVyHlrfS6oD7E7SsS+DFccGiaCjP4REqAqbHXI/g=="
-  "resolved" "https://registry.npmjs.org/cubing/-/cubing-0.19.1.tgz"
-  "version" "0.19.1"
+"cubing@^0.20.1":
+  "integrity" "sha512-47oHAAf0XbitypV5Z/0GAPLb6Gi1NI7MpOeR/lYuWp/fDQ57NtTroOs39ymDXVkCM5E7utuWYLGO3Ngi/gz1iw=="
+  "resolved" "https://registry.npmjs.org/cubing/-/cubing-0.20.1.tgz"
+  "version" "0.20.1"
   dependencies:
     "@types/three" "^0.126.1"
     "@types/web-bluetooth" "0.0.4"
