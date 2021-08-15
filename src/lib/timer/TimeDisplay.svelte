@@ -26,9 +26,9 @@
 	{#if penalty === 'DNF'} 
 		DNF
 	{:else}
-		{#if decimals}
-		<div class="seconds">{seconds}</div>
-			<div class:small={small}>.{decimals_value}{#if penalty===2}
+	<div class="seconds">{seconds}</div>
+	{#if decimals}
+		<div class:small={small}>.{decimals_value}{#if penalty===2}
 				+
 				{/if}
 			</div>
