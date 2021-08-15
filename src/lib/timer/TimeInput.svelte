@@ -49,4 +49,4 @@ import Time from './Time.svelte';
 	}
 </script>
 
-<TimeDisplay time={input} decimals={''}/>
+<TimeDisplay time={0.69}/>

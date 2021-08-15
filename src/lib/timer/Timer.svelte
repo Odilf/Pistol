@@ -95,18 +95,7 @@
 </body>
 
 <style lang='scss'>
-	body {
-		flex-grow: 1;
-		cursor: default;
-		width: 100%;
-
-		display: flex;
-		justify-content: center;
-		align-items: center;
-
-		font-size: 15vw;
-		font-weight: 100;
-	}
+	
 	.pressed {
 			color: red; 
 	}

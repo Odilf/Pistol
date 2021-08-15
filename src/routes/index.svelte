@@ -29,8 +29,10 @@ import Timer from '$lib/timer/Timer.svelte';
 		
 		<div class="center">
 			<Scramble/>
-			<Timer/>
-			<!-- <TimeInput/> -->
+			<div class="timer">
+				<!-- <Timer/> -->
+				<TimeInput/>
+			</div>
 			<QuickStats/>
 		</div>
 		
@@ -74,6 +76,18 @@ import Timer from '$lib/timer/Timer.svelte';
 		display: flex;
 		flex-direction: column;
 		align-items: center;
+	}
+	.timer {
+		flex-grow: 1;
+		cursor: default;
+		width: 100%;
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		font-size: 15vw;
+		font-weight: 100;
 	}
 	footer {
 		height: fit-content;
