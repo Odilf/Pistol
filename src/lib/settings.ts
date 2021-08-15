@@ -83,3 +83,8 @@ export function resetSettings(): void {
 	settings.set(null)
 	settings.set(default_settings)
 }
+
+//Unused
+export function updateSettings(): void {
+	settings.update(settings => settings.slice())
+}
