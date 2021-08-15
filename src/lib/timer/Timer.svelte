@@ -5,7 +5,7 @@
 	import { getSettingByName } from '$lib/settings';
 	import { addSolve, selection } from '$lib/storage/time_db'
 	import type { Solve } from '$lib/storage/time_db'
-	import RunningTime from './RunningTime.svelte';
+	import TimeDisplay from './TimeDisplay.svelte';
 	
 	const dispatch = createEventDispatcher();
 	
@@ -90,7 +90,7 @@
 
 <body>
 	<div class={timerState}>
-		<RunningTime {time}/>
+		<TimeDisplay {time}/>
 	</div>
 </body>
 
@@ -103,6 +103,9 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
+
+		font-size: 15vw;
+		font-weight: 100;
 	}
 	.pressed {
 			color: red; 

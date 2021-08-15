@@ -2,15 +2,37 @@
 	import { getSettingByName } from '$lib/settings'
 	import '../../app.css'
 
-	export let time: string
-	export let decimals: string
-	$: small = getSettingByName('Small decimals');
+	export let time: number
+	export let decimals: number = undefined
+	export let small_decimals = true
+	export let penalty: 0 | 2 | 'DNF' = 0
+
+	$: small = small_decimals && getSettingByName('Small decimals')
+	$: if (decimals === undefined) {
+		decimals = parseInt(getSettingByName('Decimals')) 
+	}
+
+	let seconds: string
+	$: if (penalty === 2) {
+		seconds = Math.floor(time + 2).toString()
+	} else {
+		seconds = Math.floor(time).toString()
+	}
+	$: decimals_value = time.toFixed(decimals).substr(-decimals)
+
 </script>
 
 <div class="timer">
-	<div class="seconds">{time}</div>
-	{#if decimals}
-	<div class:small={small}>.{decimals}</div>
+	{#if penalty === 'DNF'} 
+		DNF
+	{:else}
+		{#if decimals}
+		<div class="seconds">{seconds}</div>
+			<div class:small={small}>.{decimals_value}{#if penalty===2}
+				+
+				{/if}
+			</div>
+		{/if}
 	{/if}
 </div>
 
@@ -18,8 +40,8 @@
 
 	.timer {
 		font-family: 'Roboto';
-		font-weight: 100;
-		font-size: 15vw;
+		font-weight: inherit;
+		font-size: inherit;
 		
 		display: flex;
 		align-items: baseline;
