@@ -1,7 +1,8 @@
 <script lang='ts'>
 	import { Card, CardText, CardActions, Button, TextField } from "svelte-materialify";
 	import CubeVisualizer from "$lib/managing/CubeVisualizer.svelte";
-	import type { Solve } from '$lib/storage/time_db';
+	import { updateDatabase } from '$lib/storage/time_db';
+	import type { Solve } from '$lib/storage/time_db'
 	import TimeDisplay from "$lib/timer/TimeDisplay.svelte";
 	import '../../app.css'
 
@@ -50,7 +51,7 @@
 
 		<CardActions class='d-flex ml-4'>
 			{#each penalties as penalty_item}
-				<Button disabled={penalty_item===solve.penalty} on:click={() => solve.penalty = penalty_item}>{penalty_item}</Button>
+				<Button disabled={penalty_item===solve.penalty} on:click={() => {solve.penalty = penalty_item; updateDatabase()}}>{penalty_item}</Button>
 			{/each}
 		</CardActions>
 

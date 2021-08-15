@@ -89,3 +89,7 @@ export function deleteSolves(): void {
 	console.warn('Reseting settings')
 	localStorage.removeItem('database')
 }
+
+export function updateDatabase(): void {
+	database.update(db => db.slice())
+}
