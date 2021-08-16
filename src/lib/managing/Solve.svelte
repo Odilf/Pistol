@@ -1,10 +1,11 @@
 <script lang='ts'>
 	import { Card, CardText, CardActions, Button, TextField } from "svelte-materialify";
 	import CubeVisualizer from "$lib/managing/CubeVisualizer.svelte";
-	import { updateDatabase } from '$lib/storage/time_db';
+	import { active_session, updateDatabase } from '$lib/storage/time_db';
 	import type { Solve } from '$lib/storage/time_db'
 	import TimeDisplay from "$lib/timer/TimeDisplay.svelte";
 	import '../../app.css'
+import SolveList from "./SolveList.svelte";
 
 	export let solve: Solve;
 	const penalties: Array<0 | 2 | 'DNF'> = [0, 2, 'DNF']
@@ -20,6 +21,13 @@
 
 	$: hasReconstruction = solve.reconstruction as unknown as boolean
 
+	function deleteSolve(solve) {
+		console.log('deleting solve');
+		const i = $active_session.solves.indexOf(solve)
+		$active_session.solves.splice(i)
+		updateDatabase()
+	}
+
 </script>
 
 <div>
@@ -31,7 +39,12 @@
 				{/if} 
 				
 				<div class="text--primary text-h2">
-					<TimeDisplay time={solve.time} penalty={solve.penalty} decimals={3} small_decimals={false}/>
+					<header>
+						<div class=time>
+							<TimeDisplay time={solve.time} penalty={solve.penalty} decimals={3} small_decimals={false}/>
+						</div>
+						<Button fab on:click={() => deleteSolve(solve)}><img src='static/delete.svg' alt=delete/></Button>
+					</header>
 				</div>
 				
 				<div class="text--primary">
@@ -68,6 +81,12 @@
 </div>
 
 <style>
+	header {
+		display: flex;
+	}
+	.time {
+		flex-grow: 1;
+	}
 	.DNF {
 		font-size: 2em;
 		font-weight: 700;
