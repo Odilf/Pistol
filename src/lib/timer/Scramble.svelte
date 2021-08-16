@@ -1,9 +1,9 @@
 <script lang='ts'>
-
+	
 </script>
 
 <p>
-	B2 D2 F2 D2 B R2 B L2 D2 R2 B R U F2 U' R' D2 L B R'
+	caca
 </p>
 
 <style lang="scss">
