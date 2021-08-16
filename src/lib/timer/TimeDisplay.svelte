@@ -18,7 +18,14 @@
 	} else {
 		seconds = Math.floor(time).toString()
 	}
-	$: decimals_value = time.toFixed(decimals).substr(-decimals)
+
+	let decimals_value
+	$: if (!time) {
+		time = 0
+		decimals_value = 0
+	} else {
+		decimals_value = time.toFixed(decimals).substr(-decimals) 
+	}
 
 </script>
 
