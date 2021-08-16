@@ -2,51 +2,121 @@
 
 <script lang='ts'>
 	import { getSettingByName } from '$lib/settings'
-	import TimeDisplay from '$lib/timer/TimeDisplay.svelte'
-import Time from './Time.svelte';
+	import { addSolve, selection } from '$lib/storage/time_db'
+	import type { Solve } from '$lib/storage/time_db'
+	import { fade } from "svelte/transition";
+	import '../../app.css'
+	import TimeDisplay from './TimeDisplay.svelte';
+	import { createEventDispatcher } from 'svelte'
 
-	let input: string = ''
+	const dispatch = createEventDispatcher();
 
-	const keys = {
-		special: ['.', '.', ' ', ':'],
-		clear: ['Clear', 'Delete'],
-		back: ['Backspace'],
-		enter: ['Enter']
-	}
+	// $: time_format = getSettingByName('Time format')
 
-	$: time_format = getSettingByName('Time format')
+	let value = ''
 
-	let placeholder = ''
-	let has_decimals = true
+	let is_focused = false	
 
-	$: if (time_format === 'ss.dd') { placeholder = '_.__'; has_decimals = true
-	} else if ( time_format === 'mm:ss') { placeholder = '_:__'; has_decimals = false
-	} else if (time_format === 'mm:ss.dd') { placeholder = '_:__.__'; has_decimals = true
-	} else { console.warn('Uknown time format', time_format) }
+	$: solve = makeTime(value)
+
+	let invalid = false
+
 	
-	function handleKeydown(e) {
-		if (!isNaN(parseInt(e.key))) {
-			input += e.key
+	function makeTime(str: string) {
+		// const match = str.match(/^(\d{1,2}(?:[ :])?)?(\d{0,2}[ .,])?(\d{1,3})?$/)
+		const match = str.match(/(\d{1,2}[: ](?=\d{1,2}[., ]))?(\d{1,2})([., ]\d{1,3})?(\+)?/)
+
+		let minutes: number, seconds: number, decimals: number = 0
+		let penalty = 0		
+
+		if (match) {
+			//Seconds
+			if (match[2]) {
+				seconds = parseInt(match[2])
+			} else { seconds = 0 }
+
+			//Minutes
+			if (match[1]) {
+				if (match[1].length > 2) match[1] = match[1].substr(0, 2)
+				minutes = parseInt(match[1])
+			} else { minutes = 0}
+
+			if (match[3]) {
+				decimals = parseInt(match[3].substr(1)) / (10**match[3].substr(1).length)
+			} else { decimals = 0 }
+
+			if (match[4] && match[4] === '+') {
+				penalty = 2
+			}
 		}
 
-		if (keys.special.includes(e.key) && input.length % 2 !== 0) {
-			input = input.slice(0, -1) + '0' + input.slice(-1)
+		const solve: Solve = {
+			time: (minutes * 60 + seconds + decimals),
+			scramble: 'R U R\' U\'',
+			penalty: penalty as 0 | 2,
+			date: new Date(),
 		}
-		
-		if (keys.enter.includes(e.key)) {
-			console.log('bleep bloop appending time')
-			input = ''
+		return solve
+		// return minutes * 60 + seconds + decimals / 100
+	}
+
+	function handleKeydown(e) {
+		if (is_focused && !e.key.match(/[^a-z]|../i)) {
+			e.preventDefault()
+			return
 		}
-		
-		if (keys.clear.includes(e.key)) {
-			input = ''
-		}
-		
-		if (keys.back.includes(e.key)) {
-			if (e.shiftKey) { input = ''}
-			else { input = input.slice(0, -1) }
+
+		if (e.key === 'Enter') {
+			dispatch('submit', {solve: solve})
+			value = ''
 		}
 	}
+
 </script>
 
-<TimeDisplay time={0.69}/>
+<main>
+	<input class:invalid type="text" transition:fade bind:value 
+	on:focus={() => is_focused = true} on:blur={() => is_focused = false}>
+	<p>Will be saved as 
+		<div><TimeDisplay time={solve.time} penalty={solve.penalty} decimals={3}/></div>
+	
+	<!-- <TimeDisplay time={0.69}/> -->
+</main>
+
+<style lang='scss'>
+	main {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		box-sizing: border-box;
+	}
+	input {
+		background-color: var(--secondary-color);
+		color: whitesmoke;
+		width: 80%;
+		text-align: center;
+		font-size: 0.5em;
+		border-radius: 20px;
+	}
+	input:focus {
+		// background-color: var(--accent-color);
+		outline:1000px solid white;
+		border-left: 0.1em solid var(--accent-color);
+		border-right: 0.1em solid var(--accent-color);
+		outline: none;
+	}
+	p {
+		font-size: 1rem;
+		font-weight: 700;
+		color: grey;
+
+		display: flex;
+	} 
+	div {
+		font-size: 4rem;
+		font-weight: 400;
+	}
+	.invalid {
+		background-color: red;
+	}
+</style>
