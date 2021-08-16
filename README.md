@@ -1,6 +1,6 @@
-# Odilf Timer
+# Pistol
 
-Odilf Timer is an open source speedcubing timer that brings a modern aproach and desing. Focused on the best possible user expirience: elegancy, simplicity, ease of use, performance and customization. 
+Pistol is an open source speedcubing timer that brings a modern aproach and desing. Focused on the best possible user expirience: elegancy, simplicity, ease of use, performance and customization. 
 
 Built with [SvelteKit](https://kit.svelte.dev/), still under development. 
 
