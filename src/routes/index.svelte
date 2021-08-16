@@ -3,6 +3,8 @@
 </script>
 
 <script lang="ts">
+  import Timing from './Timing.svelte';
+
 import Footer from '$lib/Footer.svelte';
 import EventSelect from '$lib/managing/EventSelect.svelte';
 import SessionSelect from '$lib/managing/SessionSelect.svelte';
@@ -29,10 +31,7 @@ import Timer from '$lib/timer/Timer.svelte';
 		
 		<div class="center">
 			<Scramble/>
-			<div class="timer">
-				<!-- <Timer/> -->
-				<TimeInput/>
-			</div>
+			<Timing></Timing>
 			<QuickStats/>
 		</div>
 		
@@ -76,18 +75,6 @@ import Timer from '$lib/timer/Timer.svelte';
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-	}
-	.timer {
-		flex-grow: 1;
-		cursor: default;
-		width: 100%;
-
-		display: flex;
-		justify-content: center;
-		align-items: center;
-
-		font-size: 15vw;
-		font-weight: 100;
 	}
 	footer {
 		height: fit-content;
