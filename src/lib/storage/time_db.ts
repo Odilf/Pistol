@@ -23,7 +23,7 @@ export type Solve = {
 	penalty: 0 | 2 | 'DNF'
 	date: Date
 	scramble: string
-	reconstruction: string
+	reconstruction?: string
 };
 
 type Session = {
