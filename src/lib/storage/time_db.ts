@@ -84,7 +84,7 @@ export function addSolve(solve: Solve, event: number, session: number): void {
 	})
 }
 
-export function deleteSolves(): void {
+export function deleteAllSolves(): void {
 	if (!browser) return 
 	console.warn('Reseting settings')
 	localStorage.removeItem('database')

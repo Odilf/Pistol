@@ -19,7 +19,7 @@
 	import { settings, resetSettings } from '$lib/settings'
 	import Setting from '$lib/settings/Setting.svelte'
 	import Back from '$lib/utils/Back.svelte'
-	import { deleteSolves } from '$lib/storage/time_db'
+	import { deleteAllSolves } from '$lib/storage/time_db'
 	import ConfirmationButton from '$lib/utils/ConfirmationButton.svelte'
 </script>
 
@@ -83,7 +83,7 @@
 							<div class="setting">
 								<ConfirmationButton  button_text='Delete all solves' 
 								dialog_text="This will permantly and irreversably delete forever all your solves in all events. Are you sure you want to do this?"
-								on:confirmation={deleteSolves}/>
+								on:confirmation={deleteAllSolves}/>
 							</div>
 						</span>
 					</ListItem>
