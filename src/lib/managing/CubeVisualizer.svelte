@@ -10,13 +10,20 @@
 	
 </script>
 
-<twisty-player
+<!-- <twisty-player
 	experimental-setup-alg={`x2 y2 ${solve.scramble}`}
 	background="none"
 	control-panel="none"
 	hint-facelets="none"
 	alg={solve.reconstruction}
-/>
+	/> -->
+
+<twisty-player
+	experimental-setup-alg={`x2 y2 ${solve.scramble}`}
+	background="none"
+	control-panel="none"
+	hint-facelets="none"
+	/>
 
 <p>
 	Cube visualization courtesy of cubing.js
