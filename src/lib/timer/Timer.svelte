@@ -41,7 +41,8 @@
 	
 	function handleKeydown(e) {
 		//Pressed to prepare timer
-		if (timerState === 'released' && e.code === 'Space') { 
+		if (timerState === 'released' && e.code === 'Space') {
+			// e.preventDefault() //Ignore other things the space key would do
 			dispatch('timerReady', { time: time });
 			timerState = 'pressed'
 			press_start = new Date()
@@ -50,15 +51,16 @@
 					
 		//Pressed to stop timer
 		} else if (timerState === 'running') {
+			// if (e.code === 'Space') e.preventDefault() //Ignore other things space key would do
 			time = getTime(startTime)
-			dispatch('timerEnd', { time: time });
 			
 			timerState = 'pressed'
 			clearInterval(interval)
-
+			
 			let solve: Solve = {time: time, penalty: 0, date: null, scramble: "B2 D2 F2 D2 B R2 B L2 D2 R2 B R U F2 U' R' D2 L B R'", reconstruction: null}
+			dispatch('timerEnd', { solve: solve });
 			//TODO: #6 Is the selection store a good idea?
-			addSolve(solve, $selection.event, $selection.sessions[$selection.event])
+			// addSolve(solve, $selection.event, $selection.sessions[$selection.event])
 		}
 	}
 	
@@ -88,11 +90,9 @@
 </script>
 
 
-<body>
-	<div class={timerState}>
-		<TimeDisplay {time}/>
-	</div>
-</body>
+<div class={timerState}>
+	<TimeDisplay {time}/>
+</div>
 
 <style lang='scss'>
 	
