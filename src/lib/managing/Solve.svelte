@@ -5,26 +5,19 @@
 	import type { Solve } from '$lib/storage/time_db'
 	import TimeDisplay from "$lib/timer/TimeDisplay.svelte";
 	import '../../app.css'
-import SolveList from "./SolveList.svelte";
 
 	export let solve: Solve;
 	const penalties: Array<0 | 2 | 'DNF'> = [0, 2, 'DNF']
 	
-	// let dialog = false
-	// let temp_reconstruction
-	// function handleKeydown(e) {
-	// 	if (e.key === 'Enter') {
-	// 		solve.reconstruction = temp_reconstruction
-	// 		temp_reconstruction = ''
-	// 	}
-	// }
-
 	$: hasReconstruction = solve.reconstruction as unknown as boolean
+
+	let reconstruction = ''
+	let reconstruction_dialog = false
 
 	function deleteSolve(solve) {
 		console.log('deleting solve');
 		const i = $active_session.solves.indexOf(solve)
-		$active_session.solves.splice(i)
+		$active_session.solves.splice(i, 1)
 		updateDatabase()
 	}
 
@@ -43,7 +36,7 @@ import SolveList from "./SolveList.svelte";
 						<div class=time>
 							<TimeDisplay time={solve.time} penalty={solve.penalty} decimals={3} small_decimals={false}/>
 						</div>
-						<Button fab on:click={() => deleteSolve(solve)}><img src='static/delete.svg' alt=delete/></Button>
+						<Button size=small class='red' fab on:click={() => deleteSolve(solve)}><img src='static/delete.svg' alt=delete/></Button>
 					</header>
 				</div>
 				
@@ -51,7 +44,7 @@ import SolveList from "./SolveList.svelte";
 				Scramble: {solve.scramble} <br>
 				
 				{#if hasReconstruction}
-				Reconstruction: {solve.reconstruction} <br>
+					Reconstruction: {solve.reconstruction} <br>
 				{/if}
 
 				<div style=color:grey>
@@ -70,11 +63,17 @@ import SolveList from "./SolveList.svelte";
 
 		<CardActions>
 			<!-- TODO: #54 Add reconstruction support -->
-			<!-- <Button disabled={hasReconstruction} text on:click={() => dialog = true}> Add reconstruction</Button> -->
-			<!-- {#if dialog}
-				<TextField disabled={hasReconstruction} on:keydown={handleKeydown} bind:value={temp_reconstruction} placeholder="Reconstruction" solo color=red clearable/>
-			{/if} -->
-			<Button disabled text> (Reconstructions coming soon!)</Button>
+			{#if !reconstruction_dialog}
+				<Button text on:click={() => reconstruction_dialog = true}> {#if hasReconstruction} Change reconstruction {:else} Add reconstruction {/if}</Button>
+			{:else}
+				<TextField bind:value={solve.reconstruction} placeholder="Reconstruction" color=red clearable/>
+				<Button fab size='small' class='ml-2' on:click={() => reconstruction_dialog = false}>
+					<img src="static/check.svg" alt='done'>
+				</Button>
+			{/if}
+			<!-- {#if dialog} -->
+			<!-- {/if} -->
+			<!-- <Button disabled text> (Reconstructions coming soon!)</Button> -->
 		</CardActions>
 	</Card>
 	</div>
@@ -83,6 +82,8 @@ import SolveList from "./SolveList.svelte";
 <style>
 	header {
 		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 	.time {
 		flex-grow: 1;
