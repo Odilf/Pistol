@@ -52,7 +52,7 @@
 			<hr>
 			<p>
 				All the cubing visualizations were made with <a href=https://js.cubing.net/cubing>cubing.js</a>. <br>
-				Timer inspired mainly by <a href=https://cstimer.net>csTimer</a> and partialy by <a href=https://timer.cubing.net>timer.cubing.net/</a>.
+				Timer inspired mainly by <a href=https://cstimer.net>csTimer</a> and partialy by <a href=https://timer.cubing.net>timer.cubing.net</a>.
 			</p>
 
 			<h2>License</h2>
