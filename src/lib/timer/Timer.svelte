@@ -3,7 +3,6 @@
 <script lang='ts'>
 	import { createEventDispatcher } from 'svelte';
 	import { getSettingByName } from '$lib/settings';
-	import { addSolve, selection } from '$lib/storage/time_db'
 	import type { Solve } from '$lib/storage/time_db'
 	import TimeDisplay from './TimeDisplay.svelte';
 	
@@ -39,10 +38,10 @@
 			break;
 	}
 	
-	function handleKeydown(e) {
+	function handleKeydown(e) {	
 		//Pressed to prepare timer
 		if (timerState === 'released' && e.code === 'Space') {
-			// e.preventDefault() //Ignore other things the space key would do
+		// e.preventDefault() //Ignore other things the space key would do
 			dispatch('timerReady', { time: time });
 			timerState = 'pressed'
 			press_start = new Date()
@@ -51,7 +50,7 @@
 					
 		//Pressed to stop timer
 		} else if (timerState === 'running') {
-			// if (e.code === 'Space') e.preventDefault() //Ignore other things space key would do
+			//Ignore other things space key would do
 			time = getTime(startTime)
 			
 			timerState = 'pressed'
