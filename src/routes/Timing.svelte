@@ -9,7 +9,9 @@
 	import { addSolve, selection } from '$lib/storage/time_db'
 	import type { Solve } from '$lib/storage/time_db'
 
-	$: timer = getSettingByName('Input method')
+	$: timer_type = getSettingByName('Input method')
+
+	let timer;
 
 	function submit(event) {
 		addSolve(event.detail.solve, $selection.event, $selection.sessions[$selection.event])
@@ -17,10 +19,10 @@
 </script>
 
 <main>
-	{#if timer === 'Typing'}
-		<TimeInput on:submit={submit}/>
+	{#if timer_type === 'Typing'}
+		<TimeInput  on:submit={submit}/>
 	{:else}
-		<Timer on:timerEnd={submit}/>
+		<Timer bind:this={timer_type} on:timerEnd={submit}/>
 	{/if}
 </main>
 
