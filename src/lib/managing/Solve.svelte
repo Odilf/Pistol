@@ -11,7 +11,6 @@
 	
 	$: hasReconstruction = solve.reconstruction as unknown as boolean
 
-	let reconstruction = ''
 	let reconstruction_dialog = false
 
 	function deleteSolve(solve) {
@@ -28,7 +27,7 @@
 		<Card style=height:fit-content>
 			<CardText>
 				{#if solve.penalty === 'DNF'}
-				<div class='DNF'>{solve.time.toFixed(3)}</div>
+					<div class='DNF'>{solve.time.toFixed(3)}</div>
 				{/if} 
 				
 				<div class="text--primary text-h2">

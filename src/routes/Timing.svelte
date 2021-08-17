@@ -7,11 +7,8 @@
 	import Timer from '$lib/timer/Timer.svelte';
 	import { getSettingByName } from '$lib/settings'
 	import { addSolve, selection } from '$lib/storage/time_db'
-	import type { Solve } from '$lib/storage/time_db'
 
 	$: timer_type = getSettingByName('Input method')
-
-	let timer;
 
 	function submit(event) {
 		addSolve(event.detail.solve, $selection.event, $selection.sessions[$selection.event])
@@ -36,7 +33,7 @@
 		justify-content: center;
 		align-items: center;
 
-		font-size: 15vw;
+		font-size: max(15vw, 15vh);
 		font-weight: 100;
 	}
 </style>
