@@ -31,12 +31,14 @@ interface Category {
 
 const default_settings: Category[] = [
 		{ name: 'Timing', description: 'Timing related options', settings: [
-			{name: 'Input method', description: 'Way of inputting times', value: 0, options: ['Timer', 'Typing'], child: 
-				{name: 'Input format', value: 0, options: ['ss.dd', 'mm:ss', 'mm:ss.dd'], parent: 1}},
+			{name: 'Input method', description: 'Way of inputting times', value: 0, options: ['Timer', 'Typing'], 
+			// child: {name: 'Input format', value: 0, options: ['ss.dd', 'mm:ss', 'mm:ss.dd'], parent: 1}
+			},
 			{name: 'Decimals', description: 'Decimals to display in big timer', value: 2, options: ['0', '1', '2', '3']},
 			{name: 'Solve decimals', description: 'Decimals to display in solve list', value: 2, options: ['1', '2', '3']},
 			{name: 'Timer delay', description: 'Time to press down the timer before it starts', value: 2, options: ['0', '0.1', '0.3', '0.55', '1']},
 			{name: 'Refresh rate', description: 'How often the time gets updated when timer is running', value: 1, options: ['1ms', '69ms', '0.1s', '0.5s', '1s']},
+			{name: 'Stop timer with', description: 'Keys used to stop timer', value: 1, options: ['Any', 'Letters and space', 'Only space']},
 		]},
 
 		{ name: 'Visual', description: 'How the timer looks', settings: [
