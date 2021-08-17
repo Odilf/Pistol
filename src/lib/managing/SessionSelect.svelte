@@ -10,7 +10,7 @@
 	<!-- TODO: #30 Make hover on desktop but not require two clicks on mobile -->
 	<Menu>
 		<div slot="activator">
-			<Button>{$active_session.name}</Button>
+			<Button style="width:100%;">{$active_session.name}</Button>
 		</div>
 		<List>
 			{#each selectable_sessions as session, i}
@@ -22,8 +22,14 @@
 
 <style lang='scss'>
 	body {
+		display: flex;
+		flex-direction: column;
 		padding: 1em;
 		height: auto;
-		width: auto;
+		width: 100%;
+	}
+	div {
+		flex-grow: 1;
+		display: flex;
 	}
 </style>
