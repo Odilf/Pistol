@@ -57,14 +57,13 @@
 	main {
 		display: flex;
 		flex-direction: column;
+		height: 100%;
 		width: 100%;
 		align-items: center;
 	}
 	body {
 		overflow: scroll;
-		/* flex-shrink: 1; */
 		width: 90%;
-		/* TODO: #33 Make solves actually not go off screen according to parent size */
 		flex-grow: 9;
 		padding: 1em;
 		padding-top: 0em;

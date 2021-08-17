@@ -3,21 +3,25 @@
 </script>
 
 <script lang="ts">
-  import Timing from './Timing.svelte';
+	import { fade, fly } from 'svelte/transition'
+	import { flip } from 'svelte/animate'
 
-import Footer from '$lib/Footer.svelte';
-import EventSelect from '$lib/managing/EventSelect.svelte';
-import SessionSelect from '$lib/managing/SessionSelect.svelte';
-import SolveList from '$lib/managing/SolveList.svelte';
-import QuickStats from '$lib/timer/QuickStats.svelte';
-import Scramble from '$lib/timer/Scramble.svelte';
-import TimeInput from '$lib/timer/TimeInput.svelte';
-import Timer from '$lib/timer/Timer.svelte';
+	import Timing from './Timing.svelte';
+	import Footer from '$lib/Footer.svelte';
+	import EventSelect from '$lib/managing/EventSelect.svelte';
+	import SessionSelect from '$lib/managing/SessionSelect.svelte';
+	import SolveList from '$lib/managing/SolveList.svelte';
+	import QuickStats from '$lib/timer/QuickStats.svelte';
+	import Scramble from '$lib/timer/Scramble.svelte';
+
+	let width
 </script>
 
 <svelte:head>
 	<title>Pistol</title>
 </svelte:head>
+
+<svelte:window bind:innerWidth={width}/>
 
 <main>
 	<header>
@@ -25,19 +29,38 @@ import Timer from '$lib/timer/Timer.svelte';
 	</header>
 	
 	<body>
-		<div class="column">
-			<SessionSelect/>
-		</div>
+		{#if width > 900} 
+			<div class="column">
+				<SessionSelect/>
+			</div>
+			
+			<div class="center">
+				<Scramble/>
+				<Timing></Timing>
+				<QuickStats/>
+			</div>
+			
+			<div class="column">
+				<SolveList/>	
+			</div>
+		{:else if width > 500}
+			<div class="center">
+				<Scramble/>
+				<Timing></Timing>
+				<QuickStats/>
+			</div>
 		
-		<div class="center">
-			<Scramble/>
-			<Timing></Timing>
-			<QuickStats/>
-		</div>
-		
-		<div class="column">
-			<SolveList/>	
-		</div>
+			<div class="column">
+				<SessionSelect/>
+				<SolveList/>
+			</div>
+		{:else}
+			<div class="center">
+				<Scramble/>
+				<Timing></Timing>
+				<QuickStats/>
+			</div>
+		{/if}
 	</body>
 	
 	<footer>
@@ -66,7 +89,8 @@ import Timer from '$lib/timer/Timer.svelte';
 	.column {
 		width: $column-width;
 		display: flex;
-		justify-content: center;
+		flex-direction: column;
+		align-items: center;
 		max-height: 100%;
 	}
 	.center {

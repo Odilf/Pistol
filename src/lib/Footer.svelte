@@ -2,7 +2,7 @@
 	import '../app.css'
 	import { Footer, Button } from 'svelte-materialify'
 
-	let wide = 'width:10em'
+	let wide = 'width:7em'
 </script>
 
 <Footer class='justify-center flex-column'>
