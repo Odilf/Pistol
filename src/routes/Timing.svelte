@@ -3,6 +3,7 @@
 </script>
 
 <script lang="ts">
+	import { fly } from 'svelte/transition'
 	import TimeInput from '$lib/timer/TimeInput.svelte';
 	import Timer from '$lib/timer/Timer.svelte';
 	import { getSettingByName } from '$lib/settings'
@@ -17,9 +18,13 @@
 
 <main>
 	{#if timer_type === 'Typing'}
-		<TimeInput  on:submit={submit}/>
+	<div transition:fly={{ y: 200}}>
+		<TimeInput on:submit={submit}/>
+	</div>
 	{:else}
+	<div transition:fly={{ y: -200}}>
 		<Timer bind:this={timer_type} on:timerEnd={submit}/>
+	</div>
 	{/if}
 </main>
 
@@ -35,6 +40,9 @@
 
 		font-size: max(15vw, 15vh);
 		font-weight: 100;
+	}
+	div {
+		width: 100%;
 	}
 </style>
 

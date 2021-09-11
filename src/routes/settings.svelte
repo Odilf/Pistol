@@ -15,12 +15,18 @@
 </script>
 
 <script lang='ts'>
-	import { Tabs, Tab, TabContent, ListItem, } from 'svelte-materialify'
+	import { Tabs, Tab, TabContent, ListItem, Button } from 'svelte-materialify'
 	import { settings, resetSettings } from '$lib/settings'
 	import Setting from '$lib/settings/Setting.svelte'
 	import Back from '$lib/utils/Back.svelte'
 	import { deleteAllSolves } from '$lib/storage/time_db'
 	import ConfirmationButton from '$lib/utils/ConfirmationButton.svelte'
+
+	let tabs_active = true;
+
+	function toggleTabs() {
+		tabs_active = !tabs_active
+	}
 </script>
 
 <svelte:head>
@@ -28,75 +34,80 @@
 </svelte:head>
 
 <header>
-	<Back></Back>
+	<div class="menu">
+		<Back/>
+		<Button fab on:click={toggleTabs}><img src='static/menu.svg' alt='menu'></Button>
+	</div>
 	<h1>Settings</h1>
 </header>
 
-<Tabs vertical >
-	<div slot='tabs'>
-		{#each $settings as category}
+<main style='position:relative; right:150px;'>
+	<Tabs vertical>
+		<div slot='tabs'>
+			{#each $settings as category}
 			<Tab> {category.name} </Tab>
-		{/each}
-		<Tab>User</Tab>
-	</div>
-
-	{#each $settings as category}
+			{/each}
+			<Tab>User</Tab>
+		</div>
+		
+		{#each $settings as category}
 		<TabContent>
 			<div class='content'>
 				<h2>{category.description}</h2>
-					{#each category.settings as setting}
-					<ListItem>
-						{setting.name}
-						<span slot="subtitle"> {setting.description} </span>
-						
-						<span slot="append">
-							<div class="setting">
-								<Setting bind:setting={setting}/>
-							</div>
-						</span>
-					</ListItem>
-					{/each}
+				{#each category.settings as setting}
+				<ListItem style='width:100%'>
+					{setting.name}
+					<span slot="subtitle"> {setting.description} </span>
+					
+					<span slot="append">
+						<div class="setting">
+							<Setting bind:setting={setting}/>
+						</div>
+					</span>
+				</ListItem>
+				{/each}
 			</div>
 		</TabContent>
-	{/each}
-
+		{/each}
+		
 		<TabContent>
 			<div class='content'>
 				<h2>User configuration</h2>
-					<ListItem>
-						Reset settings
-						<span slot="subtitle"> Revert settings to default. This can't be undone </span>
-						
-						<span slot="append">
-							<div class="setting">
-								<ConfirmationButton button_text='Reset settings' 
-								dialog_text='This will permantly revert your settings. Are you sure you want to do this?'
-								on:confirmation={resetSettings}/>
-							</div>
-						</span>
-					</ListItem>
-					<ListItem>
-						Delete solves
-						<span slot="subtitle"> Completely remove all your solves. This can't be undone </span>
-						
-						<span slot="append">
-							<div class="setting">
-								<ConfirmationButton  button_text='Delete all solves' 
-								dialog_text="This will permantly and irreversably delete forever all your solves in all events. Are you sure you want to do this?"
-								on:confirmation={deleteAllSolves}/>
-							</div>
-						</span>
-					</ListItem>
+				<ListItem>
+					Reset settings
+					<span slot="subtitle"> Revert settings to default. This can't be undone </span>
+					
+					<span slot="append">
+						<div class="setting">
+							<ConfirmationButton button_text='Reset settings' 
+							dialog_text='This will permantly revert your settings. Are you sure you want to do this?'
+							on:confirmation={resetSettings}/>
+						</div>
+					</span>
+				</ListItem>
+				<ListItem>
+					Delete solves
+					<span slot="subtitle"> Completely remove all your solves. This can't be undone </span>
+					
+					<span slot="append">
+						<div class="setting">
+							<ConfirmationButton  button_text='Delete all solves' 
+							dialog_text="This will permantly and irreversably delete forever all your solves in all events. Are you sure you want to do this?"
+							on:confirmation={deleteAllSolves}/>
+						</div>
+					</span>
+				</ListItem>
 			</div>
 			
 		</TabContent>
-</Tabs>
-
+	</Tabs>
+</main>
 
 <style>
 	header {
 		display: flex;
 		align-items: center;
+		width: 100vw;
 	}
 	h1 {
 		display: flex;
@@ -120,5 +131,11 @@
 
 	.setting {
 		color: whitesmoke;
+	}
+	.menu {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		margin: 1em;	
 	}
 </style>

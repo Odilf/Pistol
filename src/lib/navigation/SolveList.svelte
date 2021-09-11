@@ -62,7 +62,7 @@
 		align-items: center;
 	}
 	body {
-		overflow: scroll;
+		overflow-y: scroll;
 		width: 90%;
 		flex-grow: 9;
 		padding: 1em;
@@ -72,7 +72,7 @@
 	div {
 		margin-top: 0;
 		padding-top: 0;
-		/* background-color: aqua; */
+		// background-color: aqua;
 
 		display: flex;
 		justify-content: center;

@@ -4,6 +4,7 @@
 	import { active_session, updateDatabase } from '$lib/storage/time_db';
 	import type { Solve } from '$lib/storage/time_db'
 	import TimeDisplay from "$lib/timer/TimeDisplay.svelte";
+	import { fade, fly } from 'svelte/transition'
 	import '../../app.css'
 
 	export let solve: Solve;
@@ -27,7 +28,7 @@
 		<Card style=height:fit-content>
 			<CardText>
 				{#if solve.penalty === 'DNF'}
-					<div class='DNF'>{solve.time.toFixed(3)}</div>
+					<div transition:fade class='DNF'>{solve.time.toFixed(3)}</div>
 				{/if} 
 				
 				<div class="text--primary text-h2">

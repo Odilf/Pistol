@@ -6,6 +6,7 @@
 	import { fade, fly } from 'svelte/transition'
 	import { flip } from 'svelte/animate'
 
+	import { Button, AppBar, NavigationDrawer, Overlay } from 'svelte-materialify'
 	import Timing from './Timing.svelte';
 	import Footer from '$lib/Footer.svelte';
 	import EventSelect from '$lib/managing/EventSelect.svelte';
@@ -29,38 +30,19 @@
 	</header>
 	
 	<body>
-		{#if width > 900} 
-			<div class="column">
-				<SessionSelect/>
-			</div>
-			
-			<div class="center">
-				<Scramble/>
-				<Timing></Timing>
-				<QuickStats/>
-			</div>
-			
-			<div class="column">
-				<SolveList/>	
-			</div>
-		{:else if width > 500}
-			<div class="center">
-				<Scramble/>
-				<Timing></Timing>
-				<QuickStats/>
-			</div>
+		<div class="column">
+			<SessionSelect/>
+		</div>
 		
-			<div class="column">
-				<SessionSelect/>
-				<SolveList/>
-			</div>
-		{:else}
-			<div class="center">
-				<Scramble/>
-				<Timing></Timing>
-				<QuickStats/>
-			</div>
-		{/if}
+		<div class="center">
+			<Scramble/>
+			<Timing></Timing>
+			<QuickStats/>
+		</div>
+		
+		<div class="column">
+			<SolveList/>	
+		</div>
 	</body>
 	
 	<footer>
@@ -84,7 +66,7 @@
 		flex-grow: 1;
 		display: flex;
 		// height: 100%;
-		overflow: scroll;
+		overflow: hidden;
 	}
 	.column {
 		width: $column-width;
