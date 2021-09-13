@@ -9,6 +9,7 @@
 
 	//TODO: #34 Maybe optimize this for hundreds of thousands of solves
 	$: solves = $active_session.solves.slice().reverse()
+	$: decimals = getSettingByName("Solve Decimals")
 
 	let windowHeight: number;
 
@@ -22,25 +23,30 @@
 <main>
 	{#if show_solves}
 	<body class="rounded-bl-xl" transition:fly={{ y: -420, duration: 1000 }}>
+
 		{#if solves.length === 0}
-		<div class='grey-text pt-8'>
-			No solves yet <br>
-			Start solving!
-		</div>
+			<div class='grey-text pt-8'>
+				No solves yet <br>
+				Start solving!
+			</div>
 		{:else}
+
 		<List class="elevation-24 d-flex flex-column pb-0">
 			{#each solves as solve }
 			<div>	
 				<Button style='flex-grow:1' class='rounded-0' on:click={() => active_solve = solve}>
-					<TimeDisplay time={solve.time} small_decimals={false} penalty={solve.penalty}/>
+					<TimeDisplay time={solve.time} small_decimals={false} penalty={solve.penalty} {decimals}/>
 				</Button>
 				<Dialog active={active_solve === solve} on:outroend={() => active_solve = null}><Solve bind:solve/></Dialog>
 			</div>
 			{/each}
 		</List>
+
 		{/if}
 	</body>
 	{/if}
+
+
 	<footer>
 		<Button class='red darken-2' on:click={() => show_solves=!show_solves}>
 		{#if show_solves} <div>
