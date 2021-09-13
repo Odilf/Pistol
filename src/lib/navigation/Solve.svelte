@@ -1,6 +1,6 @@
 <script lang='ts'>
 	import { Card, CardText, CardActions, Button, TextField } from "svelte-materialify";
-	import CubeVisualizer from "$lib/managing/CubeVisualizer.svelte";
+	import CubeVisualizer from "$lib/navigation/CubeVisualizer.svelte";
 	import { active_session, updateDatabase } from '$lib/storage/time_db';
 	import type { Solve } from '$lib/storage/time_db'
 	import TimeDisplay from "$lib/timer/TimeDisplay.svelte";
