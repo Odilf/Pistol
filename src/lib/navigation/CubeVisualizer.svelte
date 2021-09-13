@@ -4,27 +4,19 @@
 	export let solve: Solve;
 	import '../../app.css'
 
-	if (!solve.reconstruction) {
+	$: if (!solve.reconstruction) {
 		solve.reconstruction = ''
 	}
 	
 </script>
 
-<!-- <twisty-player
-	experimental-setup-alg={`x2 y2 ${solve.scramble}`}
-	background="none"
-	control-panel="none"
-	hint-facelets="none"
-	alg={solve.reconstruction}
-	/> -->
-
 <twisty-player
-	experimental-setup-alg={`x2 y2 ${solve.scramble}`}
+	alg={`${solve.scramble} x2 y2 ${solve.reconstruction}`}
 	background="none"
-	control-panel="none"
 	hint-facelets="none"
+	control-panel="none"
 	/>
-
+	
 <p>
 	Cube visualization courtesy of cubing.js
 </p>
