@@ -58,8 +58,6 @@
 			prepare()
 		}
 		if (timer_stop_regex.test(e.key)) {
-			console.log('stopping');
-			
 			stop()
 		}
 	}
@@ -80,10 +78,11 @@
 			let solve: Solve = {
 				time: time,
 				penalty: 0,
-				date: null,
-				scramble: "B2 D2 F2 D2 B R2 B L2 D2 R2 B R U F2 U' R' D2 L B R'",
+				date: new Date(),
+				scramble: "R U R' U' F2 D' R3", 
 				reconstruction: null
 			};
+
 			if (!cancel) {
 				dispatch('timerEnd', { solve: solve });
 			}
