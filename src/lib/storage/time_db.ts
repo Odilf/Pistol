@@ -3,12 +3,27 @@ import { writable as LS_writable } from "svelte-local-storage-store";
 import { writable, derived } from 'svelte/store'
 
 export const wca_events = ['3x3', '2x2', '4x4', '5x5', '6x6', '7x7', '3BLD', 'FMC', 'OH', 'Clock', 
-'Megaminx', 'Pyraminx', 'Skewb', 'Sq-1', '4BLD', '5BLD', 'MLBD']
+'Megaminx', 'Pyraminx', 'Skewb', 'Sq-1', '4BLD', '5BLD', 'MBLD']
 
 //TODO: #3 Add correct default se	ssions for each event
 const default_sessions_for_event = [
-	{name: '3x3', sessions: ['Main', 'PLL', 'Last layer', 'Algs']},
-	{name: '3BLD', sessions: ['Main', 'Memo-Ex', 'Memo-Edges-Corners', '2-part memo, 2-part execution']}
+	{name: '3x3', sessions: ['Main', 'PLL', 'Last layer', 'Alg drill']},
+	{name: '2x2', sessions: ['Main', 'Alg drill']},
+	{name: '4x4', sessions: ['Main', '3x3 phase', 'Centers', 'Edge pairing']},
+	{name: '5x5', sessions: ['Main', '3x3 phase', 'Centers', 'Edge pairing']},
+	{name: '6x6', sessions: ['Main', '3x3 phase', 'Centers', 'Edge pairing']},
+	{name: '7x7', sessions: ['Main', '3x3 phase', 'Centers', 'Edge pairing']},
+	{name: '3BLD', sessions: ['Main', 'Memo-Ex', 'Memo-Edges-Corners', '2-part memo, 2-part execution']},
+	{name: 'FMC', sessions: ['Main']},
+	{name: 'OH', sessions: ['Main', 'PLL', 'Last layer', 'Algs']},
+	{name: 'Clock', sessions: ['Main']},
+	{name: 'Megaminx', sessions: ['Main', 'RF2L', 'Last layer']},
+	{name: 'Pyraminx', sessions: ['Main']},
+	{name: 'Skewb', sessions: ['Main', 'RF2L', 'Last layer']},
+	{name: 'Sq-1', sessions: ['Main']},
+	{name: '4BLD', sessions: ['Main']},
+	{name: '5BLD', sessions: ['Main']},
+	{name: 'MBLD', sessions: ['Main']},
 ]
 
 //Change for non-testing purposes
@@ -43,7 +58,7 @@ type Event = {
 function build_default_database(): Event[] {
 	let events: Event[] = []
 	for (const event of wca_events) {
-		//i is -1 if default sessions haven't been specified for event
+		// i is -1 if default sessions haven't been specified for event
 		const i = default_sessions_for_event.map(v => v.name).indexOf(event)
 		const sessions = i === -1 
 		? [default_session] 
