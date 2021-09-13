@@ -41,7 +41,7 @@
 	<h1>Settings</h1>
 </header>
 
-<main style='position:relative; right:150px;'>
+<main style='position:relative; right:0px;'>
 	<Tabs vertical>
 		<div slot='tabs'>
 			{#each $settings as category}
