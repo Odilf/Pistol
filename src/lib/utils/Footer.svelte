@@ -1,5 +1,5 @@
 <script>
-	import '../app.css'
+	import '../../app.css'
 	import { Footer, Button } from 'svelte-materialify'
 
 	let wide = 'width:7em'

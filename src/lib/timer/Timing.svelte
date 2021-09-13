@@ -9,9 +9,12 @@
 	import { getSettingByName } from '$lib/settings'
 	import { addSolve, selection } from '$lib/storage/time_db'
 
+	import { update_scramble } from '$lib/scramble/scrambler'
+
 	$: timer_type = getSettingByName('Input method')
 
 	function submit(event) {
+		update_scramble($selection.event)
 		addSolve(event.detail.solve, $selection.event, $selection.sessions[$selection.event])
 	}
 </script>
