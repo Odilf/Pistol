@@ -57,11 +57,6 @@
   "resolved" "https://registry.npmjs.org/@humanwhocodes/object-schema/-/object-schema-1.2.0.tgz"
   "version" "1.2.0"
 
-"@iarna/toml@^2.2.5":
-  "integrity" "sha512-trnsAYxU3xnS1gPHPyU961coFyLkh4gAD/0zQ5mymY4yOZ+CYvsPqUbOFSw0aDM4y0tV7tiFxL/1XfXPNC6IPg=="
-  "resolved" "https://registry.npmjs.org/@iarna/toml/-/toml-2.2.5.tgz"
-  "version" "2.2.5"
-
 "@lukeed/csprng@^1.0.0":
   "integrity" "sha512-ruuGHsnabmObBdeMg3vKdGRmh06Oog3eFpf/Tk6X0kDSJDpJTDCj2dqdp1+0VjzIUgHlFF9GBm7uFqfYhhdX9g=="
   "resolved" "https://registry.npmjs.org/@lukeed/csprng/-/csprng-1.0.0.tgz"
@@ -252,12 +247,11 @@
     "@material/dom" "^11.0.0"
     "@material/ripple" "^11.0.0"
 
-"@sveltejs/adapter-netlify@^1.0.0-next.30":
-  "integrity" "sha512-pGSd/jiDGW/cSC5L69Jhp9oR9GQpNgjA3OUzDVgouYu1rQnN5AloQCcx0wOFNUl6BQVG1JERqOBHpczLP9NPGA=="
-  "resolved" "https://registry.npmjs.org/@sveltejs/adapter-netlify/-/adapter-netlify-1.0.0-next.30.tgz"
-  "version" "1.0.0-next.30"
+"@sveltejs/adapter-vercel@next":
+  "integrity" "sha512-a2n4UCuTu5LhUoS5KiI5xasgvIXW8qKnSSKOnTTLYlZhpJ5VnSKWyT9hUOoVsAEGkeZw+2SYxxI3Vckw6ZhSng=="
+  "resolved" "https://registry.npmjs.org/@sveltejs/adapter-vercel/-/adapter-vercel-1.0.0-next.28.tgz"
+  "version" "1.0.0-next.28"
   dependencies:
-    "@iarna/toml" "^2.2.5"
     "esbuild" "^0.12.5"
 
 "@sveltejs/kit@next":
