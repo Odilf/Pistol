@@ -45,31 +45,32 @@
 	<Tabs vertical>
 		<div slot='tabs'>
 			{#each $settings as category}
-			<Tab> {category.name} </Tab>
+				<Tab> {category.name} </Tab>
 			{/each}
 			<Tab>User</Tab>
 		</div>
 		
 		{#each $settings as category}
-		<TabContent>
-			<div class='content'>
-				<h2>{category.description}</h2>
-				{#each category.settings as setting}
-				<ListItem style='width:100%'>
-					{setting.name}
-					<span slot="subtitle"> {setting.description} </span>
-					
-					<span slot="append">
-						<div class="setting">
-							<Setting bind:setting={setting}/>
-						</div>
-					</span>
-				</ListItem>
-				{/each}
-			</div>
-		</TabContent>
+			<TabContent>
+				<div class='content'>
+					<h2>{category.description}</h2>
+					{#each category.settings as setting}
+					<ListItem style='width:100%'>
+						{setting.name}
+						<span slot="subtitle"> {setting.description} </span>
+						
+						<span slot="append">
+							<div class="setting">
+								<Setting bind:setting={setting}/>
+							</div>
+						</span>
+					</ListItem>
+					{/each}
+				</div>
+			</TabContent>
 		{/each}
 		
+		<!-- User Configuration settings -->
 		<TabContent>
 			<div class='content'>
 				<h2>User configuration</h2>
