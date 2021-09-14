@@ -56,15 +56,10 @@ export const settings = writable('settings', default_settings)
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function getSettingByName(name: string) {
 	if (!browser) return null
-	const settings = JSON.parse(localStorage.getItem('settings'))
+	let settings = JSON.parse(localStorage.getItem('settings'))
 
 	if (!settings) {
-		settings.update(() => default_settings)
-	}
-
-	if (!settings) {
-		console.warn("Settings still don't exist");
-		return null
+		settings = default_settings
 	}
 
 	for (const category of settings) {
