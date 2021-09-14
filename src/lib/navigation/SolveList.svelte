@@ -22,7 +22,7 @@
 
 <main>
 	{#if show_solves}
-	<body class="rounded-bl-xl" transition:fly={{ y: -420, duration: 1000 }}>
+	<body class="rounded-bl-xl" transition:fly={{ x: 69, duration: 500 }}>
 
 		{#if solves.length === 0}
 			<div class='grey-text pt-8'>
