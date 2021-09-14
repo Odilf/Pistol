@@ -1,9 +1,16 @@
 <script>
 	import "../../app.css";
+	import { active_session } from '$lib/storage/time_db'
+
+	$: average = $active_session.solves.map(v => v.time).reduce((a, b) => a + b, 0) / $active_session.solves.length
 </script>
 
 <p>
-	Yee-haaaaaaa going fast :sungals:
+	{#if average}
+		Average: {average.toFixed(3)}	
+	{:else}
+		Yee-haaaaaaa going fast :sungals:
+	{/if}
 </p>
 
 <style lang="scss">
