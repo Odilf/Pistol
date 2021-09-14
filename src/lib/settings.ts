@@ -58,7 +58,9 @@ export function getSettingByName(name: string) {
 	if (!browser) return null
 	const settings = JSON.parse(localStorage.getItem('settings'))
 
-	if (!settings) return null
+	if (!settings) {
+		settings.update(() => default_settings)
+	}
 
 	for (const category of settings) {
 		for (const setting of category.settings) {
