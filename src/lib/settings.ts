@@ -62,6 +62,11 @@ export function getSettingByName(name: string) {
 		settings.update(() => default_settings)
 	}
 
+	if (!settings) {
+		console.warn("Settings still don't exist");
+		return null
+	}
+
 	for (const category of settings) {
 		for (const setting of category.settings) {
 			if (setting.name === name) {
