@@ -36,7 +36,7 @@
 <header>
 	<div class="menu">
 		<Back/>
-		<Button fab on:click={toggleTabs}><img src='static/menu.svg' alt='menu'></Button>
+		<!-- <Button fab on:click={toggleTabs}><img src='$lib/static/menu.svg' alt='menu'></Button> -->
 	</div>
 	<h1>Settings</h1>
 </header>
