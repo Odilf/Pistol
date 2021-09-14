@@ -29,9 +29,11 @@
 	</header>
 	
 	<body>
-		<div class="column">
-			<SessionSelect/>
-		</div>
+		{#if width > 900}
+			<div class="column">
+				<SessionSelect/>
+			</div>
+		{/if}
 		
 		<div class="center">
 			<Scramble/>
@@ -39,9 +41,11 @@
 			<QuickStats/>
 		</div>
 		
-		<div class="column">
-			<SolveList/>	
-		</div>
+		{#if width > 900}
+			<div class="column">
+				<SolveList/>	
+			</div>
+		{/if}
 	</body>
 	
 	<footer>
