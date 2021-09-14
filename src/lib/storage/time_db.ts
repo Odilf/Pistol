@@ -1,4 +1,4 @@
-import { browser } from "$app/env";
+// import { browser } from "$app/env";
 import { writable as LS_writable } from "svelte-local-storage-store";
 import { writable, derived } from 'svelte/store'
 
@@ -52,9 +52,6 @@ type Event = {
 	sessions: Session[]
 };
 
-
-
-
 function build_default_database(): Event[] {
 	let events: Event[] = []
 	for (const event of wca_events) {
@@ -100,7 +97,7 @@ export function addSolve(solve: Solve, event: number, session: number): void {
 }
 
 export function deleteAllSolves(): void {
-	if (!browser) return 
+	// if (!browser) return 
 	console.warn('Reseting settings')
 	localStorage.removeItem('database')
 }
