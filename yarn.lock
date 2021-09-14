@@ -313,6 +313,16 @@
   dependencies:
     "@types/node" "*"
 
+"@types/three@^0.126.1":
+  "integrity" "sha512-6JqTgijtfXcTJik8NtiNxr2L90ex6ElM00qilOGeUcrEsJLOdzLJSIkXHUYS+KPAYQYtRJQKD6XaXds3HjS+gg=="
+  "resolved" "https://registry.npmjs.org/@types/three/-/three-0.126.2.tgz"
+  "version" "0.126.2"
+
+"@types/web-bluetooth@0.0.4":
+  "integrity" "sha512-C+BgVBBGY9c6ixcc5PsKAmGaCy3bswZ5zx/AWIAik9dgFuBkFsXBA3ze69jJi05xdZQ99QkfBSVIX6zl+6Tmww=="
+  "resolved" "https://registry.npmjs.org/@types/web-bluetooth/-/web-bluetooth-0.0.4.tgz"
+  "version" "0.0.4"
+
 "@typescript-eslint/eslint-plugin@^4.19.0":
   "integrity" "sha512-eiREtqWRZ8aVJcNru7cT/AMVnYd9a2UHsfZT8MR1dW3UUEg6jDv9EQ9Cq4CUPZesyQ58YUpoAADGv71jY8RwgA=="
   "resolved" "https://registry.npmjs.org/@typescript-eslint/eslint-plugin/-/eslint-plugin-4.29.0.tgz"
@@ -719,6 +729,11 @@
   dependencies:
     "delayed-stream" "~1.0.0"
 
+"comlink@^4.3.1":
+  "integrity" "sha512-+YbhUdNrpBZggBAHWcgQMLPLH1KDF3wJpeqrCKieWQ8RL7atmgsgTQko1XEBK6PsecfopWNntopJ+ByYG1lRaA=="
+  "resolved" "https://registry.npmjs.org/comlink/-/comlink-4.3.1.tgz"
+  "version" "4.3.1"
+
 "concat-map@0.0.1":
   "integrity" "sha1-2Klr13/Wjfd5OnMDajug1UBdR3s="
   "resolved" "https://registry.npmjs.org/concat-map/-/concat-map-0.0.1.tgz"
@@ -754,6 +769,16 @@
     "path-key" "^3.1.0"
     "shebang-command" "^2.0.0"
     "which" "^2.0.1"
+
+"cubing@^0.20.2":
+  "integrity" "sha512-JM8kvnFU1QSgEThw1MlrH+8ygGwToyArXZcrU8agOBHcaUdQEI/A95hXMyowu2FyF6nxzihqOug3Uf6yoV6ztg=="
+  "resolved" "https://registry.npmjs.org/cubing/-/cubing-0.20.2.tgz"
+  "version" "0.20.2"
+  dependencies:
+    "@types/three" "^0.126.1"
+    "@types/web-bluetooth" "0.0.4"
+    "comlink" "^4.3.1"
+    "three" "^0.126.1"
 
 "dashdash@^1.12.0":
   "integrity" "sha1-hTz6D3y+L+1d4gMmuN1YEDX24vA="
@@ -2558,6 +2583,11 @@
   "integrity" "sha1-f17oI66AUgfACvLfSoTsP8+lcLQ="
   "resolved" "https://registry.npmjs.org/text-table/-/text-table-0.2.0.tgz"
   "version" "0.2.0"
+
+"three@^0.126.1":
+  "integrity" "sha512-eOEXnZeE1FDV0XgL1u08auIP13jxdN9LQBAEmlErYzMxtIIfuGIAZbijOyookALUhqVzVOx0Tywj6n192VM+nQ=="
+  "resolved" "https://registry.npmjs.org/three/-/three-0.126.1.tgz"
+  "version" "0.126.1"
 
 "to-regex-range@^5.0.1":
   "integrity" "sha512-65P7iz6X5yEr1cwcgvQxbbIw7Uk3gOy5dIdtZ4rDveLqhrdJP+Li/Hx6tyK0NEb+2GCyneCMJiGqrADCSNk8sQ=="

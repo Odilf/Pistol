@@ -38,6 +38,7 @@
     "@lukeed/uuid": "^2.0.0",
     "@smui/button": "^4.2.0",
     "cookie": "^0.4.1",
+    "cubing": "^0.20.2",
     "jshint": "^2.13.0",
     "svelte-local-storage-store": "^0.2.3"
   }
