@@ -1,7 +1,7 @@
 <script lang='ts'>
 	import { Card, CardText, CardActions, Button, TextField } from "svelte-materialify";
 	import CubeVisualizer from "$lib/navigation/CubeVisualizer.svelte";
-	import { active_session, updateDatabase } from '$lib/storage/time_db';
+	import { active_session, updateDatabase, deleteSolve } from '$lib/storage/time_db';
 	import type { Solve } from '$lib/storage/time_db'
 	import TimeDisplay from "$lib/timer/TimeDisplay.svelte";
 	import { fade, fly } from 'svelte/transition'
@@ -13,13 +13,6 @@
 	$: hasReconstruction = solve.reconstruction as unknown as boolean
 
 	let reconstruction_dialog = false
-
-	function deleteSolve(solve) {
-		console.log('deleting solve');
-		const i = $active_session.solves.indexOf(solve)
-		$active_session.solves.splice(i, 1)
-		updateDatabase()
-	}
 
 </script>
 
