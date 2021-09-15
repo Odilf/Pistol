@@ -103,6 +103,16 @@ export function deleteAllSolves(): void {
 	localStorage.removeItem('sessions')
 }
 
+let active_session_value: Session
+active_session.subscribe(v => active_session_value = v)
+
+export function deleteSolve(solve: Solve): void {
+	console.log('deleting solve');
+	const i = active_session_value.solves.indexOf(solve)
+	active_session_value.solves.splice(i, 1)
+	updateDatabase()
+}
+
 export function updateDatabase(): void {
 	database.update(db => db.slice())
 }
