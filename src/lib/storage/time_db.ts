@@ -100,6 +100,7 @@ export function deleteAllSolves(): void {
 	// if (!browser) return 
 	console.warn('Reseting settings')
 	localStorage.removeItem('database')
+	localStorage.removeItem('sessions')
 }
 
 export function updateDatabase(): void {
