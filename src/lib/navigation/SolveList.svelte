@@ -1,13 +1,14 @@
 <script lang='ts'>
-	import { active_session, database } from '$lib/storage/time_db'
+	import { active_session, deleteSolve } from '$lib/storage/time_db'
 	import { Button, Dialog, List } from 'svelte-materialify'
 	import Solve from './Solve.svelte'
 	import { getSettingByName } from '$lib/settings'
 	import TimeDisplay from '$lib/timer/TimeDisplay.svelte'
 
-	import { fly } from 'svelte/transition'
+	import { fly, fade } from 'svelte/transition'
 	import { flip } from 'svelte/animate'
 	import '../../app.css'
+import { loop_guard } from 'svelte/internal';
 
 	//TODO: #34 Maybe optimize this for hundreds of thousands of solves
 	$: solves = $active_session.solves.slice().reverse()
@@ -33,14 +34,17 @@
 			</div>
 		{:else}
 
-		<List class="elevation-24 d-flex flex-column pb-0">
+		<List class="d-flex flex-column pb-0">
 			{#each solves as solve (solve.date) }
-			<div animate:flip>	
-				<Button style='flex-grow:1' class='rounded-0' on:click={() => active_solve = solve}>
-					<TimeDisplay time={solve.time} small_decimals={false} penalty={solve.penalty} {decimals}/>
-				</Button>
-				<Dialog transition={fly} transition_settings={{x: 100, duration: 200}} active={active_solve === solve} on:outroend={() => active_solve = null}><Solve bind:solve/></Dialog>
-			</div>
+				<div animate:flip={{duration:200}} in:fly={{y: -20, duration: 800}} out:fade on:auxclick={() => deleteSolve(solve)}>	
+					<Button style='flex-grow:1' class='elevation-24' 
+						on:click={() => active_solve = solve} 
+						
+					>
+						<TimeDisplay time={solve.time} small_decimals={false} penalty={solve.penalty} {decimals}/>
+					</Button>
+					<Dialog transition={fly} active={active_solve === solve} on:outroend={() => active_solve = null}><Solve bind:solve/></Dialog>
+				</div>
 			{/each}
 		</List>
 
@@ -80,7 +84,6 @@
 	div {
 		margin-top: 0;
 		padding-top: 0;
-		// background-color: aqua;
 
 		display: flex;
 		justify-content: center;
@@ -90,5 +93,5 @@
 		flex-grow: 10;
 		padding: 1em;
 	}
-	
+
 </style>
