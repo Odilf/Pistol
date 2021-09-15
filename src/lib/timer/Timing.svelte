@@ -8,14 +8,31 @@
 	import Timer from '$lib/timer/Timer.svelte';
 	import { getSettingByName } from '$lib/settings'
 	import { addSolve, selection } from '$lib/storage/time_db'
+	import type { Solve } from '$lib/storage/time_db';
 
-	import { update_scramble } from '$lib/scramble/scrambler'
+	import { update_scramble, scrambles } from '$lib/scramble/scrambler'
 
 	$: timer_type = getSettingByName('Input method')
 
 	function submit(event) {
+		
+		let penalty: 0 | 2 | 'DNF' = 0
+		if ('penalty' in event.detail) {
+			penalty = event.detail.penalty
+		}
+		
+		const scramble = $scrambles[$selection.event][$scrambles[$selection.event].length - 1]
+		
+		const solve: Solve = {
+			time: event.detail.time,
+			penalty: penalty,
+			date: new Date(),
+			scramble: scramble,
+			reconstruction: null,
+		}
+		addSolve(solve, $selection.event, $selection.sessions[$selection.event])
+
 		update_scramble($selection.event)
-		addSolve(event.detail.solve, $selection.event, $selection.sessions[$selection.event])
 	}
 </script>
 

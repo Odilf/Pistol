@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
 	import { getSettingByName } from '$lib/settings';
-	import type { Solve } from '$lib/storage/time_db';
 	import TimeDisplay from './TimeDisplay.svelte';
 
 	const dispatch = createEventDispatcher();
@@ -75,16 +74,8 @@
 			timerState = 'pressed';
 			clearInterval(interval);
 
-			let solve: Solve = {
-				time: time,
-				penalty: 0,
-				date: new Date(),
-				scramble: "R U R' U' F2 D' R3", 
-				reconstruction: null
-			};
-
 			if (!cancel) {
-				dispatch('timerEnd', { solve: solve });
+				dispatch('timerEnd', { time: time });
 			}
 		}
 	}
