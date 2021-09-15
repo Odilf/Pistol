@@ -1,4 +1,4 @@
-// import { browser } from "$app/env";
+import { browser } from "$app/env";
 import { writable as LS_writable } from "svelte-local-storage-store";
 import { derived } from 'svelte/store'
 
@@ -27,7 +27,7 @@ const default_sessions_for_event = [
 ]
 
 //Change for non-testing purposes
-const default_session: Session = { id: 69, name: 'Default (test)', solves: [
+const default_session: Session = { name: 'Default (test)', solves: [
 	{time: 4.2, penalty: 0, date: new Date(), scramble: "R U R' U'", reconstruction: ''},
 	{time: 5, penalty: 2, date: new Date(), scramble: "I F UR MOM", reconstruction: ''},
 	{time: 0.69, penalty: 'DNF', date: new Date(), scramble: "M' S M S'", reconstruction: ''}
@@ -41,13 +41,12 @@ export type Solve = {
 	reconstruction?: string
 };
 
-type Session = {
-	id: number
+export type Session = {
 	name: string
 	solves: Solve[]
 };
 
-type Event = {
+export type Event = {
 	name: string
 	sessions: Session[]
 };
@@ -84,30 +83,30 @@ export const active_session = derived(
 	([$selection, $database]) => $database[$selection.event].sessions[$selection.sessions[$selection.event]]
 )
 
-export function addSolve(solve: Solve, event: number, session: number): void {
+let active_session_value: Session
+active_session.subscribe(v => active_session_value = v)
+
+export function addSolve(solve: Solve): void {
 
 	if (!solve.date) {
 		solve.date = new Date()
 	}
 
-	database.update(db => {
-		db[event].sessions[session].solves.push(solve)
-		return db
-	})
+	// database.update(db => {
+		active_session_value.solves.push(solve)
+	// 	return db
+	// })
 }
 
 export function deleteAllSolves(): void {
-	// if (!browser) return 
+	if (!browser) return 
 	console.warn('Reseting settings')
 	localStorage.removeItem('database')
 	localStorage.removeItem('sessions')
 }
 
-let active_session_value: Session
-active_session.subscribe(v => active_session_value = v)
 
 export function deleteSolve(solve: Solve): void {
-	console.log('deleting solve');
 	const i = active_session_value.solves.indexOf(solve)
 	active_session_value.solves.splice(i, 1)
 	updateDatabase()

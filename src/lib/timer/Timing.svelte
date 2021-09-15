@@ -7,7 +7,7 @@
 	import TimeInput from '$lib/timer/TimeInput.svelte';
 	import Timer from '$lib/timer/Timer.svelte';
 	import { getSettingByName } from '$lib/settings'
-	import { addSolve, selection } from '$lib/storage/time_db'
+	import { addSolve, selection, updateDatabase } from '$lib/storage/time_db'
 	import type { Solve } from '$lib/storage/time_db';
 
 	import { update_scramble, scrambles } from '$lib/scramble/scrambler'
@@ -30,8 +30,8 @@
 			scramble: scramble,
 			reconstruction: null,
 		}
-		addSolve(solve, $selection.event, $selection.sessions[$selection.event])
-
+		addSolve(solve)
+		updateDatabase()
 		update_scramble($selection.event)
 	}
 </script>
