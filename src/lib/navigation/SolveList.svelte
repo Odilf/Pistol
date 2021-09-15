@@ -8,7 +8,6 @@
 	import { fly, fade } from 'svelte/transition'
 	import { flip } from 'svelte/animate'
 	import '../../app.css'
-import { loop_guard } from 'svelte/internal';
 
 	//TODO: #34 Maybe optimize this for hundreds of thousands of solves
 	$: solves = $active_session.solves.slice().reverse()
