@@ -1,12 +1,8 @@
 <script context="module">
-	import { browser, dev } from '$app/env';
-
-	// ...but if the client-side router is already loaded
-	// (i.e. we came here from elsewhere in the app), use it
+	import { browser } from '$app/env';
+	
+	// Route if came from browser or smth
 	export const router = browser;
-
-	// since there's no dynamic data here, we can prerender
-	// it so that it gets served as a static asset in prod
 	export const prerender = true;
 </script>
 
@@ -18,11 +14,17 @@
 	import { deleteAllSolves } from '$lib/storage/time_db'
 	import ConfirmationButton from '$lib/utils/ConfirmationButton.svelte'
 
-	let tabs_active = true;
+	import { fly } from 'svelte/transition'
+	import { onMount } from 'svelte'
 
+	let tabs_active	= true
 	function toggleTabs() {
 		tabs_active = !tabs_active
+		console.log(tabs_active);
 	}
+	
+	let width: number
+	
 </script>
 
 <svelte:head>
@@ -32,18 +34,29 @@
 <header>
 	<div class="menu">
 		<Back/>
-		<!-- <Button fab on:click={toggleTabs}><img src='$lib/static/menu.svg' alt='menu'></Button> -->
+
+		<Button fab on:click={toggleTabs}>
+			<!-- Menu button -->
+			<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><g fill="none"><path d="M0 0h24v24H0V0z"/><path d="M0 0h24v24H0V0z" opacity=".87"/></g><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7zm-4 6h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
+		</Button>
 	</div>
 	<h1>Settings</h1>
 </header>
 
-<main style='position:relative; right:0px;'>
+<svelte:window bind:innerWidth={width}/>
+
+<main>
+	<!-- <Button on:click={toggleTabs}> Me	nu </Button> -->
 	<Tabs vertical>
 		<div slot='tabs'>
-			{#each $settings as category}
-				<Tab> {category.name} </Tab>
-			{/each}
-			<Tab>User</Tab>
+			{#if tabs_active}
+				<div transition:fly={{x: -69, duration: 500}}>
+					{#each $settings as category}
+						<Tab> {category.name} </Tab>
+					{/each}
+						<Tab>User</Tab>
+				</div>
+			{/if}
 		</div>
 		
 		{#each $settings as category}
