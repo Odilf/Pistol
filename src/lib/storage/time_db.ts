@@ -1,6 +1,6 @@
 // import { browser } from "$app/env";
 import { writable as LS_writable } from "svelte-local-storage-store";
-import { writable, derived } from 'svelte/store'
+import { derived } from 'svelte/store'
 
 export const wca_events = ['3x3', '2x2', '4x4', '5x5', '6x6', '7x7', '3BLD', 'FMC', 'OH', 'Clock', 
 'Megaminx', 'Pyraminx', 'Skewb', 'Sq-1', '4BLD', '5BLD', 'MBLD']
@@ -71,7 +71,7 @@ const default_events = build_default_database()
 export const database = LS_writable('database', default_events)
 
 //Object with selected event id and array of selected sessions id for each event (defaults to 0)
-export const selection = writable({event: 0, sessions: wca_events.map(() => 0)})
+export const selection = LS_writable('selection', {event: 0, sessions: wca_events.map(() => 0)})
 
 //Get active event and session from the selection store
 export const active_event = derived(

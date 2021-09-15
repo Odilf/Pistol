@@ -1,7 +1,7 @@
 <script lang='ts'>
 	import '../../app.css'
 	import type { GeneralSetting as Setting} from '$lib/settings'; 
-	import { Menu, Switch, ListItem, List, Button, Slider } from 'svelte-materialify'
+	import { Menu, Switch, ListItem, List, Button } from 'svelte-materialify'
 	export let setting: Setting
 	export let disabled = false
 
@@ -14,32 +14,31 @@
 <main>
 
 	{#if 'options' in setting }
-	<Menu offsetX offsetY={false} nudgeY={-10} hover>
+	<Menu offsetY>
 		<div slot="activator">
 			<Button {disabled} active={false}>{setting.options[setting.value]}</Button>
 		</div>
+
 		{#if !disabled}
-		<List>
-			{#each setting.options as option, i}
-			<ListItem on:click={() => setting.value = i}> {option} </ListItem>
-			{/each}
-		</List>
+			<List>
+				{#each setting.options as option, i}
+					<ListItem on:click={() => setting.value = i}> {option} </ListItem>
+				{/each}
+			</List>
 		{/if}
 	</Menu>
 	
 	{:else if 'min' in setting}
-	<input type="range" min={setting.min} max={setting.max} bind:value={setting.value}/>
-	<p>
-		{setting.value}
-	</p>
+		<input type="range" min={setting.min} max={setting.max} bind:value={setting.value}/>
+		<p> {setting.value} </p>
 	{:else}
 		<Switch bind:checked={setting.value} color=red/>
 	{/if}
 	
 	{#if setting.child}
-	<div class:disable={disable_child}>
-		<svelte:self disabled={disable_child} bind:setting={setting.child}/>
-	</div>
+		<div class:disable={disable_child}>
+			<svelte:self disabled={disable_child} bind:setting={setting.child}/>
+		</div>
 	{/if}
 </main>
 	

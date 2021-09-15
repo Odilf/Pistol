@@ -17,7 +17,9 @@
 
 	let is_focused = false	
 
-	$: solve = makeTime(value)
+	$: time = makeTime(value).time
+	$: penalty = makeTime(value).penalty
+	
 
 	let invalid = false
 
@@ -27,7 +29,7 @@
 		const match = str.match(/(\d{1,2}[: ](?=\d{1,2}[., ]))?(\d{1,2})([., ]\d{1,3})?(\+)?/)
 
 		let minutes: number, seconds: number, decimals: number = 0
-		let penalty = 0		
+		let penalty: 0 | 2 | 'DNF' = 0		
 
 		if (match) {
 			//Seconds
@@ -50,14 +52,8 @@
 			}
 		}
 
-		const solve: Solve = {
-			time: (minutes * 60 + seconds + decimals),
-			scramble: 'R U R\' U\'',
-			penalty: penalty as 0 | 2,
-			date: new Date(),
-		}
-		return solve
-		// return minutes * 60 + seconds + decimals / 100
+		const time = minutes * 60 + seconds + decimals
+		return {time: time, penalty: penalty}
 	}
 
 	function handleKeydown(e) {
@@ -67,7 +63,7 @@
 		}
 
 		if (e.key === 'Enter') {
-			dispatch('submit', {solve: solve})
+			dispatch('submit', {time: time, penalty: penalty})
 			value = ''
 		}
 	}
@@ -78,7 +74,7 @@
 	<input class:invalid type="text" transition:fade bind:value 
 	on:focus={() => is_focused = true} on:blur={() => is_focused = false}>
 	<p>Will be saved as 
-		<div><TimeDisplay time={solve.time} penalty={solve.penalty} decimals={3}/></div>
+		<div><TimeDisplay time={time} penalty={penalty} decimals={3}/></div>
 	
 	<!-- <TimeDisplay time={0.69}/> -->
 </main>
