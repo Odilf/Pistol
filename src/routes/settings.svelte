@@ -15,7 +15,6 @@
 	import ConfirmationButton from '$lib/utils/ConfirmationButton.svelte'
 
 	import { fly } from 'svelte/transition'
-	import { onMount } from 'svelte'
 
 	let tabs_active	= true
 	function toggleTabs() {
