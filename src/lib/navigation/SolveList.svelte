@@ -3,8 +3,10 @@
 	import { Button, Dialog, List } from 'svelte-materialify'
 	import Solve from './Solve.svelte'
 	import { getSettingByName } from '$lib/settings'
-	import { fly } from 'svelte/transition';
 	import TimeDisplay from '$lib/timer/TimeDisplay.svelte'
+
+	import { fly } from 'svelte/transition'
+	import { flip } from 'svelte/animate'
 	import '../../app.css'
 
 	//TODO: #34 Maybe optimize this for hundreds of thousands of solves
@@ -32,12 +34,12 @@
 		{:else}
 
 		<List class="elevation-24 d-flex flex-column pb-0">
-			{#each solves as solve }
-			<div>	
+			{#each solves as solve (solve.date) }
+			<div animate:flip>	
 				<Button style='flex-grow:1' class='rounded-0' on:click={() => active_solve = solve}>
 					<TimeDisplay time={solve.time} small_decimals={false} penalty={solve.penalty} {decimals}/>
 				</Button>
-				<Dialog active={active_solve === solve} on:outroend={() => active_solve = null}><Solve bind:solve/></Dialog>
+				<Dialog transition={fly} transition_settings={{x: 100, duration: 200}} active={active_solve === solve} on:outroend={() => active_solve = null}><Solve bind:solve/></Dialog>
 			</div>
 			{/each}
 		</List>
