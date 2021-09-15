@@ -1,6 +1,5 @@
 <script lang='ts'>
 	import '../../app.css'
-	import { settings } from '$lib/settings'
 	import type { GeneralSetting as Setting} from '$lib/settings'; 
 	import { Menu, Switch, ListItem, List, Button, Slider } from 'svelte-materialify'
 	export let setting: Setting
@@ -34,7 +33,7 @@
 		{setting.value}
 	</p>
 	{:else}
-	<Switch bind:checked={setting.value} color=red/>
+		<Switch bind:checked={setting.value} color=red/>
 	{/if}
 	
 	{#if setting.child}
