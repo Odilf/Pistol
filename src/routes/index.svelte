@@ -14,7 +14,7 @@
 	import QuickStats from '$lib/timer/QuickStats.svelte';
 	import Scramble from '$lib/timer/Scramble.svelte';
 
-	let width
+	let width: number
 </script>
 
 <svelte:head>
@@ -57,18 +57,20 @@
 
 	$column-width: 200px;
 	main {
-		height: 100vh;
-		width: 100vw;
+		// height: 100vh;
+		// width: 100vw;
+		position: fixed;
+		top:0; right:0; bottom:0; left:0;
+
 		display: flex;
 		flex-direction: column;
 	}
 	header {
-		height: fit-content;
+		flex-basis: content;
 	}
 	body {
 		flex-grow: 1;
 		display: flex;
-		// height: 100%;
 		overflow: hidden;
 	}
 	.column {
@@ -84,8 +86,5 @@
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-	}
-	footer {
-		height: fit-content;
 	}
 </style>
