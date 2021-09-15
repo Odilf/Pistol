@@ -1,4 +1,11 @@
-<h1> Dashboard coming soon! </h1>
+<script lang='ts'>
+	import Import from '$lib/utils/Import.svelte'
+
+</script>
+
+<!-- <h1> Dashboard coming soon! </h1> -->
+
+<Import/>
 
 <style>
 	h1 {
