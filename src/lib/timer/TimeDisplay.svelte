@@ -19,7 +19,7 @@
 		seconds = Math.floor(time).toString()
 	}
 
-	let decimals_value
+	let decimals_value: string|number
 	$: if (!time) {
 		time = 0
 		decimals_value = 0
@@ -34,10 +34,9 @@
 		DNF
 	{:else}
 	<div class="seconds">{seconds}</div>
-	{#if decimals}
-		<div class:small={small}>.{decimals_value}{#if penalty===2}
-				+
-				{/if}
+		{#if decimals}
+			<div class:small={small}>.{decimals_value}
+				{#if penalty===2} + {/if}
 			</div>
 		{/if}
 	{/if}
