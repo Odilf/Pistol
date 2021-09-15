@@ -1,6 +1,6 @@
 // import { browser } from "$app/env";
 import { writable as LS_writable } from "svelte-local-storage-store";
-import { writable, derived } from 'svelte/store'
+import { derived } from 'svelte/store'
 
 export const wca_events = ['3x3', '2x2', '4x4', '5x5', '6x6', '7x7', '3BLD', 'FMC', 'OH', 'Clock', 
 'Megaminx', 'Pyraminx', 'Skewb', 'Sq-1', '4BLD', '5BLD', 'MBLD']

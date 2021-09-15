@@ -14,6 +14,7 @@
 	import QuickStats from '$lib/timer/QuickStats.svelte';
 	import Scramble from '$lib/timer/Scramble.svelte';
 
+	import { fade } from 'svelte/transition'
 	let width: number
 </script>
 
@@ -35,7 +36,7 @@
 			</div>
 		{/if}
 		
-		<div class="center">
+		<div class="center" transition:fade>
 			<Scramble/>
 			<Timing></Timing>
 			<QuickStats/>

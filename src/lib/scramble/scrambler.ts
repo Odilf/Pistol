@@ -37,14 +37,14 @@ interface Move {
 	amount: number
 }
 
-const moves = [
-	{axis: 0, direction: 1, amount: 1},
-	{axis: 1, direction: 1, amount: 1},
-	{axis: 2, direction: 1, amount: 1},
-	{axis: 0, direction: -1, amount: 1},
-	{axis: 1, direction: -1, amount: 1},
-	{axis: 2, direction: -1, amount: 1},
-]
+// const moves = [
+// 	{axis: 0, direction: 1, amount: 1},
+// 	{axis: 1, direction: 1, amount: 1},
+// 	{axis: 2, direction: 1, amount: 1},
+// 	{axis: 0, direction: -1, amount: 1},
+// 	{axis: 1, direction: -1, amount: 1},
+// 	{axis: 2, direction: -1, amount: 1},
+// ]
 
 function name(move: Move) {
 	let face = ""
