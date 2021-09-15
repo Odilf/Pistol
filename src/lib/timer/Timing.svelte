@@ -57,11 +57,10 @@
 		display: flex;
 		justify-content: center;
 		align-items: center;
-
-		font-size: max(15vw, 15vh);
-		font-weight: 100;
 	}
 	div {
+		font-size: max(15vw, 15vh);
+		font-weight: 100;
 		width: 100%;
 	}
 </style>

@@ -44,11 +44,11 @@
 </div>
 
 <style lang='scss'>
-
 	.timer {
 		font-family: 'Roboto';
 		font-weight: inherit;
 		font-size: inherit;
+		font-style: inherit;
 		
 		display: flex;
 		align-items: baseline;
