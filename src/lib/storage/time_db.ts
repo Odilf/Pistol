@@ -71,7 +71,7 @@ const default_events = build_default_database()
 export const database = LS_writable('database', default_events)
 
 //Object with selected event id and array of selected sessions id for each event (defaults to 0)
-export const selection = writable({event: 0, sessions: wca_events.map(() => 0)})
+export const selection = LS_writable('selection', {event: 0, sessions: wca_events.map(() => 0)})
 
 //Get active event and session from the selection store
 export const active_event = derived(
