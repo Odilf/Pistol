@@ -34,10 +34,10 @@
 <main>
 	<header>
 		<Back/>
-		<Button fab on:click={toggleTabs}>
-			<!-- Menu button -->
+		<!-- <Button fab on:click={toggleTabs}>
+			Menu button
 			<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><g fill="none"><path d="M0 0h24v24H0V0z"/><path d="M0 0h24v24H0V0z" opacity=".87"/></g><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7zm-4 6h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
-		</Button>
+		</Button> -->
 		<h1>Settings</h1>
 	</header>
 
@@ -56,6 +56,7 @@
 						
 						<span slot='tip'>{setting.description}</span>
 					</Tooltip>
+
 					<span slot="append">
 						<div class="setting">
 							<Setting bind:setting={setting}/>
@@ -69,8 +70,8 @@
 		<br>
 	{/each}
 		
-	<!-- User Configuration settings -->
-	<!-- <div class='content'>
+	<!-- User Configuration settings
+	<div class='content'>
 		<h2>User configuration</h2>
 		<ListItem>
 			Reset settings
@@ -125,11 +126,11 @@
 	}
 
 	.content {
-		width: 100%;
-		margin: 2em;
+		width: min(50vw, calc(fit-content));
+		margin-bottom: 0;
 		margin-top: 0;
 		color: whitesmoke;
-		width: fit-content;
+		padding: 1em;
 	}
 
 	.setting {
@@ -138,5 +139,7 @@
 	}
 	main {
 		background-color: var(--primary-color);
+		display: flex;
+		flex-direction: column;
 	}
 </style>
