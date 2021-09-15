@@ -13,7 +13,7 @@
 	let interval: ReturnType<typeof setInterval>;
 	let startTime: Date;
 
-	let refresh_rate;
+	let refresh_rate: number;
 	$: refresh_rate_option = getSettingByName('Refresh rate');
 	$: switch (refresh_rate_option) {
 		case '1ms':
