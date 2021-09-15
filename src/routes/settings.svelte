@@ -7,7 +7,7 @@
 </script>
 
 <script lang='ts'>
-	import { ListItem, Button } from 'svelte-materialify'
+	import { ListItem, Button, Tooltip } from 'svelte-materialify'
 	import { settings, resetSettings } from '$lib/settings'
 	import Setting from '$lib/settings/Setting.svelte'
 	import Back from '$lib/utils/Back.svelte'
@@ -44,14 +44,18 @@
 
 	{#each $settings as category}
 		<div class='content'>
+			
 			<h2>{category.name}</h2>
 			<h3>{category.description}</h3>
-
+			
 			{#each category.settings as setting}
 				<ListItem style='width:100%'>
-					{setting.name}
-					<!-- <span slot="subtitle"> {setting.description} </span> -->
-					
+					<Tooltip top>
+						{setting.name}
+						<!-- <span slot="subtitle"> {setting.description} </span> -->
+						
+						<span slot='tip'>{setting.description}</span>
+					</Tooltip>
 					<span slot="append">
 						<div class="setting">
 							<Setting bind:setting={setting}/>
