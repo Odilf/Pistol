@@ -27,7 +27,7 @@
 	<body class="rounded-bl-xl" transition:fly={{ x: 69, duration: 500 }}>
 
 		{#if solves.length === 0}
-			<div class='grey-text pt-8'>
+			<div class='grey-text pt-8' transition:fly={{ x: 69, duration: 500 }}>
 				No solves yet <br>
 				Start solving!
 			</div>
@@ -42,7 +42,9 @@
 					>
 						<TimeDisplay time={solve.time} small_decimals={false} penalty={solve.penalty} {decimals}/>
 					</Button>
-					<Dialog transition={fly} active={active_solve === solve} on:outroend={() => active_solve = null}><Solve bind:solve/></Dialog>
+					<Dialog transition={fly} active={active_solve === solve} on:outroend={() => active_solve = null}>
+						<Solve bind:solve transition={fly}/>
+					</Dialog>
 				</div>
 			{/each}
 		</List>
