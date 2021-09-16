@@ -33,4 +33,8 @@
 
 		text-align: right;
 	}
+
+	twisty-player {
+		width: 100%;
+	}
 </style>
