@@ -15,29 +15,15 @@
 	import ConfirmationButton from '$lib/utils/ConfirmationButton.svelte'
 
 	import '../app.css';
-
-	let tabs_active	= true
-	function toggleTabs() {
-		tabs_active = !tabs_active
-		console.log(tabs_active);
-	}
-	
-	let width: number
-	
 </script>
 
 <svelte:head>
 	<title>Settings</title>
 </svelte:head>
-<svelte:window bind:innerWidth={width}/>
 
 <main>
 	<header>
 		<Back/>
-		<!-- <Button fab on:click={toggleTabs}>
-			Menu button
-			<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><g fill="none"><path d="M0 0h24v24H0V0z"/><path d="M0 0h24v24H0V0z" opacity=".87"/></g><path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7zm-4 6h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/></svg>
-		</Button> -->
 		<h1>Settings</h1>
 	</header>
 
@@ -69,36 +55,6 @@
 		<br>
 		<br>
 	{/each}
-		
-	<!-- User Configuration settings
-	<div class='content'>
-		<h2>User configuration</h2>
-		<ListItem>
-			Reset settings
-			<span slot="subtitle"> Revert settings to default. This can't be undone </span>
-			
-			<span slot="append">
-				<div class="setting">
-					<ConfirmationButton button_text='Reset settings' 
-					dialog_text='This will permantly revert your settings. Are you sure you want to do this?'
-					on:confirmation={resetSettings}/>
-				</div>
-			</span>
-		</ListItem>
-		<ListItem>
-			Delete solves
-			<span slot="subtitle"> Completely remove all your solves. This can't be undone </span>
-			
-			<span slot="append">
-				<div class="setting">
-					<ConfirmationButton  button_text='Delete all solves' 
-					dialog_text="This will permantly and irreversably delete forever all your solves in all events. Are you sure you want to do this?"
-					on:confirmation={deleteAllSolves}/>
-				</div>
-			</span>
-		</ListItem>
-	</div> -->
-			
 </main>
 
 <style lang='scss'>
@@ -126,7 +82,7 @@
 	}
 
 	.content {
-		width: min(50vw, calc(fit-content));
+		width: min(100%, 30em);
 		margin-bottom: 0;
 		margin-top: 0;
 		color: whitesmoke;
@@ -141,5 +97,6 @@
 		background-color: var(--primary-color);
 		display: flex;
 		flex-direction: column;
+		align-items: center;
 	}
 </style>
