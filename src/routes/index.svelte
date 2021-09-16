@@ -8,7 +8,7 @@
 <script lang="ts">
 	import Timing from '$lib/timer/Timing.svelte';
 	import Footer from '$lib/utils/Footer.svelte';
-	import EventSelect from '$lib/navigation/EventSelect.svelte';
+	import EventSelect from '$lib/navigation/events/EventSelect.svelte';
 	import SessionSelect from '$lib/navigation/SessionSelect.svelte';
 	import SolveList from '$lib/navigation/SolveList.svelte';
 	import QuickStats from '$lib/timer/QuickStats.svelte';
