@@ -1,10 +1,12 @@
 <script lang='ts'>
-	import { scrambles } from '$lib/scramble/scrambler'
-	import { selection } from '$lib/storage/time_db'
+	// import { scrambles } from '$lib/scramble/scrambler'
+	import { database, active_session } from '$lib/storage/time_db'
 </script>
 
 <p>
-	{$scrambles[$selection.event][$scrambles[$selection.event].length - 1]}
+	{#if $active_session.scrambles}
+		{$active_session.scrambles[$active_session.scrambles.length - 1]}
+	{/if}
 </p>
 
 <style lang="scss">

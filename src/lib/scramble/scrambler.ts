@@ -1,5 +1,7 @@
-export function get_random_scramble(cube_type: string, seed = 69420): string {
+export function get_random_scramble(event: {name: string, type?: string}, seed = new Date().getMilliseconds()): string {
 	
+	const cube_type = event.type ? event.type : event.name
+
 	let scramble: Move[] = []
 	let length = 69
 	switch (cube_type) {
@@ -15,11 +17,11 @@ export function get_random_scramble(cube_type: string, seed = 69420): string {
 		
 		for (let i = 0; i < length; i++) {
 			const temp_move = random_item(get_moves(cube_type, scramble[scramble.length - 1]), seed)
-		if (Array.isArray(temp_move)) {
-			scramble = scramble.concat(temp_move)
-		} else {
-			scramble.push(temp_move)
-		}
+			if (Array.isArray(temp_move)) {
+				scramble = scramble.concat(temp_move)
+			} else {
+				scramble.push(temp_move)
+			}
 			// console.log(name(scramble[scramble.length - 1]) );
 		}
 		
@@ -36,15 +38,6 @@ interface Move {
 	direction: number
 	amount: number
 }
-
-// const moves = [
-// 	{axis: 0, direction: 1, amount: 1},
-// 	{axis: 1, direction: 1, amount: 1},
-// 	{axis: 2, direction: 1, amount: 1},
-// 	{axis: 0, direction: -1, amount: 1},
-// 	{axis: 1, direction: -1, amount: 1},
-// 	{axis: 2, direction: -1, amount: 1},
-// ]
 
 function name(move: Move) {
 	let face = ""
@@ -106,19 +99,4 @@ function get_moves(cube_type: string, last_move?: Move): Move[] {
 	// }
 
 	return moves
-}
-
-// Save the stuff to not really session storage but basically the same thing? idk man
-import { wca_events } from "$lib/storage/time_db"
-import { writable } from "svelte/store"
-
-export const scrambles = writable(
-	wca_events.map( v => [get_random_scramble(v, new Date().getMilliseconds())] )
-)
-
-export function update_scramble(session: number): void {
-	scrambles.update(v => {
-			v[session].push( get_random_scramble(wca_events[session], new Date().getMilliseconds()) )
-			return v
-		})
 }

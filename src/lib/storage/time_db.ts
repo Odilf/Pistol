@@ -1,4 +1,5 @@
 import { browser } from "$app/env";
+// import { updateSettings } from "$lib/settings";
 import { writable } from "svelte-local-storage-store";
 import { derived } from 'svelte/store'
 
@@ -25,13 +26,8 @@ const default_sessions_for_event = [
 	{name: 'MBLD', sessions: ['Main']},
 ]
 
-//Change for non-testing purposes
 const default_session: Session = {
- name: 'Default (test)', solves: [
-	{time: 4.2, penalty: 0, date: new Date(), scramble: "R U R' U'", reconstruction: ''},
-	{time: 5, penalty: 2, date: new Date(), scramble: "I F UR MOM", reconstruction: ''},
-	{time: 0.69, penalty: 'DNF', date: new Date(), scramble: "M' S M S'", reconstruction: ''}
-]}
+ name: 'Default (test)', scrambles: null, solves: []}
 
 export type Solve = {
 	time: number
@@ -44,15 +40,23 @@ export type Solve = {
 export type Session = {
 	name: string
 	solves: Solve[]
+	scrambles: string[]
 };
 
 export type Event = {
 	name: string
-	hide: boolean
 	sessions: Session[]
+	hide: boolean
+	selected_session: number
+	scramble?: string
 };
 
-function build_default_database(): Event[] {
+type Database = {
+	events: Event[],
+	selected_event: number
+}
+
+function build_default_database(): Database {
 	const events: Event[] = []
 	// Build default sessions if not specified
 	for (const event of wca_events) {
@@ -60,69 +64,130 @@ function build_default_database(): Event[] {
 		const i = default_sessions_for_event.map(v => v.name).indexOf(event)
 		const sessions = i === -1 
 		? [default_session] 
-		: default_sessions_for_event[i].sessions.map( v => ({name: v, solves: []}) )
+		: default_sessions_for_event[i].sessions.map( v => ({name: v, solves: [], scrambles: null}) )
 		
-		events.push( {name: event, hide: false, sessions: sessions} )
+		events.push( {name: event, hide: false, sessions: sessions, selected_session: 0} )
 	}
-	return events
+	return {events: events, selected_event: 0}
 }
 
 export const database = writable('database', build_default_database())
 
-//Object with selected event index and array of selected sessions index for each event (defaults to 0)
-export const selection = writable('selection', {event: 0, sessions: wca_events.map(() => 0)})
-selection.update(() => { return {event: 0, sessions: wca_events.map(() => 0)}})
+checkSelection()
 
 export const selectable_events = derived(
 	database,
-	$database => $database.filter(v => v.hide === false)
+	$database => $database.events.filter(v => v.hide === false)
 )
 
-//Get active event and session from the selection store
 export const active_event = derived(
-	[selection, database],
-	([$selection, $database]) => $database[$selection.event]
+	database,
+	$database => $database.events[$database.selected_event]
 )
 
 export const active_session = derived(
-	[selection, active_event],	
-	([$selection, $active_event]) => $active_event.sessions[$selection.sessions[0]]
+	active_event,
+	$active_event => $active_event.sessions[$active_event.selected_session]
 )
 
-// export const active_session = derived(
-// 	[selection, database],	
-// 	([$selection, $database]) => {
-// 		console.log($selection[2])
-// 		return $database[$selection.event].sessions[$selection.sessions[$selection.event]]
-// 	}
-// )
+// Checks if selection aren't out of bounds
+function checkSelection(): void {
+	let db: Database
+	const unsubcribe = database.subscribe(v => db = v)
 
-let active_session_value: Session
-active_session.subscribe(v => active_session_value = v)
+	if (db.selected_event > db.events.length || db.selected_event < 0) { 
+		console.warn(`Event selection was ${db.selected_event}`);
+		db.selected_event = 0
+		
+	}
+	
+	for (const event of db.events) {
+		if (event.selected_session > event.sessions.length || event.selected_session < 0) {
+			console.warn(`Event ${event.name}'s selection was ${db.selected_event}`);
+			event.selected_session = 0
+		}
+	}
 
+	updateDatabase()
+	unsubcribe()
+}
 
 export function addSolve(solve: Solve): void {
+	let event: Event
+	const unsubcribe = active_event.subscribe(v => event = v)
+	const session = event.sessions[event.selected_session]
+
 	if (!solve.date) {
 		solve.date = new Date()
 	}
 
-	active_session_value.solves.push(solve)
+	solve.scramble = session.scrambles[session.scrambles.length - 1]
+
+	session.solves.push(solve)
+	session.scrambles.push(get_random_scramble(event))
+
+	unsubcribe()
 }
+
+active_session.subscribe(v => console.log(v))
 
 export function deleteAllSolves(): void {
 	if (!browser) return 
 	console.warn('Reseting settings')
 	localStorage.removeItem('database')
-	localStorage.removeItem('sessions')
 }
 
-
 export function deleteSolve(solve: Solve): void {
-	const i = active_session_value.solves.indexOf(solve)
-	active_session_value.solves.splice(i, 1)
+	let session
+	const unsubcribe = active_session.subscribe(v => session = v)
+
+	const i = session.solves.indexOf(solve)
+	session.solves.splice(i, 1)
+	updateDatabase()
+	unsubcribe()
+}
+
+export function addEvent(name: string, scramble?: string): void {
+	database.update(db => {
+		const new_event: Event = {
+			name: name,
+			hide: false,
+			sessions: [default_session],
+			scramble: scramble ? scramble : null,
+			selected_session: 0,
+		}
+		db.events.push(new_event)
+
+		return db
+	})
 	updateDatabase()
 }
 
-export function updateDatabase(): void {
-	database.update(db => db.slice())
+export function addSession(name: string, event: Event): void {
+	let db: Database
+	const unsubcribe = database.subscribe(v => db = v)
+
+	const new_session: Session = {
+		name: name,
+		solves: [],
+		scrambles: [get_random_scramble(event)]
+	}
+	db.events[db.events.indexOf(event)].sessions.push(new_session)
+	unsubcribe()
 }
+
+export function updateDatabase(): void {
+	database.update(db => { return {events: db.events, selected_event: db.selected_event}})
+}
+
+import { get_random_scramble } from '$lib/scramble/scrambler'
+
+// Remove old scrambles at load time
+database.update($database => {
+	for (const event of $database.events) {
+		for (const session of event.sessions) {
+			session.scrambles = [get_random_scramble(event)]
+		}
+	}
+	return $database
+})

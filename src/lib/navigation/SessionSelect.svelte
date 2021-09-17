@@ -1,8 +1,7 @@
 <script lang='ts'>
-	import { active_event, active_session, selection } from "$lib/storage/time_db";
+	import { database, active_event, active_session } from "$lib/storage/time_db";
 	import { Menu, List, ListItem, Button } from 'svelte-materialify'
 
-	$: selectable_sessions = $active_event.sessions.map(v => v.name)
 	
 </script>
 
@@ -13,8 +12,8 @@
 			<Button style="width:100%;">{$active_session.name}</Button>
 		</div>
 		<List>
-			{#each selectable_sessions as session, i}
-				<ListItem on:click={() => $selection.sessions[$selection.event] = i}>{session}</ListItem> 
+			{#each $active_event.sessions as session, i}
+				<ListItem on:click={() => $database.events[$database.selected_event].selected_session = i}>{session.name}</ListItem> 
 			{/each}
 		</List>
 	</Menu>

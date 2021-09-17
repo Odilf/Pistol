@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Dialog, List, ListItem, Button, ListGroup } from 'svelte-materialify'
-	import { updateDatabase } from '$lib/storage/time_db'
-	import type { Event } from '$lib/storage/time_db'
+	import { database, updateDatabase, wca_events, addSession } from '$lib/storage/time_db'
+	import type { Event, Session } from '$lib/storage/time_db'
 
 	export let event: Event;
 
@@ -9,11 +9,12 @@
 	let adding_session = false;
 	let new_session_name: string;
 
-	function addSession() {
-		event.sessions.push({name: new_session_name, solves: null})
-		adding_session = false
+	function deleteSession(session) {
+		event.sessions.splice(event.sessions.indexOf(session), 1)
+		event.selected_session = 0
 		updateDatabase()
 	}
+
 </script>
 
 <main>
@@ -25,37 +26,44 @@
 		{/if}
 	</Button>
 
-<ListGroup bind:active disabled class='white-text flex-grow-1'>
+	<ListGroup bind:active disabled class='white-text flex-grow-1'>
 
-	<span slot="activator"> {event.name} </span>
+		<span slot="activator"> {event.name} </span>
 
-	<List>
-		{#each event.sessions as session}
-		<ListItem>
-			{session.name}
+		<List>
+			{#each event.sessions as session}
+			<ListItem>
+				{session.name}
 
-			<span slot='append'>
-				<Button on:click={() => {event.sessions.splice(event.sessions.indexOf(session), 1); updateDatabase()}}>
-					del
-				</Button>
-			</span>
-		</ListItem>
-		{/each}
-	</List>
+				<span slot='append'>
+					<Button fab on:click={() => deleteSession(session)}>
+						del
+					</Button>
+				</span>
+			</ListItem>
+			{/each}
+		</List>
+		
+		<Button disabled={false} on:click={() => adding_session = true}> Add session... </Button>
+		
+	</ListGroup>
 
-	
-
-	<Button disabled={false} on:click={() => adding_session = true}> Add session... </Button>
-
-</ListGroup>
+	{#if !wca_events.includes(event.name) }
+		<Button fab on:click={() => {
+				$database.selected_event = 0;
+				$database.events.splice($database.events.indexOf(event), 1)
+				updateDatabase()
+			}}> del </Button>
+	{/if}
 </main>
 
 <Dialog bind:active={adding_session}>
 	Enter session name
-	<input bind:value={new_session_name} on:submit={() => {
-		
-	}}/>
-	<Button on:click={addSession}>Done</Button>
+	<input bind:value={new_session_name}/>
+	<Button on:click={() => {
+		addSession(new_session_name, event);
+		adding_session = false
+	}}>Done</Button>
 </Dialog>
 
 <style>
