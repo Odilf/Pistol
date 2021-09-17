@@ -35,9 +35,7 @@
 	{:else}
 	<div class="seconds">{seconds}</div>
 		{#if decimals}
-			<div class:small={small}>.{decimals_value}
-				{#if penalty===2} + {/if}
-			</div>
+			<div class:small={small}>.{decimals_value}{#if penalty===2} + {/if}</div>
 		{/if}
 	{/if}
 </div>
