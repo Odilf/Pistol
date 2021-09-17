@@ -1,9 +1,6 @@
 <svelte:window on:keydown={handleKeydown}/>
 
 <script lang='ts'>
-	import { getSettingByName } from '$lib/settings'
-	import { addSolve, selection } from '$lib/storage/time_db'
-	import type { Solve } from '$lib/storage/time_db'
 	import { fade } from "svelte/transition";
 	import '../../app.css'
 	import TimeDisplay from './TimeDisplay.svelte';
