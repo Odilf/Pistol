@@ -6,6 +6,8 @@
 </script>
 
 <script lang="ts">
+	import '$lib/storage/versionManager'
+	
 	import Timing from '$lib/timer/Timing.svelte';
 	import Footer from '$lib/utils/Footer.svelte';
 	import EventSelect from '$lib/navigation/events/EventSelect.svelte';
