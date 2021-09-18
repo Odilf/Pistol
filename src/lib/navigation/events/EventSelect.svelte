@@ -4,19 +4,22 @@
 	import EventManager from "$lib/navigation/events/EventManager.svelte";
 	import { tick } from "svelte";
 	
-	let tab_value = $selectable_events.indexOf($database.events[$database.selected_event])
+	$: tab_value = $selectable_events.indexOf($database.events[$database.selected_event])
 	if (tab_value === -1) tab_value = 0
 
 	let editing = false
 
 	// Navigation with arrows
 	function handleKeydown(e) {
+		let move
 		if (e.code === 'ArrowLeft') {
-			(tab_value == 0) || (tab_value -= 1)
+			move = -1
 		}
 		if (e.code === 'ArrowRight') {
-			tab_value < $selectable_events.length - 1 && (tab_value += 1)
+			move = 1
 		}
+		const index = $database.events.indexOf($selectable_events[tab_value + move])
+		if (index !== -1) $database.selected_event = index
 	}
 
 	async function editEvent() {
@@ -32,7 +35,7 @@
 
 <Tabs centerActive bind:value={tab_value}>
 	<div slot='tabs'>
-		{#each $selectable_events as event}
+		{#each $selectable_events as event (event.name)}
 		<Tab on:click={() => $database.selected_event = $database.events.indexOf(event)}>
 			{event.name}
 		</Tab>
