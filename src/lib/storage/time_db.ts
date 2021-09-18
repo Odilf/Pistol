@@ -34,6 +34,7 @@ export type Solve = {
 	date: Date
 	scramble: string
 	reconstruction?: string
+	imported?: string
 };
 
 export type Session = {
