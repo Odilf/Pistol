@@ -1,23 +1,38 @@
 <script lang='ts'>
-	import { database, active_event, active_session } from "$lib/storage/time_db";
-	import { Menu, List, ListItem, Button } from 'svelte-materialify'
+	import type { Event } from '$lib/storage/time_db'
+	import { addSession } from '$lib/storage/time_db'
+	import { Menu, List, ListItem, Button, Dialog } from 'svelte-materialify'
 
-	
+	export let event: Event
+	let adding_session: boolean
+	let new_session_name
 </script>
 
 <body>
-	<!-- TODO: #30 Make hover on desktop but not require two clicks on mobile -->
-	<Menu>
+	<Menu disabled={!event}>
 		<div slot="activator">
-			<Button style="width:100%;">{$active_session.name}</Button>
+			<Button style="width:100%;" disabled={!event}>{event ? event.sessions[event.selected_session].name : ''}</Button>
 		</div>
-		<List>
-			{#each $active_event.sessions as session, i}
-				<ListItem on:click={() => $database.events[$database.selected_event].selected_session = i}>{session.name}</ListItem> 
-			{/each}
-		</List>
-	</Menu>
+			<List>
+				{#if event}
+					{#each event.sessions as session, i}
+						<ListItem on:click={() => event.selected_session = i}>{session.name}</ListItem> 
+					{/each}
+				{/if}
+				<ListItem class='red darken-4' on:click={() => adding_session = true}> New session </ListItem>
+			</List>
+		</Menu>
 </body>
+
+<Dialog bind:active={adding_session}>
+	Enter session name
+	<input bind:value={new_session_name}/>
+	<Button on:click={() => {
+		addSession(new_session_name, event);
+		adding_session = false;
+		event.selected_session = event.sessions.length - 1
+	}}> Done </Button>
+</Dialog>
 
 <style lang='scss'>
 	body {

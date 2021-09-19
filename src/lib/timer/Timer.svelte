@@ -138,5 +138,6 @@
 		justify-content: center;
 
 		-webkit-touch-callout: none; 
+		-webkit-user-select: none; 
 	}
 </style>

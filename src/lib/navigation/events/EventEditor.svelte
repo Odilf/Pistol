@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { Dialog, List, ListItem, Button, ListGroup } from 'svelte-materialify'
-	import { database, updateDatabase, wca_events, addSession } from '$lib/storage/time_db'
+	import { database, wca_events, addSession } from '$lib/storage/time_db'
 	import type { Event } from '$lib/storage/time_db'
+import EventSelect from './EventSelect.svelte';
 
 	export let event: Event;
 
@@ -12,7 +13,6 @@
 	function deleteSession(session) {
 		event.sessions.splice(event.sessions.indexOf(session), 1)
 		event.selected_session = 0
-		updateDatabase()
 	}
 
 </script>
@@ -48,12 +48,14 @@
 		
 	</ListGroup>
 
+	<!-- Delete event button -->
 	{#if !wca_events.includes(event.name) }
 		<Button fab on:click={() => {
-				$database.selected_event = 0;
-				$database.events.splice($database.events.indexOf(event), 1)
-				updateDatabase()
-			}}> del </Button>
+			database.update(db => {
+				db.selected_event = 0
+				db.events.splice(db.events.indexOf(event), 1)
+				return db
+			})}}> del </Button>
 	{/if}
 </main>
 

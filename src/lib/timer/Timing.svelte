@@ -7,7 +7,7 @@
 	import TimeInput from '$lib/timer/TimeInput.svelte';
 	import Timer from '$lib/timer/Timer.svelte';
 	import { getSettingByName } from '$lib/settings'
-	import { addSolve, updateDatabase } from '$lib/storage/time_db'
+	import { addSolve } from '$lib/storage/time_db'
 	import type { Solve } from '$lib/storage/time_db';
 
 	$: timer_type = getSettingByName('Input method')
@@ -30,7 +30,6 @@
 			reconstruction: null,
 		}
 		addSolve(solve)
-		updateDatabase()
 	}
 </script>
 

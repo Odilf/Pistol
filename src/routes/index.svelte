@@ -1,6 +1,3 @@
-<!-- <script context="module" lang="ts">
-	// export const prerender = true;
-</script> -->
 <script context="module">
 	export const router = false;
 </script>
@@ -16,8 +13,14 @@
 	import QuickStats from '$lib/timer/QuickStats.svelte';
 	import Scramble from '$lib/timer/Scramble.svelte';
 
+	import Import from '$lib/utils/Import.svelte'
+
+	
 	import { fade } from 'svelte/transition'
+	import { database } from '$lib/storage/time_db';
 	let width: number
+	
+	let isDragging
 </script>
 
 <svelte:head>
@@ -26,7 +29,9 @@
 
 <svelte:window bind:innerWidth={width}/>
 
-<main>
+<Import {isDragging}/>
+
+<main on:mouseleave={() => isDragging = false} on:dragover|preventDefault={() => isDragging = true}>
 	<header>
 		<EventSelect/>
 	</header>
@@ -34,7 +39,7 @@
 	<body>
 		{#if width > 900}
 			<div class="column">
-				<SessionSelect/>
+				<SessionSelect bind:event={$database.events[$database.selected_event]}/>
 			</div>
 		{/if}
 		

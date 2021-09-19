@@ -37,6 +37,7 @@
     "@fontsource/fira-mono": "^4.2.2",
     "@fontsource/roboto": "^4.5.0",
     "@lukeed/uuid": "^2.0.0",
+    "@mdi/js": "^6.1.95",
     "@smui/button": "^4.2.0",
     "cookie": "^0.4.1",
     "cubing": "^0.20.2",

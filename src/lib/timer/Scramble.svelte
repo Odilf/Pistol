@@ -1,11 +1,13 @@
 <script lang='ts'>
 	// import { scrambles } from '$lib/scramble/scrambler'
-	import { database, active_session } from '$lib/storage/time_db'
+	import { active_session } from '$lib/storage/time_db'
+
+	$: session = active_session()
 </script>
 
 <p>
-	{#if $active_session.scrambles}
-		{$active_session.scrambles[$active_session.scrambles.length - 1]}
+	{#if session.scrambles}
+		{session.scrambles[session.scrambles.length - 1]}
 	{/if}
 </p>
 

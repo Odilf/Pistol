@@ -1,16 +1,16 @@
 <script lang='ts'>
 	import { Card, CardText, CardActions, Button, TextField } from "svelte-materialify";
 	import CubeVisualizer from "$lib/navigation/CubeVisualizer.svelte";
-	import { active_session, updateDatabase, deleteSolve } from '$lib/storage/time_db';
+	import { database, deleteSolve } from '$lib/storage/time_db';
 	import type { Solve } from '$lib/storage/time_db'
 	import TimeDisplay from "$lib/timer/TimeDisplay.svelte";
 	import { fade, fly } from 'svelte/transition'
 	import '../../app.css'
 
 	export let solve: Solve;
-	const penalties: Array<0 | 2 | 'DNF'> = [0, 2, 'DNF']
+	export let transition = fly;
 	
-	$: hasReconstruction = solve.reconstruction as unknown as boolean
+	const penalties: Array<0 | 2 | 'DNF'> = [0, 2, 'DNF']
 
 	let reconstruction_dialog = false
 
@@ -18,7 +18,7 @@
 
 <div>
 	<div class="d-flex justify-center mt-4 mb-4">
-		<Card style=height:fit-content>
+		<Card style=height:fit-content {transition}>
 			<CardText>
 				{#if solve.penalty === 'DNF'}
 					<div transition:fade class='DNF'>{solve.time.toFixed(3)}</div>
@@ -39,7 +39,7 @@
 				<div class="text--primary">
 				Scramble: {solve.scramble} <br>
 				
-				{#if hasReconstruction}
+				{#if solve.reconstruction}
 					Reconstruction: {solve.reconstruction} <br>
 				{/if}
 
@@ -53,13 +53,13 @@
 
 		<CardActions class='d-flex ml-4'>
 			{#each penalties as penalty_item}
-				<Button disabled={penalty_item===solve.penalty} on:click={() => {solve.penalty = penalty_item; updateDatabase()}}>{penalty_item}</Button>
+				<Button disabled={penalty_item===solve.penalty} on:click={() => {solve.penalty = penalty_item; database.update(db => db)}}>{penalty_item}</Button>
 			{/each}
 		</CardActions>
 
 		<CardActions>
 			{#if !reconstruction_dialog}
-				<Button text on:click={() => reconstruction_dialog = true}> {#if hasReconstruction} Change reconstruction {:else} Add reconstruction {/if}</Button>
+				<Button text on:click={() => reconstruction_dialog = true}> {#if solve.reconstruction} Change reconstruction {:else} Add reconstruction {/if}</Button>
 			{:else}
 				<TextField bind:value={solve.reconstruction} placeholder="Reconstruction" color=red clearable/>
 				<Button fab size='small' class='ml-2' on:click={() => reconstruction_dialog = false}>

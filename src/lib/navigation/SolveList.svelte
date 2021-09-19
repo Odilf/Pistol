@@ -1,32 +1,34 @@
 <script lang='ts'>
-	import { active_session, deleteSolve } from '$lib/storage/time_db'
-	import { Button, Dialog, List } from 'svelte-materialify'
+	import { active_session, database, deleteSolve } from '$lib/storage/time_db'
+	import type { Solve as SolveType } from '$lib/storage/time_db'
 	import Solve from './Solve.svelte'
 	import { getSettingByName } from '$lib/settings'
 	import TimeDisplay from '$lib/timer/TimeDisplay.svelte'
-
+	
+	import { Button, Dialog, List } from 'svelte-materialify'
 	import { fly, fade } from 'svelte/transition'
 	import { flip } from 'svelte/animate'
+	import { derived, readable } from 'svelte/store'
 	import '../../app.css'
 
-	//TODO: #34 Maybe optimize this for hundreds of thousands of solves
-	$: solves = $active_session.solves.slice().reverse()
-	$: decimals = getSettingByName("Solve Decimals")
+	let truncated = false
+	const solves = derived(database, db => {
+		const solves = db.events[db.selected_event].sessions[db.events[db.selected_event].selected_session].solves
+		if (solves.length > 100) truncated = true
+		return solves.slice().reverse().slice(0, 100)
+	})
+	const decimals = getSettingByName("Solve Decimals")
 
-	let windowHeight: number;
-
-	// let active = false
-	let active_solve
+	let active_solve: SolveType
 	let show_solves = true
+	let show_solve = false
 </script>
-
-<svelte:window bind:innerHeight={windowHeight}/>
 
 <main>
 	{#if show_solves}
-	<body class="rounded-bl-xl" transition:fly={{ x: 69, duration: 500 }}>
+	<body class="rounded-bl-xl" transition:fly={{ x: 69, duration: 500 }} >
 
-		{#if solves.length === 0}
+		{#if $solves.length === 0}
 			<div class='grey-text pt-8' transition:fly={{ x: 69, duration: 500 }}>
 				No solves yet <br>
 				Start solving!
@@ -34,25 +36,36 @@
 		{:else}
 
 		<List class="d-flex flex-column pb-0">
-			{#each solves as solve (solve.date) }
-				<div animate:flip={{duration:200}} in:fly={{y: -20, duration: 800}} out:fade on:auxclick={() => deleteSolve(solve)}>	
-					<Button style='flex-grow:1' class='elevation-24' 
-						on:click={() => active_solve = solve} 
-						
+			{#each $solves as solve, i (i)}
+				<div animate:flip in:fly={{y: -20, duration: 800}} out:fade
+					on:auxclick={() => deleteSolve(solve)}
+					on:click={e => { e.altKey && deleteSolve(solve)}}
+				>
+					<Button style='flex-grow:1' class='elevation-2'
+						on:click={() => {active_solve = solve; show_solve = true}}
 					>
+
 						<TimeDisplay time={solve.time} small_decimals={false} penalty={solve.penalty} {decimals}/>
 					</Button>
-					<Dialog transition={fly} active={active_solve === solve} on:outroend={() => active_solve = null}>
-						<Solve bind:solve transition={fly}/>
-					</Dialog>
+
 				</div>
 			{/each}
+			{#if truncated}
+				<div class='d-inline-flex justify-center align-center mt-2'>
+					More solves in the dashboard!
+				</div>
+			{/if}
 		</List>
 
 		{/if}
 	</body>
 	{/if}
 
+	<Dialog bind:active={show_solve} on:outroend={() => show_solve = false} class=red>
+		{#if active_solve}
+			<Solve bind:solve={active_solve} transition={fly}/>
+		{/if}
+	</Dialog>
 
 	<footer>
 		<Button class='red darken-2' on:click={() => show_solves=!show_solves}>
@@ -89,7 +102,7 @@
 		display: flex;
 		justify-content: center;
 		flex-grow: 1;
-	} 
+	}
 	footer {
 		flex-grow: 10;
 		padding: 1em;

@@ -1,17 +1,17 @@
 <script lang='ts'>
-	import { selectable_events, database } from "$lib/storage/time_db";
+	import { selectable_events, database, updateDatabase } from "$lib/storage/time_db";
 	import { Tabs, Tab } from 'svelte-materialify'
 	import EventManager from "$lib/navigation/events/EventManager.svelte";
 	import { tick } from "svelte";
 	
 	$: tab_value = $selectable_events.indexOf($database.events[$database.selected_event])
-	if (tab_value === -1) tab_value = 0
+	$: if (tab_value === -1) tab_value = 0
 
 	let editing = false
 
 	// Navigation with arrows
 	function handleKeydown(e) {
-		let move
+		let move = 0
 		if (e.code === 'ArrowLeft') {
 			move = -1
 		}
@@ -24,9 +24,14 @@
 
 	async function editEvent() {
 		editing = true
-		const temp_tab = tab_value
-		await tick()
-		tab_value = temp_tab
+	}
+
+	function handleClick(event) {
+		if ('button' in event) {
+			editEvent()
+		} else {
+			$database.selected_event = $database.events.indexOf(event)
+		}
 	}
 	
 </script>
@@ -35,13 +40,11 @@
 
 <Tabs centerActive bind:value={tab_value}>
 	<div slot='tabs'>
-		{#each $selectable_events as event (event.name)}
-		<Tab on:click={() => $database.selected_event = $database.events.indexOf(event)}>
-			{event.name}
-		</Tab>
+		{#each [...$selectable_events, {name: 'Edit events...', button: true}] as event}
+			<Tab on:click={() => handleClick(event)}>
+				{event.name}
+			</Tab>
 		{/each}
-		
-		<Tab on:click={editEvent}> Edit events...</Tab>
 	</div>
 </Tabs>
 

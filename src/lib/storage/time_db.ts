@@ -3,7 +3,7 @@ import { writable } from "svelte-local-storage-store"
 import { derived } from 'svelte/store'
 
 export const wca_events = ['3x3', '2x2', '4x4', '5x5', '6x6', '7x7', '3BLD', 'FMC', 'OH', 'Clock', 
-							'Megaminx', 'Pyraminx', 'Skewb', 'Sq-1', '4BLD', '5BLD', 'MBLD']
+							'Megaminx', 'Pyraminx', 'Skewb', 'Square-1', '4BLD', '5BLD', 'MBLD', 'Other']
 
 const default_sessions_for_event = [
 	{name: '3x3', sessions: ['Main', 'PLL', 'Last layer', 'Alg drill']},
@@ -19,10 +19,11 @@ const default_sessions_for_event = [
 	{name: 'Megaminx', sessions: ['Main', 'RF2L', 'Last layer']},
 	{name: 'Pyraminx', sessions: ['Main']},
 	{name: 'Skewb', sessions: ['Main', 'RF2L', 'Last layer']},
-	{name: 'Sq-1', sessions: ['Main']},
+	{name: 'Square-1', sessions: ['Main']},
 	{name: '4BLD', sessions: ['Main']},
 	{name: '5BLD', sessions: ['Main']},
 	{name: 'MBLD', sessions: ['Main']},
+	{name: 'Other', sessions: ['Main']},
 ]
 
 const default_session: Session = {
@@ -52,7 +53,7 @@ export type Event = {
 };
 
 type Database = {
-	events: Event[],
+	events: Event[]
 	selected_event: number
 }
 
@@ -68,7 +69,8 @@ function build_default_database(): Database {
 		
 		events.push( {name: event, hide: false, sessions: sessions, selected_session: 0} )
 	}
-	return {events: events, selected_event: 0}
+	const db: Database = {events: events, selected_event: 0}
+	return db
 }
 
 export const database = writable('database', build_default_database())
@@ -78,31 +80,28 @@ export const selectable_events = derived(
 	$database => $database.events.filter(v => v.hide === false)
 )
 
-export const active_event = derived(
-	database,
-	$database => $database.events[$database.selected_event]
-)
+export function active_event(callback: (event: Event) => Event): void {
+	database.update(db => {
+		db.events[db.selected_event] = callback(db.events[db.selected_event])
+		return db
+	})
+}
 
-export const active_session = derived(
-	active_event,
-	$active_event => $active_event.sessions[$active_event.selected_session]
-)
+export function active_session(callback: (session: Session) => Session = v => v): Session {
+	let session
+	database.update(db => {
+		session = db.events[db.selected_event].sessions[db.events[db.selected_event].selected_session]
+		session = callback(session)
+		return db
+	})
+	return session 
+}
 
 export function addSolve(solve: Solve): void {
-	let event: Event
-	const unsubcribe = active_event.subscribe(v => event = v)
-	const session = event.sessions[event.selected_session]
-
-	if (!solve.date) {
-		solve.date = new Date()
-	}
-
-	solve.scramble = session.scrambles[session.scrambles.length - 1]
-
-	session.solves.push(solve)
-	session.scrambles.push(get_random_scramble(event))
-
-	unsubcribe()
+	active_session(session => {
+		session.solves.push(solve)
+		return session
+	})
 }
 
 export function deleteAllSolves(): void {
@@ -112,13 +111,11 @@ export function deleteAllSolves(): void {
 }
 
 export function deleteSolve(solve: Solve): void {
-	let session
-	const unsubcribe = active_session.subscribe(v => session = v)
-
-	const i = session.solves.indexOf(solve)
-	session.solves.splice(i, 1)
-	updateDatabase()
-	unsubcribe()
+	active_session(session => {
+		const i = session.solves.indexOf(solve)
+		session.solves.splice(i, 1)
+		return session
+	})
 }
 
 export function addEvent(name: string, scramble?: string): void {
@@ -134,24 +131,18 @@ export function addEvent(name: string, scramble?: string): void {
 
 		return db
 	})
-	updateDatabase()
 }
 
 export function addSession(name: string, event: Event): void {
-	let db: Database
-	const unsubcribe = database.subscribe(v => db = v)
-
-	const new_session: Session = {
-		name: name,
-		solves: [],
-		scrambles: [get_random_scramble(event)]
-	}
-	db.events[db.events.indexOf(event)].sessions.push(new_session)
-	unsubcribe()
-}
-
-export function updateDatabase(): void {
-	database.update(db => {return {...db}})
+	database.update(db => {
+		const new_session: Session = {
+			name: name,
+			solves: [],
+			scrambles: [get_random_scramble(event)]
+		}
+		db.events[db.events.indexOf(event)].sessions.push(new_session)
+		return db
+	})
 }
 
 import { get_random_scramble } from '$lib/scramble/scrambler'

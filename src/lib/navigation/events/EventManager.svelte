@@ -30,7 +30,7 @@
 				<Button>Scramble type</Button>
 			</div>
 			<List>
-				{#each wca_events as event}
+				{#each [...wca_events, 'Other'] as event}
 					<ListItem on:click={() => new_event_scramble = event}>
 						{event}
 					</ListItem>

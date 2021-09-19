@@ -1,6 +1,6 @@
 <script lang='ts'>
 	import '../../app.css'
-	import type { GeneralSetting as Setting} from '$lib/settings'; 
+	import type { GeneralSetting as Setting } from '$lib/settings'; 
 	import { Menu, Switch, ListItem, List, Button } from 'svelte-materialify'
 	export let setting: Setting
 	export let disabled = false
