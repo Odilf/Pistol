@@ -39,6 +39,7 @@
     "@lukeed/uuid": "^2.0.0",
     "@mdi/js": "^6.1.95",
     "@smui/button": "^4.2.0",
+    "chart.js": "^3.5.1",
     "cookie": "^0.4.1",
     "cubing": "^0.20.2",
     "jshint": "^2.13.0",
