@@ -2,7 +2,7 @@
 	import { getSettingByName } from '$lib/settings'
 	import '../../app.css'
 
-	export let time: number
+	export let time: number = 0
 	export let decimals: number = undefined
 	export let small_decimals = true
 	export let penalty: 0 | 2 | 'DNF' = 0
@@ -11,32 +11,37 @@
 	const small = small_decimals && getSettingByName('Small decimals')
 	if (penalty === 2) time += 2
 	
-	const date = new Date(time * 1000)
+	// let date = new Date(time * 1000)
+	$: date = new Date(time * 1000)
 
-	const hours = date.getHours() - 1
-	const minutes = date.getMinutes()
-	const seconds = date.getSeconds()
+	$: hours = date.getHours() - 1
+	$: minutes = date.getMinutes()
+	$: seconds = date.getSeconds()
 	
 	if (decimals === undefined && !minutes) {
 		decimals = parseInt(getSettingByName('Decimals')) 
 	}
-	const decimals_value = Math.round((time % 1) * 10**(decimals))
+	$: decimals_value = time.toFixed(decimals).substr(-decimals)
 	
-	let whole = ''
-	if (hours) {
-		hours < 10 && (whole += '0')
-		whole += hours
-		whole += ':'
+	$: whole = format_wholes(hours, minutes, seconds)
+	function format_wholes(hours: number, minutes: number, seconds: number): string {
+		whole = ''
+		if (hours) {
+			hours < 10 && (whole += '0')
+			whole += hours
+			whole += ':'
+		}
+		if (whole || minutes) {
+			whole && minutes < 10 && (whole += '0')
+			whole += minutes
+			whole += ':'
+		}
+		if (whole) {
+			seconds < 10 && (whole += '0')
+		}
+		whole += seconds
+	return whole
 	}
-	if (whole || minutes) {
-		whole && minutes < 10 && (whole += '0')
-		whole += minutes
-		whole += ':'
-	}
-	if (whole) {
-		seconds < 10 && (whole += '0')
-	}
-	whole += seconds
 
 </script>
 
