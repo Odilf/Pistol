@@ -17,7 +17,7 @@
 
 	
 	import { fade } from 'svelte/transition'
-	import { database } from '$lib/storage/time_db';
+	import { database } from '$lib/storage/database';
 	let width: number
 	
 	let isDragging

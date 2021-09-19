@@ -1,6 +1,6 @@
 <script lang='ts'>
-	import type { Event } from '$lib/storage/time_db'
-	import { addSession } from '$lib/storage/time_db'
+	import type { Event } from '$lib/storage/database'
+	import { addSession } from '$lib/storage/database'
 	import { Menu, List, ListItem, Button, Dialog } from 'svelte-materialify'
 
 	export let event: Event

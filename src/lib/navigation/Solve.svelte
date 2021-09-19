@@ -1,8 +1,8 @@
 <script lang='ts'>
 	import { Card, CardText, CardActions, Button, TextField } from "svelte-materialify";
 	import CubeVisualizer from "$lib/navigation/CubeVisualizer.svelte";
-	import { database, deleteSolve } from '$lib/storage/time_db';
-	import type { Solve } from '$lib/storage/time_db'
+	import { database, deleteSolve } from '$lib/storage/database';
+	import type { Solve } from '$lib/storage/database'
 	import TimeDisplay from "$lib/timer/TimeDisplay.svelte";
 	import { fade, fly } from 'svelte/transition'
 	import '../../app.css'
@@ -45,6 +45,10 @@
 
 				<div style=color:grey>
 					Solved on: {new Date(solve.date).toDateString()}
+					{#if solve.imported}
+						<br>
+						Imported from {solve.imported}
+					{/if}
 				</div>
 			</div>
 			<CubeVisualizer {solve}/>

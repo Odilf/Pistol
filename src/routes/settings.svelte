@@ -7,11 +7,11 @@
 </script>
 
 <script lang='ts'>
-	import { ListItem, Button, Tooltip } from 'svelte-materialify'
+	import { Button, ListItem, Tooltip } from 'svelte-materialify'
 	import { settings, resetSettings } from '$lib/settings'
 	import Setting from '$lib/settings/Setting.svelte'
 	import Back from '$lib/utils/Back.svelte'
-	import { deleteAllSolves } from '$lib/storage/time_db'
+	import { deleteAllSolves } from '$lib/storage/database'
 	import ConfirmationButton from '$lib/utils/ConfirmationButton.svelte'
 
 	import '../app.css';
@@ -28,33 +28,60 @@
 	</header>
 
 
+	<div class='content'>
 	{#each $settings as category}
-		<div class='content'>
-			
-			<h2>{category.name}</h2>
-			<h3>{category.description}</h3>
-			
-			{#each category.settings as setting}
-				<ListItem style='width:100%'>
-					<Tooltip top>
-						{setting.name}
-						<!-- <span slot="subtitle"> {setting.description} </span> -->
-						
-						<span slot='tip'>{setting.description}</span>
-					</Tooltip>
+		
+		<h2>{category.name}</h2>
+		<h3>{category.description}</h3>
+		
+		{#each category.settings as setting}
+			<ListItem style='width:100%'>
+				<Tooltip top>
+					{setting.name}
+					<span slot='tip'>{setting.description}</span>
+				</Tooltip>
 
-					<span slot="append">
-						<div class="setting">
-							<Setting bind:setting={setting}/>
-						</div>
-					</span>
-				</ListItem>
-			{/each}
-		</div>
+				<span slot="append">
+					<div class="setting">
+						<Setting bind:setting={setting}/>
+					</div>
+				</span>
+			</ListItem>
+		{/each}
+		
+		
 
-		<br>
-		<br>
-	{/each}
+		{/each}
+
+		<h2>Import and data</h2>
+		<h3>Import from csTimer or delete your data</h3>
+
+		<ListItem style='width:100%'>
+			<div class="setting">
+				To import from csTimer drag and drop <br> 
+				csTimer export to timer.  
+			</div>
+		</ListItem>
+
+		<ListItem style='width:100%'>
+			<div class="setting">
+				<ConfirmationButton on:confirmation={resetSettings}> 
+					Reset settings
+				</ConfirmationButton>
+			</div>
+		</ListItem>
+
+		<ListItem style='width:100%'>
+			<div class="setting">
+				<ConfirmationButton on:confirmation={deleteAllSolves}> 
+					Delete all solves
+					<span slot='dialog'> Are you sure you want to irreversibly delete all your solves? </span>
+				</ConfirmationButton>
+			</div>
+		</ListItem>
+	<br>
+	<br>
+	</div>
 </main>
 
 <style lang='scss'>

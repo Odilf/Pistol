@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { Event, Session, Solve } from '$lib/storage/time_db'
-	import { database } from '$lib/storage/time_db'
+	import type { Event, Session, Solve } from '$lib/storage/database'
+	import { database } from '$lib/storage/database'
 	import { Dialog, Overlay, Button, Divider } from 'svelte-materialify'
 	import ImportCard from '$lib/utils/ImportCard.svelte'
 

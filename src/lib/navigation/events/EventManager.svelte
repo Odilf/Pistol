@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Dialog, Button, List, Menu, ListItem } from 'svelte-materialify'
-	import { addEvent, database, wca_events } from '$lib/storage/time_db'
+	import { addEvent, database, wca_events } from '$lib/storage/database'
 	import EventEditor from './EventEditor.svelte'
 
 	export let active = false

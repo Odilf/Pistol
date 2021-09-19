@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Dialog, List, ListItem, Button, ListGroup } from 'svelte-materialify'
-	import { database, wca_events, addSession } from '$lib/storage/time_db'
-	import type { Event } from '$lib/storage/time_db'
+	import { database, wca_events, addSession } from '$lib/storage/database'
+	import type { Event } from '$lib/storage/database'
 import EventSelect from './EventSelect.svelte';
 
 	export let event: Event;

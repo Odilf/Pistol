@@ -1,5 +1,5 @@
 <script lang='ts'>
-	import type { Solve } from '$lib/storage/time_db'
+	import type { Solve } from '$lib/storage/database'
 	import { TwistyPlayer } from "cubing/twisty"; //Necessary for cube visualization
 	export let solve: Solve;
 	import '../../app.css'

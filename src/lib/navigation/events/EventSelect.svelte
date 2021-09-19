@@ -1,5 +1,5 @@
 <script lang='ts'>
-	import { selectable_events, database, updateDatabase } from "$lib/storage/time_db";
+	import { selectable_events, database } from "$lib/storage/database";
 	import { Tabs, Tab } from 'svelte-materialify'
 	import EventManager from "$lib/navigation/events/EventManager.svelte";
 	import { tick } from "svelte";

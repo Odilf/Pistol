@@ -2,8 +2,8 @@
 	import { Card, CardActions, Button, Divider, Menu, List, ListItem } from 'svelte-materialify'
 	import { slide } from 'svelte/transition'
 	import TimeDisplay from '$lib/timer/TimeDisplay.svelte';
-	import type { Event, Solve } from '$lib/storage/time_db'
-	import { database } from '$lib/storage/time_db'
+	import type { Event, Solve } from '$lib/storage/database'
+	import { database } from '$lib/storage/database'
 	import SessionSelect from '$lib/navigation/SessionSelect.svelte';
 
 	export let csSession: {name: string, solves: Solve[], scramble_type: string, event: Event }

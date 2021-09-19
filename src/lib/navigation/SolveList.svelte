@@ -1,6 +1,6 @@
 <script lang='ts'>
-	import { active_session, database, deleteSolve } from '$lib/storage/time_db'
-	import type { Solve as SolveType } from '$lib/storage/time_db'
+	import { active_session, database, deleteSolve } from '$lib/storage/database'
+	import type { Solve as SolveType } from '$lib/storage/database'
 	import Solve from './Solve.svelte'
 	import { getSettingByName } from '$lib/settings'
 	import TimeDisplay from '$lib/timer/TimeDisplay.svelte'

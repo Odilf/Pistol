@@ -1,6 +1,6 @@
 <script>
 	import "../../app.css";
-	// import { $solve_database } from '$lib/storage/time_db'
+	// import { $solve_database } from '$lib/storage/database'
 
 	// $: average = $active_session.solves.map(v => v.time).reduce((a, b) => a + b, 0) / $active_session.solves.length
 </script>

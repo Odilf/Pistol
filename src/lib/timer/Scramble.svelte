@@ -1,6 +1,6 @@
 <script lang='ts'>
 	// import { scrambles } from '$lib/scramble/scrambler'
-	import { active_session } from '$lib/storage/time_db'
+	import { active_session } from '$lib/storage/database'
 
 	$: session = active_session()
 </script>
