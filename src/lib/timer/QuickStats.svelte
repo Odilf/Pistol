@@ -1,16 +1,23 @@
 <script>
-	import "../../app.css";
-	// import { $solve_database } from '$lib/storage/database'
+	// import "../../app.css";
+	import { active_session, database } from '$lib/storage/database'
+	import { onDestroy } from "svelte";
 
-	// $: average = $active_session.solves.map(v => v.time).reduce((a, b) => a + b, 0) / $active_session.solves.length
+	
+	let average
+	const unsubscribe = database.subscribe(() => 
+		average = active_session().solves.map(v => v.time).reduce((a, b) => a + b, 0) / active_session().solves.length
+	)
+	onDestroy(unsubscribe)
+
 </script>
 
 <p>
-	<!-- {#if average}
+	{#if average}
 		Average: {average.toFixed(3)}	
 	{:else}
 		Yee-haaaaaaa going fast :sungals:
-	{/if} -->
+	{/if}
 </p>
 
 <style lang="scss">
