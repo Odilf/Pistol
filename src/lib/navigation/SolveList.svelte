@@ -22,7 +22,17 @@
 	let active_solve: SolveType
 	let show_solves = true
 	let show_solve = false
+
+	function handleKeydown(e) {
+		let index = $solves.indexOf(active_solve)
+		if (index === -1) return
+		if (e.key === 'ArrowDown') index += 1
+		if (e.key === 'ArrowUp')   index -= 1
+		$solves[index] && (active_solve = $solves[index])
+	}
 </script>
+
+<svelte:window on:keydown={handleKeydown}/>
 
 <main>
 	{#if show_solves}
