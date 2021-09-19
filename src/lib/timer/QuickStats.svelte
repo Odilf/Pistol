@@ -5,16 +5,17 @@
 
 	
 	let average
-	const unsubscribe = database.subscribe(() => 
-		average = active_session().solves.map(v => v.time).reduce((a, b) => a + b, 0) / active_session().solves.length
-	)
+	const unsubscribe = database.subscribe(() => {
+		const solves = active_session().solves.slice(-100)
+		average = solves.map(v => v.time).reduce((a, b) => a + b, 0) / solves.length
+	})
 	onDestroy(unsubscribe)
 
 </script>
 
 <p>
 	{#if average}
-		Average: {average.toFixed(3)}	
+		Ao100: {average.toFixed(3)}	
 	{:else}
 		Yee-haaaaaaa going fast :sungals:
 	{/if}
