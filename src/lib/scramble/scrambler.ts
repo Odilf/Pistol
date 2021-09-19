@@ -1,22 +1,24 @@
-export function get_random_scramble(event: {name: string, type?: string}, seed = new Date().getMilliseconds()): string {
+export function get_random_scramble(event: {name: string, scramble: string}, seed = new Date().getMilliseconds()): string {
 	
-	const cube_type = event.type ? event.type : event.name
+	// const event.scramble = event.scramble
 
 	let scramble: Move[] = []
 	let length = 69
-	switch (cube_type) {
+	switch (event.scramble) {
 		case "3x3":
 			length = 18
 			break;
 		case "2x2":
 			length = 9
 			break;
+		case "Other":
+			return ''
 		default:
-			return "Not a supported cube (yet)"
+			return `${event.scramble} is not yet supported`
 		}
 		
 		for (let i = 0; i < length; i++) {
-			const temp_move = random_item(get_moves(cube_type, scramble[scramble.length - 1]), seed)
+			const temp_move = random_item(get_moves(event.scramble, scramble[scramble.length - 1]), seed)
 			if (Array.isArray(temp_move)) {
 				scramble = scramble.concat(temp_move)
 			} else {
