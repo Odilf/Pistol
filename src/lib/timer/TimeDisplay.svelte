@@ -7,37 +7,47 @@
 	export let small_decimals = true
 	export let penalty: 0 | 2 | 'DNF' = 0
 
-	$: small = small_decimals && getSettingByName('Small decimals')
-	$: if (decimals === undefined) {
+	
+	const small = small_decimals && getSettingByName('Small decimals')
+	if (penalty === 2) time += 2
+	
+	const date = new Date(time * 1000)
+
+	const hours = date.getHours() - 1
+	const minutes = date.getMinutes()
+	const seconds = date.getSeconds()
+	
+	if (decimals === undefined && !minutes) {
 		decimals = parseInt(getSettingByName('Decimals')) 
 	}
-
-	let seconds: string
-	$: if (penalty === 2) {
-		seconds = Math.floor(time + 2).toString()
-	} else {
-		seconds = Math.floor(time).toString()
+	const decimals_value = Math.round((time % 1) * 10**(decimals))
+	
+	let whole = ''
+	if (hours) {
+		hours < 10 && (whole += '0')
+		whole += hours
+		whole += ':'
 	}
-
-	let decimals_value: string|number
-	$: if (!time) {
-		time = 0
-		decimals_value = 0
-	} else {
-		decimals_value = time.toFixed(decimals).substr(-decimals) 
+	if (whole || minutes) {
+		whole && minutes < 10 && (whole += '0')
+		whole += minutes
+		whole += ':'
 	}
+	if (whole) {
+		seconds < 10 && (whole += '0')
+	}
+	whole += seconds
 
 </script>
 
-<div class="timer">
-	{#if penalty === 'DNF'} 
-		DNF
-	{:else}
-	<div class="seconds">{seconds}</div>
+<!-- {time} -->
+
+<div class="timer {penalty === 'DNF' ? 'DNF' : ''}">
+	{whole}
 		{#if decimals}
 			<div class:small={small}>.{decimals_value}{#if penalty===2} + {/if}</div>
 		{/if}
-	{/if}
+	<!-- {/if} -->
 </div>
 
 <style lang='scss'>
@@ -52,5 +62,12 @@
 		.small {
 			font-size: 0.69em;
 		}
+	}
+
+	.DNF::before {
+		content: 'DNF (';
+	}
+	.DNF::after {
+		content: ')';
 	}
 </style>
