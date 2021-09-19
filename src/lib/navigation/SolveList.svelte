@@ -16,7 +16,7 @@
 	const solves = derived(database, db => {
 		const solves = db.events[db.selected_event].sessions[db.events[db.selected_event].selected_session].solves
 		if (solves.length > 100) truncated = true
-		return solves.slice().reverse().slice(0, 100)
+		return solves.slice(-100).reverse()
 	})
 	const decimals = getSettingByName("Solve Decimals")
 
