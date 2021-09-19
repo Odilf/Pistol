@@ -1,16 +1,16 @@
 <script lang='ts'>
-	import CubeVisualizer from "$lib/navigation/CubeVisualizer.svelte";
-	import TimeDisplay from "$lib/timer/TimeDisplay.svelte";
+	import CubeVisualizer from "$lib/navigation/CubeVisualizer.svelte"
+	import TimeDisplay from "$lib/timer/TimeDisplay.svelte"
 	
-	import { database, deleteSolve } from '$lib/storage/database';
+	import { database, deleteSolve } from '$lib/storage/database'
 	import type { Solve } from '$lib/storage/database'
 
-	import { Card, CardText, CardActions, Button, TextField } from "svelte-materialify";
+	import { Card, CardText, CardActions, Button, TextField } from "svelte-materialify"
 	import { fade, fly } from 'svelte/transition'
 	import '../../app.css'
 
-	export let solve: Solve;
-	export let transition = fly;
+	export let solve: Solve
+	export let puzzle: string
 	
 	const penalties: Array<0 | 2 | 'DNF'> = [0, 2, 'DNF']
 
@@ -18,17 +18,14 @@
 
 </script>
 
-<div>
-	<div class="d-flex justify-center mt-4 mb-4">
-		<Card style=height:fit-content {transition}>
-			<CardText>
-				{#if solve.penalty === 'DNF'}
-					<div transition:fade class='DNF'>{solve.time.toFixed(3)}</div>
-				{/if} 
+<!-- <div> -->
+	<!-- <div class="d-flex justify-center mt-4 mb-4"> -->
+		<Card style='height:fit-content width:80%'>
+			<CardText class='pa-4'>
 				
 				<div class="text--primary text-h2">
 					<header>
-						<div class=time>
+						<div class='time {solve.penalty === 'DNF' ? 'red-text darken-4' : ''}'>
 							<TimeDisplay time={solve.time} penalty={solve.penalty} decimals={3} small_decimals={false}/>
 						</div>
 						<Button size=small class='red' fab on:click={() => deleteSolve(solve)}>
@@ -53,7 +50,7 @@
 					{/if}
 				</div>
 			</div>
-			<CubeVisualizer {solve}/>
+			<CubeVisualizer {solve} {puzzle}/>
 			
 		</CardText>
 
@@ -75,8 +72,8 @@
 			{/if}
 		</CardActions>
 	</Card>
-	</div>
-</div>
+	<!-- </div> -->
+<!-- </div> -->
 
 <style>
 	header {
@@ -86,10 +83,5 @@
 	}
 	.time {
 		flex-grow: 1;
-	}
-	.DNF {
-		font-size: 2em;
-		font-weight: 700;
-		color: rgb(172, 101, 101);
 	}
 </style>
