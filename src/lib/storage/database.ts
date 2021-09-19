@@ -49,7 +49,7 @@ export type Event = {
 	sessions: Session[]
 	hide: boolean
 	selected_session: number
-	scramble?: string
+	scramble: string
 };
 
 type Database = {
@@ -67,7 +67,7 @@ function build_default_database(): Database {
 		? [default_session] 
 		: default_sessions_for_event[i].sessions.map( v => ({name: v, solves: [], scrambles: null}) )
 		
-		events.push( {name: event, hide: false, sessions: sessions, selected_session: 0} )
+		events.push( {name: event, hide: false, sessions: sessions, selected_session: 0, scramble: event} )
 	}
 	const db: Database = {events: events, selected_event: 0}
 	return db
@@ -80,11 +80,23 @@ export const selectable_events = derived(
 	$database => $database.events.filter(v => v.hide === false)
 )
 
-export function active_event(callback: (event: Event) => Event): void {
-	database.update(db => {
-		db.events[db.selected_event] = callback(db.events[db.selected_event])
+export function active_event(callback: (event: Event) => Event = null): Event {
+	let event
+	const accesor = db => {
+		event = db.events[db.selected_event]
+		event = callback(event)
 		return db
-	})
+	}
+
+	if (callback) {
+		database.update(accesor)
+	}
+	else {
+		callback = v => v
+		const unsubscribe = database.subscribe(accesor)
+		unsubscribe()	
+	}
+	return event 
 }
 
 export function active_session(callback: (session: Session) => Session = null): Session {
