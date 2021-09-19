@@ -87,13 +87,22 @@ export function active_event(callback: (event: Event) => Event): void {
 	})
 }
 
-export function active_session(callback: (session: Session) => Session = v => v): Session {
+export function active_session(callback: (session: Session) => Session = null): Session {
 	let session
-	database.update(db => {
+	const accesor = db => {
 		session = db.events[db.selected_event].sessions[db.events[db.selected_event].selected_session]
 		session = callback(session)
 		return db
-	})
+	}
+
+	if (callback) {
+		database.update(accesor)
+	}
+	else {
+		callback = v => v
+		const unsubscribe = database.subscribe(accesor)
+		unsubscribe()	
+	}
 	return session 
 }
 
