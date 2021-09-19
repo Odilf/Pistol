@@ -1,7 +1,3 @@
-<script context="module" lang="ts">
-	export const prerender = true;
-</script>
-
 <script lang="ts">
 	import { fly } from 'svelte/transition'
 	import TimeInput from '$lib/timer/TimeInput.svelte';
