@@ -1,6 +1,8 @@
 import preprocess from 'svelte-preprocess';
 import vercel from '@sveltejs/adapter-vercel';
 
+const production = process.env.NODE_ENV === 'production';
+
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
 	// Consult https://github.com/sveltejs/svelte-preprocess
@@ -15,7 +17,16 @@ const config = {
 	kit: {
 		// hydrate the <div id="svelte"> element in src/app.html
 		adapter: vercel(),
-		target: '#svelte'
+		target: '#svelte',
+		vite: {
+			optimizeDeps: {
+				include: ['@carbon/charts'],
+				exclude: ['@carbon/telemetry']
+			},
+			ssr: {
+				noExternal: [production && '@carbon/charts'].filter(Boolean),
+			},
+		},
 	},
 };
 
