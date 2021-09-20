@@ -1,5 +1,5 @@
 <script lang='ts'>
-	import { active_session, database, deleteSolve } from '$lib/storage/database'
+	import { active_event, active_session, database, deleteSolve } from '$lib/storage/database'
 	import type { Solve as SolveType } from '$lib/storage/database'
 	import { getSettingByName } from '$lib/settings'
 	
@@ -14,7 +14,9 @@
 
 	let truncated = false
 	const solves = derived(database, db => {
+		
 		const solves = db.events[db.selected_event].sessions[db.events[db.selected_event].selected_session].solves
+		// console.log(solves);
 		if (solves.length > 100) truncated = true
 		return solves.slice(-100).reverse()
 	})
@@ -23,8 +25,9 @@
 	let active_solve: SolveType
 	let show_solves = true
 	let show_solve = false
+	let puzzle: string
 
-	function handleKeydown(e) {
+	function handleKeydown(e): void {
 		let index = $solves.indexOf(active_solve)
 		if (index === -1) return
 		if (e.key === 'ArrowDown') index += 1
@@ -40,20 +43,21 @@
 	<body class="rounded-bl-xl" transition:fly={{ x: 69, duration: 500 }} >
 
 		{#if $solves.length === 0}
-			<div class='grey-text pt-8' transition:fly={{ x: 69, duration: 500 }}>
+			<div class='grey-text pt-8' in:fly={{ x: 69, duration: 500 }}>
 				No solves yet <br>
 				Start solving!
 			</div>
 		{:else}
 
 		<List class="d-flex flex-column pb-0">
-			{#each $solves as solve, i (i)}
-				<div animate:flip in:fly={{y: -20, duration: 800}} out:fade
+			{#each $solves as solve}
+				<div in:fly={{y: -20, duration: 800}}
+				
 					on:auxclick={() => deleteSolve(solve)}
 					on:click={e => { e.altKey && deleteSolve(solve)}}
 				>
 					<Button style='flex-grow:1' class='elevation-2'
-						on:click={() => {active_solve = solve; show_solve = true}}
+						on:click={() => { active_solve = solve; show_solve = true }}
 					>
 
 						<TimeDisplay time={solve.time} small_decimals={false} penalty={solve.penalty} {decimals}/>
@@ -74,7 +78,7 @@
 
 	<Dialog bind:active={show_solve} on:outroend={() => show_solve = false} class=red>
 		{#if active_solve}
-			<Solve bind:solve={active_solve} transition={fly}/>
+			<Solve bind:solve={active_solve} puzzle={active_event().scramble}/>
 		{/if}
 	</Dialog>
 

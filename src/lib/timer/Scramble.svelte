@@ -1,13 +1,16 @@
 <script lang='ts'>
 	// import { scrambles } from '$lib/scramble/scrambler'
-	import { active_session } from '$lib/storage/database'
+	import { database, active_session } from '$lib/storage/database'
+	import { onDestroy } from 'svelte';
 
-	$: session = active_session()
+	let scrambles
+	const unsubscribe = database.subscribe(() => scrambles = active_session().scrambles)
+	onDestroy(unsubscribe)
 </script>
 
 <p>
-	{#if session.scrambles}
-		{session.scrambles[session.scrambles.length - 1]}
+	{#if scrambles}
+	{scrambles[scrambles.length - 1]}
 	{/if}
 </p>
 

@@ -3,10 +3,15 @@
 	import TimeInput from '$lib/timer/TimeInput.svelte';
 	import Timer from '$lib/timer/Timer.svelte';
 	import { getSettingByName } from '$lib/settings'
-	import { addSolve } from '$lib/storage/database'
+	import { database, active_session, addSolve, active_event  } from '$lib/storage/database'
 	import type { Solve } from '$lib/storage/database';
+	import { onDestroy } from 'svelte';
 
 	$: timer_type = getSettingByName('Input method')
+
+	let scramble
+	const unsubscribe = database.subscribe(() => scramble = active_session().scrambles[active_session().scrambles.length - 1])
+	onDestroy(unsubscribe)
 
 	function submit(event) {
 		
@@ -15,9 +20,6 @@
 			penalty = event.detail.penalty
 		}
 		
-		// const scramble = $scrambles[$selection.event][$scrambles[$selection.event].length - 1]
-		const scramble = 'caca'
-		
 		const solve: Solve = {
 			time: event.detail.time,
 			penalty: penalty,
@@ -25,7 +27,7 @@
 			scramble: scramble,
 			reconstruction: null,
 		}
-		addSolve(solve)
+		addSolve(solve, active_event())
 	}
 </script>
 

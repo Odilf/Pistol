@@ -1,4 +1,4 @@
-export function get_random_scramble(event: {name: string, scramble: string}, seed = new Date().getMilliseconds()): string {
+export async function get_random_scramble(event: {name: string, scramble: string}, seed = new Date().getMilliseconds()): Promise<string> {
 	
 	// const event.scramble = event.scramble
 

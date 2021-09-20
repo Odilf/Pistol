@@ -118,9 +118,11 @@ export function active_session(callback: (session: Session) => Session = null): 
 	return session 
 }
 
-export function addSolve(solve: Solve): void {
+export async function addSolve(solve: Solve, event: Event): Promise<void> {
+	const scramble = await get_random_scramble(event)
 	active_session(session => {
 		session.solves.push(solve)
+		session.scrambles.push(scramble)
 		return session
 	})
 }
@@ -154,12 +156,13 @@ export function addEvent(name: string, scramble?: string): void {
 	})
 }
 
-export function addSession(name: string, event: Event): void {
+export async function addSession(name: string, event: Event): Promise<void> {
+	const scramble = await get_random_scramble(event)
 	database.update(db => {
 		const new_session: Session = {
 			name: name,
 			solves: [],
-			scrambles: [get_random_scramble(event)]
+			scrambles: [scramble]
 		}
 		db.events[db.events.indexOf(event)].sessions.push(new_session)
 		return db
@@ -169,11 +172,19 @@ export function addSession(name: string, event: Event): void {
 import { get_random_scramble } from '$lib/scramble/scrambler'
 
 // Remove old scrambles at load time
-database.update($database => {
-	for (const event of $database.events) {
+async function reset_scrambles() {
+	let db
+	const unsubscribe = database.subscribe(v => db = v)
+
+	for (const event of db.events) {
 		for (const session of event.sessions) {
-			session.scrambles = [get_random_scramble(event)]
+			session.scrambles = [await get_random_scramble(event)]
 		}
 	}
-	return $database
-})
+
+	database.set(db)
+
+	unsubscribe()
+}
+
+reset_scrambles()

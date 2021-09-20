@@ -1,17 +1,14 @@
 <script lang='ts'>
-	import Import from '$lib/utils/Import.svelte'
+	import DashboardCard from '$lib/dashboard/DashboardCard.svelte'
+	import { database } from '$lib/storage/database'
 
 </script>
 
-<!-- <h1> Dashboard coming soon! </h1> -->
-
-<Import/>
+<!-- {#each $database.events as event} -->
+	<!-- <DashboardCard session={event.sessions[0]} event={event}/> -->
+<!-- {/each} -->
+	
+<DashboardCard session={$database.events[0].sessions[0]} event={$database.events[0]}/>
 
 <style>
-	/* h1 {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		height: 100vh;
-	} */
 </style>
