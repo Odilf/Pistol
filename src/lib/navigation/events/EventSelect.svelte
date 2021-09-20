@@ -19,7 +19,7 @@
 			move = 1
 		}
 		const index = $database.events.indexOf($selectable_events[tab_value + move])
-		if (index !== -1) $database.selected_event = index
+		if (index !== -1 && move) $database.selected_event = index
 	}
 
 	async function editEvent() {
