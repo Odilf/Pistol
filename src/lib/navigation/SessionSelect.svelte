@@ -5,24 +5,23 @@
 
 	export let event: Event
 	let adding_session: boolean
-	let new_session_name
+	let new_session_name: string
 </script>
 
-<body>
-	<Menu disabled={!event}>
-		<div slot="activator">
-			<Button style="width:100%;" disabled={!event}>{event ? event.sessions[event.selected_session].name : ''}</Button>
-		</div>
-			<List>
-				{#if event}
-					{#each event.sessions as session, i}
-						<ListItem on:click={() => event.selected_session = i}>{session.name}</ListItem> 
-					{/each}
-				{/if}
-				<ListItem class='red darken-4' on:click={() => adding_session = true}> New session </ListItem>
-			</List>
-		</Menu>
-</body>
+<Menu disabled={!event} >
+	<div slot="activator">
+		<Button class='ma-2' disabled={!event}>{event ? event.sessions[event.selected_session].name : ''}</Button>
+	</div>
+
+	<List>
+		{#if event}
+			{#each event.sessions as session, i}
+				<ListItem on:click={() => event.selected_session = i}> {session.name} </ListItem> 
+			{/each}
+		{/if}
+		<ListItem class='red darken-4' on:click={() => adding_session = true}> New session </ListItem>
+	</List>
+</Menu>
 
 <Dialog bind:active={adding_session}>
 	<Card>
@@ -47,13 +46,6 @@
 </Dialog>
 
 <style lang='scss'>
-	body {
-		display: flex;
-		flex-direction: column;
-		padding: 1em;
-		height: auto;
-		width: 100%;
-	}
 	div {
 		flex-grow: 1;
 		display: flex;
