@@ -1,5 +1,5 @@
 <script lang='ts'>
-	import { Card, CardActions, Button, Divider, Menu, List, ListItem } from 'svelte-materialify'
+	import { Card, CardActions, Button, Divider, Menu, List, ListItem, CardTitle } from 'svelte-materialify'
 	import { slide } from 'svelte/transition'
 	import TimeDisplay from '$lib/timer/TimeDisplay.svelte';
 	import type { Event, Solve } from '$lib/storage/database'
@@ -12,24 +12,31 @@
 </script>
 
 <Card>
-	<div class="d-flex align-center flex-column">
-	Imported session "{csSession.name}" <br>
+	<!-- <div class="d-flex align-center flex-column"> -->
+		
+		<CardTitle>
+			Imported session "{csSession.name}" of detected type {csSession.scramble_type} <br>
+		</CardTitle>
 
-		<Menu>
-		<div slot="activator">
-			<Button> will go to event {csSession.event ? csSession.event.name : '...'}</Button>
-		</div>
-		<List>
-			{#each $database.events as event}
-				<ListItem on:click={() => csSession.event = event}>
-					{event.name}
-				</ListItem>
-			{/each}
-		</List>
-		</Menu>
+		<CardActions>
 
-		<SessionSelect event={csSession.event}/>
-
+			will go to event 
+			<Menu>
+				<div slot="activator">
+					<Button>{csSession.event ? csSession.event.name : '...'}</Button>
+				</div>
+				<List>
+					{#each $database.events as event}
+					<ListItem on:click={() => csSession.event = event}>
+						{event.name}
+					</ListItem>
+					{/each}
+				</List>
+			</Menu>
+			
+			<SessionSelect event={csSession.event}/>
+			
+		</CardActions>
 		<!-- <Menu>
 			<div slot="activator">
 				<Button> in session {csSession ? csSession.event[csSession.event.selected_session] : ''}</Button>
@@ -42,7 +49,7 @@
 				{/each}
 			</List>
 		</Menu> -->
-	</div>
+	<!-- </div> -->
 	<br>
 
 	<CardActions>
