@@ -3,7 +3,7 @@
 	import type { Event, Session, Solve } from '$lib/storage/database'
 
 	import TimeChart from './TimeChart.svelte'
-	import Back from '$lib/utils/Back.svelte';
+	import * as stats from './statistician'
 
 	export let event: Event
 	export let session: Session
@@ -12,10 +12,9 @@
 
 </script>
 
-<Back/>
-
 <Card class='d-flex ma-8 red darken-4'>
+	{stats.get_reduced_sample(session.solves.map(v => v.time), 20)}
 	<CardTitle> {event.name} </CardTitle>
 	<CardSubtitle> {average} </CardSubtitle>
-	<!-- <TimeChart {session}/> -->
+	<TimeChart {session}/>
 </Card>

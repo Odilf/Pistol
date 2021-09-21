@@ -1,8 +1,11 @@
 <script lang='ts'>
 	import DashboardCard from '$lib/dashboard/DashboardCard.svelte'
 	import { database } from '$lib/storage/database'
+	import Back from '$lib/utils/Back.svelte'
 
 </script>
+
+<Back/>
 
 <!-- {#each $database.events as event} -->
 	<!-- <DashboardCard session={event.sessions[0]} event={event}/> -->
