@@ -1,19 +1,22 @@
 <script lang="ts">
 	import { Dialog, List, ListItem, Button, ListGroup } from 'svelte-materialify'
-	import { database, wca_events, addSession } from '$lib/storage/database'
+	import { database, wca_events, addSession, Solve } from '$lib/storage/database'
 	import type { Event } from '$lib/storage/database'
-import EventSelect from './EventSelect.svelte';
+	import EventSelect from './EventSelect.svelte';
+	import SessionSelect from '../SessionSelect.svelte';
 
 	export let event: Event;
 
 	let active = false;
 	let adding_session = false;
 	let new_session_name: string;
+	let toggling_to: boolean
 
-	function deleteSession(session) {
+	function deleteSession(session: { name: string; solves: Solve[]; scrambles: string[]; }) {
 		event.sessions.splice(event.sessions.indexOf(session), 1)
 		event.selected_session = 0
 	}
+
 
 </script>
 
@@ -26,11 +29,11 @@ import EventSelect from './EventSelect.svelte';
 		{/if}
 	</Button>
 
-	<ListGroup bind:active disabled class='white-text flex-grow-1'>
+	<!-- <ListGroup bind:active disabled class='white-text flex-grow-1'> -->
 
-		<span slot="activator"> {event.name} </span>
+		<!-- <span slot="activator"> {event.name} </span> -->
 
-		<List>
+		<!-- <List>
 			{#each event.sessions as session}
 			<ListItem>
 				{session.name}
@@ -42,11 +45,13 @@ import EventSelect from './EventSelect.svelte';
 				</span>
 			</ListItem>
 			{/each}
-		</List>
+		</List> -->
 		
-		<Button disabled={false} on:click={() => adding_session = true}> Add session... </Button>
+		<SessionSelect {event}/>
+
+		<!-- <Button disabled={false} on:click={() => adding_session = true}> Add session... </Button> -->
 		
-	</ListGroup>
+	<!-- </ListGroup> -->
 
 	<!-- Delete event button -->
 	{#if !wca_events.includes(event.name) }
