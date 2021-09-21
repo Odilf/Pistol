@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Dialog, Button, List, Menu, ListItem } from 'svelte-materialify'
+	import { Dialog, Button, List, Menu, ListItem, Card, CardText, CardTitle } from 'svelte-materialify'
 	import { addEvent, database, wca_events } from '$lib/storage/database'
 	import EventEditor from './EventEditor.svelte'
 
@@ -9,17 +9,26 @@
 	let new_event_scramble: string
 </script>
 
-<Dialog bind:active={active} width={800} class='d-flex align-center flex-column'>
-	<h1> Event manager</h1>
-	<List class="elevation-2" style=width:50%>
-		{#each $database.events as event (event.name)}
-			<EventEditor bind:event={event}/>
-		{/each}
-	</List>
-	
-		<Button on:click={() => adding_event = true}> Add custom event </Button>
+<Dialog bind:active class='d-flex align-center flex-column'>
+	<Card >
+		<CardTitle>
+			<h1> Event manager</h1>
+		</CardTitle>
+		<CardText>
+			<List class="elevation-2" style=width:50%>
+				{#each $database.events as event (event.name)}
+				<EventEditor bind:event={event}/>
+				{/each}
+			</List>
+		</CardText>
 
-	<Button on:click={() => active = false}> Done </Button>
+		
+		
+		
+		<Button on:click={() => adding_event = true}> Add custom event </Button>
+		
+		<Button on:click={() => active = false}> Done </Button>
+	</Card>
 </Dialog>
 
 <Dialog bind:active={adding_event}>
