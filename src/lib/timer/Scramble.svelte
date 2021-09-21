@@ -6,10 +6,6 @@
 	let scrambles: string[]
 	const unsubscribe = database.subscribe(() => scrambles = active_session().scrambles)
 	$: scramble = scrambles[scrambles.length - 1]
-
-	$: if (scramble.includes('\n')) {
-		scramble
-	}
 	onDestroy(unsubscribe)
 </script>
 
