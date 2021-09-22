@@ -13,7 +13,7 @@
 	const unsubscribe = database.subscribe(() => scramble = active_session().scrambles[active_session().scrambles.length - 1])
 	onDestroy(unsubscribe)
 
-	function submit(event) {
+	async function submit(event) {
 		
 		let penalty: 0 | 2 | 'DNF' = 0
 		if ('penalty' in event.detail) {
@@ -24,7 +24,7 @@
 			time: event.detail.time,
 			penalty: penalty,
 			date: new Date(),
-			scramble: scramble,
+			scramble: await scramble,
 			reconstruction: null,
 		}
 		addSolve(solve, active_event())
