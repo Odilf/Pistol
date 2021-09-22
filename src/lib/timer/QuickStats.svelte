@@ -27,6 +27,6 @@
 		margin-top: 0;
 		margin-bottom: 1em;
 
-		color: var(--tertiary-color)
+		// color: var(--tertiary-color)
 	}
 </style>
