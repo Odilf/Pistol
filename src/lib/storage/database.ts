@@ -81,7 +81,7 @@ export const selectable_events = derived(
 )
 
 export function active_event(callback: (event: Event) => Event = null): Event {
-	let event
+	let event: Event
 	const accesor = db => {
 		event = db.events[db.selected_event]
 		event = callback(event)
@@ -100,7 +100,7 @@ export function active_event(callback: (event: Event) => Event = null): Event {
 }
 
 export function active_session(callback: (session: Session) => Session = null): Session {
-	let session
+	let session: Session
 	const accesor = db => {
 		session = db.events[db.selected_event].sessions[db.events[db.selected_event].selected_session]
 		session = callback(session)
@@ -175,17 +175,24 @@ import { get_random_scramble } from '$lib/scramble/scrambler'
 async function reset_scrambles() {
 	let db
 	const unsubscribe = database.subscribe(v => db = v)
-
 	for (const event of db.events) {
 		for (const session of event.sessions) {
-			// session.scrambles = [await get_random_scramble(event)]
-			session.scrambles = ['']
+			session.scrambles = null
 		}
 	}
 
 	database.set(db)
-
 	unsubscribe()
 }
 
 reset_scrambles()
+
+// Load scramble if session doesn't have one
+database.subscribe(() => {
+	if (!active_session().scrambles) {
+		active_session(session => {
+			session.scrambles = [get_random_scramble(active_event())]
+			return session
+		})
+	}
+})
