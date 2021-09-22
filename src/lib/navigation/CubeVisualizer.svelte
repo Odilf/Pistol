@@ -1,7 +1,6 @@
 <script lang='ts'>
 	import type { Solve } from '$lib/storage/database'
 	import { TwistyPlayer } from "cubing/twisty"; //Necessary for cube visualization
-import { loop_guard } from 'svelte/internal';
 	import '../../app.css'
 
 	export let solve: Solve;
