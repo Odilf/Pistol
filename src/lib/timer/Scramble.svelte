@@ -3,17 +3,21 @@
 	import { database, active_session } from '$lib/storage/database'
 	import { onDestroy } from 'svelte';
 
-	let scrambles: string[]
+	let scrambles: Promise<string>[]
 	const unsubscribe = database.subscribe(() => scrambles = active_session().scrambles)
 	$: scramble = scrambles[scrambles.length - 1]
 	onDestroy(unsubscribe)
 </script>
 
 <p>
-	{#each scramble.split('\n') as line}
+	{#await scramble}
+		Loading
+	{:then scramble} 
+		{#each scramble.split('\n') as line}
 		{line}
 		<br>
-	{/each}
+		{/each}
+	{/await}
 	<!-- {scramble} -->
 </p>
 
