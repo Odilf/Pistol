@@ -19,6 +19,9 @@ const config = {
 		adapter: vercel(),
 		target: '#svelte',
 		vite: {
+			build: {
+				chunkSizeWarningLimit: 1000
+			},
 			optimizeDeps: {
 				include: ['@carbon/charts'],
 				exclude: ['@carbon/telemetry']
