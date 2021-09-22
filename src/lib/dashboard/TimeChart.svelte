@@ -3,7 +3,7 @@ import Solve from '$lib/navigation/Solve.svelte';
 
 	import type { Session } from '$lib/storage/database'
 	import { AreaChart } from "@carbon/charts-svelte"
-	import "@carbon/charts/styles-g100.min.css"
+	// import "@carbon/charts/styles-g100.min.css"
 	import { get_reduced_sample } from './statistician';
 
 	export let session: Session
