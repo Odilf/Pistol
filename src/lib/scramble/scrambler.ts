@@ -50,12 +50,6 @@ function random_item(array: string[], input_seed = 69420): string {
 	return array[Math.floor( ((Math.random() + input_seed) % 1)*array.length)]
 }
 
-interface Move {
-	axis: number
-	direction: number
-	amount: number
-}
-
 function get_moves(cube_type: string, last_move?: string): string[] {
 	
 	let moves = []
