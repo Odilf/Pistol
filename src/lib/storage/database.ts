@@ -18,7 +18,7 @@ const default_sessions_for_event = [
 	{name: 'Clock', sessions: ['Main']},
 	{name: 'Megaminx', sessions: ['Main', 'RF2L', 'Last layer']},
 	{name: 'Pyraminx', sessions: ['Main']},
-	{name: 'Skewb', sessions: ['Main', 'RF2L', 'Last layer']},
+	{name: 'Skewb', sessions: ['Main']},
 	{name: 'Square-1', sessions: ['Main']},
 	{name: '4BLD', sessions: ['Main']},
 	{name: '5BLD', sessions: ['Main']},
@@ -41,7 +41,7 @@ export type Solve = {
 export type Session = {
 	name: string
 	solves: Solve[]
-	scrambles: string[]
+	scrambles: Promise<string>[]
 };
 
 export type Event = {
@@ -119,7 +119,7 @@ export function active_session(callback: (session: Session) => Session = null): 
 }
 
 export async function addSolve(solve: Solve, event: Event): Promise<void> {
-	const scramble = await get_random_scramble(event)
+	const scramble =  get_random_scramble(event)
 	active_session(session => {
 		session.solves.push(solve)
 		session.scrambles.push(scramble)
@@ -157,7 +157,7 @@ export function addEvent(name: string, scramble?: string): void {
 }
 
 export async function addSession(name: string, event: Event): Promise<void> {
-	const scramble = await get_random_scramble(event)
+	const scramble = get_random_scramble(event)
 	database.update(db => {
 		const new_session: Session = {
 			name: name,
@@ -178,7 +178,8 @@ async function reset_scrambles() {
 
 	for (const event of db.events) {
 		for (const session of event.sessions) {
-			session.scrambles = [await get_random_scramble(event)]
+			// session.scrambles = [await get_random_scramble(event)]
+			session.scrambles = ['']
 		}
 	}
 
