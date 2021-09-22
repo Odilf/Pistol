@@ -18,7 +18,8 @@ export async function get_random_scramble(event: {name: string, scramble: string
 	switch (event.scramble) {
 		case "3x3": return getRandomScramble333()
 		case "2x2": return getRandomScramble222()
-		case "4x4": return getRandomScramble444()
+		// case "4x4": return getRandomScramble444()
+		case "4x4": length = 20; break
 		case "5x5": length = 30; break
 		case "6x6": length = 40; break
 		case "7x7": length = 50; break
