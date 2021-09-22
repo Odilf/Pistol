@@ -20,14 +20,7 @@ const config = {
 		target: '#svelte',
 		vite: {
 			build: {
-				chunkSizeWarningLimit: 1000
-			},
-			optimizeDeps: {
-				include: ['@carbon/charts'],
-				exclude: ['@carbon/telemetry']
-			},
-			ssr: {
-				noExternal: [production && '@carbon/charts'].filter(Boolean),
+				chunkSizeWarningLimit: 2000
 			},
 		},
 	},
