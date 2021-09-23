@@ -29,27 +29,26 @@
 	$: if (!solve.reconstruction) {
 		solve.reconstruction = ''
 	}
-
-	if (puzzle === '3x3') {
-		solve.scramble = `${solve.scramble} x2 y2 `
-	}
-
-	
 	
 </script>
 
 {#if puzzle}
 
-<twisty-player
-	{puzzle}
-	alg={`${solve.scramble} ${solve.reconstruction}`}
-	background="none"
-	hint-facelets="none"
-	control-panel="none"
-	/>
-<p>
-	Cube visualization courtesy of cubing.js
-</p>
+{#await solve.scramble}
+	Loading...
+{:then scramble}
+	<twisty-player
+		{puzzle}
+		alg={`${scramble} ${solve.reconstruction}`}
+		background="none"
+		hint-facelets="none"
+		control-panel="none"
+		/>
+	<p>
+		Cube visualization courtesy of cubing.js
+	</p>
+{/await}
+
 {/if}
 
 <style>
