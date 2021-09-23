@@ -13,7 +13,7 @@
 	import QuickStats from '$lib/timer/QuickStats.svelte';
 	import Scramble from '$lib/timer/Scramble.svelte';
 
-	import Import from '$lib/utils/Import.svelte'
+	import Import from '$lib/import/Import.svelte'
 
 	
 	import { fade } from 'svelte/transition'
@@ -21,6 +21,8 @@
 	let width: number
 	
 	let isDragging
+
+	const compact_width = 900
 </script>
 
 <svelte:head>
@@ -29,19 +31,19 @@
 
 <svelte:window bind:innerWidth={width}/>
 
-<Import {isDragging}/>
+<Import bind:isDragging/>
 
-<main on:mouseleave={() => isDragging = false} on:dragover|preventDefault={() => isDragging = true}>
+<main on:dragover|preventDefault={() => isDragging = true}>
 	<header>
 		<EventSelect/>
 	</header>
 	
 	<body>
-		{#if width > 900}
-			<div class="column">
-				<SessionSelect bind:event={$database.events[$database.selected_event]}/>
-			</div>
-		{/if}
+		<!-- {#if width > compact_width} -->
+		<div class="column" style='--compact-width: {compact_width}'>
+			<SessionSelect bind:event={$database.events[$database.selected_event]}/>
+		</div>
+		<!-- {/if} -->
 		
 		<div class="center" transition:fade>
 			<Scramble/>
@@ -49,7 +51,7 @@
 			<QuickStats/>
 		</div>
 		
-		{#if width > 900}
+		{#if width > compact_width}
 			<div class="column">
 				<SolveList/>	
 			</div>
@@ -80,6 +82,15 @@
 		flex-grow: 1;
 		display: flex;
 		overflow: hidden;
+	}
+	@media only screen and (max-width: 600px) {
+		body {
+			flex-direction: column;
+		}
+		.column {
+			min-width: 100%;
+			padding-top: 1em;
+		}
 	}
 	.column {
 		width: $column-width;
