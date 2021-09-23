@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Dialog, List, ListItem, Button, ListGroup } from 'svelte-materialify'
+	import { Dialog, List, ListItem, Button, Menu } from 'svelte-materialify'
 	import { database, wca_events, addSession, Solve } from '$lib/storage/database'
 	import type { Event } from '$lib/storage/database'
 	import EventSelect from './EventSelect.svelte';
@@ -7,16 +7,8 @@
 
 	export let event: Event;
 
-	let active = false;
 	let adding_session = false;
 	let new_session_name: string;
-	let toggling_to: boolean
-
-	function deleteSession(session: { name: string; solves: Solve[]; scrambles: string[]; }) {
-		event.sessions.splice(event.sessions.indexOf(session), 1)
-		event.selected_session = 0
-	}
-
 
 </script>
 
@@ -28,30 +20,19 @@
 		<!-- Show --> <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M12 6c3.79 0 7.17 2.13 8.82 5.5C19.17 14.87 15.79 17 12 17s-7.17-2.13-8.82-5.5C4.83 8.13 8.21 6 12 6m0-2C7 4 2.73 7.11 1 11.5 2.73 15.89 7 19 12 19s9.27-3.11 11-7.5C21.27 7.11 17 4 12 4zm0 5c1.38 0 2.5 1.12 2.5 2.5S13.38 14 12 14s-2.5-1.12-2.5-2.5S10.62 9 12 9m0-2c-2.48 0-4.5 2.02-4.5 4.5S9.52 16 12 16s4.5-2.02 4.5-4.5S14.48 7 12 7z"/></svg>
 		{/if}
 	</Button>
-
-	<!-- <ListGroup bind:active disabled class='white-text flex-grow-1'> -->
-
-		<!-- <span slot="activator"> {event.name} </span> -->
-
-		<!-- <List>
-			{#each event.sessions as session}
-			<ListItem>
-				{session.name}
-
-				<span slot='append'>
-					<Button fab on:click={() => deleteSession(session)}>
-						del
-					</Button>
-				</span>
-			</ListItem>
+	<Menu disabled={!event} >
+		<div slot="activator">
+			<Button class='ma-2' disabled={!event}>Session</Button>
+		</div>
+	
+		<List>
+			{#each $database.events as event, i}
+				<ListItem > {$database.events} </ListItem> 
 			{/each}
-		</List> -->
-		
-		<SessionSelect {event}/>
-
-		<!-- <Button disabled={false} on:click={() => adding_session = true}> Add session... </Button> -->
-		
-	<!-- </ListGroup> -->
+			<ListItem class='red darken-4'> New session </ListItem>
+		</List>
+	</Menu>
+	<SessionSelect {event}/>
 
 	<!-- Delete event button -->
 	{#if !wca_events.includes(event.name) }
