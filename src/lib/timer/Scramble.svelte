@@ -5,25 +5,29 @@
 
 	let scrambles: Promise<string>[]
 	const unsubscribe = database.subscribe(() => scrambles = active_session().scrambles)
-	$: scramble = scrambles[scrambles.length - 1]
+	$: scramble_promise = scrambles[scrambles.length - 1]
 	onDestroy(unsubscribe)
 </script>
 
 <p>
-	{#await scramble}
+	{#await scramble_promise}
 		Loading
-	{:then scramble} 
+	{:then scramble}
+	{#if typeof scramble === 'string'}
 		{#each scramble.split('\n') as line}
-		{line}
-		<br>
+			{line}
+			<br>
 		{/each}
+		{/if}
 	{/await}
-	<!-- {scramble} -->
 </p>
 
 <style lang="scss">
 	p {
-		height: 3em;
+		// height: 3em;
+		max-height: 8em;
+		overflow-y: scroll;
+
 		font-size: 1.2em;
 		// margin: 200px, 100px, 0;
 		margin-top: 1em;
