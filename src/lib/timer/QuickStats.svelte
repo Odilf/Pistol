@@ -2,6 +2,7 @@
 	// import "../../app.css";
 	import { active_session, database } from '$lib/storage/database'
 	import { onDestroy } from "svelte";
+import TimeDisplay from './TimeDisplay.svelte';
 
 	
 	let average
@@ -15,9 +16,9 @@
 
 <p>
 	{#if average}
-		Ao100: {average.toFixed(3)}	
+		Ao100:&nbsp;<TimeDisplay time={average} small_decimals={false}/>
 	{:else}
-		Yee-haaaaaaa going fast :sungals:
+		<!-- Yee-haaaaaaa going fast :sungals: -->
 	{/if}
 </p>
 
@@ -26,6 +27,8 @@
 		font-size: 1.2em;
 		margin-top: 0;
 		margin-bottom: 1em;
+
+		display: flex;
 
 		// color: var(--tertiary-color)
 	}
