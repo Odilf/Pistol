@@ -6,12 +6,12 @@
 	export let decimals: number = undefined
 	export let small_decimals = true
 	export let penalty: 0 | 2 | 'DNF' = 0
+	export let units = false
 
 	
 	const small = small_decimals && getSettingByName('Small decimals')
-	if (penalty === 2) time += 2
+	$: if (penalty === 2) time += 2
 	
-	// let date = new Date(time * 1000)
 	$: date = new Date(time * 1000)
 
 	$: hours = date.getHours() - 1
@@ -40,6 +40,7 @@
 			seconds < 10 && (whole += '0')
 		}
 		whole += seconds
+		
 	return whole
 	}
 
@@ -51,6 +52,9 @@
 	{whole}
 		{#if decimals}
 			<div class:small={small}>.{decimals_value}{#if penalty===2} + {/if}</div>
+		{/if}
+		{#if units && !hours && !minutes}
+			s
 		{/if}
 	<!-- {/if} -->
 </div>
