@@ -12,13 +12,27 @@
 	import { derived } from 'svelte/store'
 	import '../../app.css'
 
-	const list_length = 20
+	let uid = 0
+
+	const list_length = 25
 	let truncated = false
-	const solves = derived(database, db => {
+	const db_solves = derived(database, db => {
 		const solves = db.events[db.selected_event].sessions[db.events[db.selected_event].selected_session].solves
 		solves.length > list_length ? truncated = true : truncated = false 
 		return solves.slice(-list_length).reverse()
 	})
+
+	let uid_solves: {solve: SolveType, uid: number}[]
+	$: uid_solves = $db_solves.map(solve => {
+			const index = uid_solves ? uid_solves.map(v => v.solve).indexOf(solve) : -1
+			if (index === -1) {
+				return {solve: solve, uid: uid}
+			}
+			return uid_solves[index]
+		})
+
+	let solves: SolveType[]
+	$: solves = uid_solves.map(v => v.solve)
 
 	const decimals = getSettingByName("Solve Decimals")
 
@@ -27,11 +41,11 @@
 	let showing_solve = false
 
 	function handleKeydown(e): void {
-		let index = $solves.indexOf(active_solve)
+		let index = solves.indexOf(active_solve)
 		if (index === -1) return
 		if (e.key === 'ArrowDown') index += 1
 		if (e.key === 'ArrowUp')   index -= 1
-		$solves[index] && (active_solve = $solves[index])
+		solves[index] && (active_solve = solves[index])
 	}
 </script>
 
@@ -41,7 +55,7 @@
 	{#if show_solves}
 	<body class="rounded-bl-xl" transition:fly={{ x: 69, duration: 500 }} >
 
-		{#if $solves.length === 0}
+		{#if solves.length === 0}
 			<div class='grey-text pt-8' in:fly={{ x: 69, duration: 500 }}>
 				No solves yet <br>
 				Start solving!
@@ -50,7 +64,7 @@
 
 		<List class="d-flex flex-column pb-0">
 				
-			{#each $solves as solve (solve.date)}
+			{#each solves as solve (solve.date)}
 			<div animate:flip in:fly={{y: -20, duration: 800}}
 				
 				on:auxclick={() => deleteSolve(solve)}
