@@ -7,25 +7,24 @@
 	import TimeDisplay from '$lib/timer/TimeDisplay.svelte'
 	
 	import { Button, Dialog, List } from 'svelte-materialify'
-	import { fly, fade } from 'svelte/transition'
+	import { fly } from 'svelte/transition'
 	import { flip } from 'svelte/animate'
-	import { derived, readable } from 'svelte/store'
+	import { derived } from 'svelte/store'
 	import '../../app.css'
 
+	const list_length = 20
 	let truncated = false
 	const solves = derived(database, db => {
-		
 		const solves = db.events[db.selected_event].sessions[db.events[db.selected_event].selected_session].solves
-		// console.log(solves);
-		if (solves.length > 100) truncated = true
-		return solves.slice(-100).reverse()
+		solves.length > list_length ? truncated = true : truncated = false 
+		return solves.slice(-list_length).reverse()
 	})
+
 	const decimals = getSettingByName("Solve Decimals")
 
 	let active_solve: SolveType
 	let show_solves = true
-	let show_solve = false
-	let puzzle: string
+	let showing_solve = false
 
 	function handleKeydown(e): void {
 		let index = $solves.indexOf(active_solve)
@@ -50,21 +49,23 @@
 		{:else}
 
 		<List class="d-flex flex-column pb-0">
-			{#each $solves as solve}
-				<div in:fly={{y: -20, duration: 800}}
 				
-					on:auxclick={() => deleteSolve(solve)}
-					on:click={e => { e.altKey && deleteSolve(solve)}}
+			{#each $solves as solve (solve.date)}
+			<div animate:flip in:fly={{y: -20, duration: 800}}
+				
+				on:auxclick={() => deleteSolve(solve)}
+				on:click={e => { e.altKey && deleteSolve(solve)}}
 				>
-					<Button style='flex-grow:1' class='elevation-2'
-						on:click={() => { active_solve = solve; show_solve = true }}
-					>
-
-						<TimeDisplay time={solve.time} small_decimals={false} penalty={solve.penalty} {decimals}/>
-					</Button>
-
-				</div>
+				<Button style='flex-grow:1' class='elevation-2'
+				on:click={() => { active_solve = solve; showing_solve = true }}
+				>
+				
+				<TimeDisplay time={solve.time} small_decimals={false} penalty={solve.penalty} {decimals}/>
+			</Button>
+			
+			</div>
 			{/each}
+
 			{#if truncated}
 				<div class='d-inline-flex justify-center align-center mt-2'>
 					More solves in the dashboard!
@@ -76,7 +77,7 @@
 	</body>
 	{/if}
 
-	<Dialog bind:active={show_solve} on:outroend={() => show_solve = false} class=red>
+	<Dialog bind:active={showing_solve} on:outroend={() => showing_solve = false} class=red>
 		{#if active_solve}
 			<Solve bind:solve={active_solve} puzzle={active_event().scramble}/>
 		{/if}
