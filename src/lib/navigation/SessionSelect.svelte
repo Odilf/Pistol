@@ -1,16 +1,32 @@
 <script lang='ts'>
 	import type { Event } from '$lib/storage/database'
+	import { get_random_scramble } from '$lib/scramble/scrambler';
 	import { addSession } from '$lib/storage/database'
 	import { Menu, List, ListItem, Button, Dialog, Card, CardTitle, CardText, CardActions } from 'svelte-materialify'
 
 	export let event: Event
+	export let size: 'x-small' | 'small' | 'default' | 'large' | 'x-large' = 'default'
 	let adding_session: boolean
 	let new_session_name: string
+
+	$: active_session = event ? event.sessions[event.selected_session] : null
+
+	function check_scrambles() {
+		if (active_session && !active_session.scrambles) {
+			active_session.scrambles.push(get_random_scramble(event))
+		}
+	}
+
+	function handleClick() {
+		adding_session = true
+		check_scrambles()
+	}
+
 </script>
 
 <Menu disabled={!event} >
 	<div slot="activator">
-		<Button class='ma-2' disabled={!event}>{event ? event.sessions[event.selected_session].name : ''}</Button>
+		<Button {size} class='ma-2' disabled={!event}>{event ? active_session.name : ''}</Button>
 	</div>
 
 	<List>
@@ -19,7 +35,7 @@
 				<ListItem on:click={() => event.selected_session = i}> {session.name} </ListItem> 
 			{/each}
 		{/if}
-		<ListItem class='red darken-4' on:click={() => adding_session = true}> New session </ListItem>
+		<ListItem class='red darken-4' on:click={handleClick}> New session </ListItem>
 	</List>
 </Menu>
 
@@ -35,11 +51,16 @@
 		</CardText>
 
 		<CardActions>
-			<Button color=red> Cancel </Button>
+			<Button color=red on:click={() => adding_session = false}> Cancel </Button>
 			<Button color='blue justify-right' on:click={() => {
-				addSession(new_session_name, event);
+				event.sessions = [...event.sessions, {
+					name: new_session_name,
+					solves: [],
+					scrambles: [],
+				}]
+				// addSession(new_session_name, event);
 				adding_session = false;
-				event.selected_session = event.sessions.length
+				event.selected_session = event.sessions.length - 1
 			}}> Done </Button>
 		</CardActions>
 	</Card>
@@ -59,8 +80,6 @@
 		border-radius: 5px;
 	}
 	input:focus {
-		// background-color: var(--accent-color);
-		outline:1000px solid white;
 		outline: none;
 	}
 </style>
