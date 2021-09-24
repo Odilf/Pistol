@@ -9,7 +9,7 @@
 
 		<div class="buttons">
 			<Button on:click={() => location.href = '/settings'}> Settings </Button>
-			<!-- <Button on:click={() => location.href = '/dashboard'}> Dashboard </Button> -->
+			<Button on:click={() => location.href = '/dashboard'}> Dashboard </Button>
 
 			<div class='spacer'> </div>
 
