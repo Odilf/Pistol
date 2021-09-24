@@ -6,26 +6,15 @@
 	export let decimals: number = undefined
 	export let small_decimals = true
 	export let penalty: 0 | 2 | 'DNF' = 0
-	export let units = false
 
-	
-	const small = small_decimals && getSettingByName('Small decimals')
-	$: if (penalty === 2) time += 2
-	
-	$: date = new Date(time * 1000)
-
-	$: hours = date.getHours() - 1
-	$: minutes = date.getMinutes()
-	$: seconds = date.getSeconds()
-	
-	if (decimals === undefined && !minutes) {
-		decimals = parseInt(getSettingByName('Decimals')) 
-	}
-	$: decimals_value = time.toFixed(decimals).substr(-decimals)
-	
-	$: whole = format_wholes(hours, minutes, seconds)
-	function format_wholes(hours: number, minutes: number, seconds: number): string {
-		whole = ''
+	function format_time(time: number, penalty: 0 | 2 | 'DNF') {
+		if (penalty === 2) time += 2
+		const date = new Date(time * 1000)
+		const hours = date.getHours() - 1
+		const minutes = date.getMinutes()
+		const seconds = date.getSeconds()
+		
+		let whole = ''
 		if (hours) {
 			hours < 10 && (whole += '0')
 			whole += hours
@@ -41,25 +30,33 @@
 		}
 		whole += seconds
 		
-	return whole
+		if (decimals === undefined && !minutes) {
+			decimals = parseInt(getSettingByName('Decimals')) 
+		}
+
+		return whole
 	}
+
+	$: whole = format_time(time, penalty)
+	$: small = small_decimals && getSettingByName('Small decimals')
+	$: decimals_value = time.toFixed(decimals).substr(-decimals)
 
 </script>
 
-<!-- {time} -->
-
-<div class="timer {penalty === 'DNF' ? 'DNF' : ''}">
-	{whole}
+<main>
+	<slot/>{#if $$slots.default}&nbsp;{/if}
+	<div class="timer {penalty === 'DNF' ? 'DNF' : ''}">
+		{whole}
 		{#if decimals}
 			<div class:small={small}>.{decimals_value}{#if penalty===2} + {/if}</div>
 		{/if}
-		{#if units && !hours && !minutes}
-			s
-		{/if}
-	<!-- {/if} -->
-</div>
+	</div>
+</main>
 
 <style lang='scss'>
+	main {
+		display: flex;
+	}
 	.timer {
 		font-family: 'Roboto';
 		font-weight: inherit;
