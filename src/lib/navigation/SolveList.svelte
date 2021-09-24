@@ -91,7 +91,7 @@
 	</body>
 	{/if}
 
-	<Dialog bind:active={showing_solve} on:outroend={() => showing_solve = false} class=red>
+	<Dialog bind:active={showing_solve} on:outroend={() => showing_solve = false}>
 		{#if active_solve}
 			<Solve bind:solve={active_solve} puzzle={active_event().scramble}/>
 		{/if}
