@@ -6,6 +6,7 @@ export type csSession = {
 	scramble_type: string,
 	solves: Solve[]
 	event: Event,
+	import: boolean,
 }
 
 export function parseImport(json: string): csSession[] {
@@ -52,6 +53,7 @@ export function parseImport(json: string): csSession[] {
 			['444bld', '4BLD'],
 			['555bld', '5BLD'],
 			['r3ni', 'MBLD'],
+			['ll', '3x3']
 		]
 		
 		let scramble_type = scramble_dictionary[scramble_dictionary.map(v => v[0]).indexOf(sessionData[i].opt.scrType)]
@@ -67,6 +69,7 @@ export function parseImport(json: string): csSession[] {
 		const csTimerSession: csSession = {
 			name: sessionData[i].name,
 			scramble_type: scramble_type[1],
+			import: true,
 			// event: {name: event.name, sessions: {...event.sessions}, hide: event.hide, selected_session: event.selected_session},
 			event: JSON.parse(JSON.stringify(event)),
 			// selected_session: event.selected_session,
@@ -113,17 +116,18 @@ export function parseImport(json: string): csSession[] {
 }
 
 export function finishImport(csSessions: csSession[]): void {
-	for (const csSession of csSessions) {
+	for (const csSession of csSessions.filter(v => v.import)) {
 		
 		const session = csSession.event.sessions[csSession.event.selected_session]
 		session.solves = csSession.solves
 
 		database.update(db => {
 			const event_index = db.events.map(v => v.name).indexOf(csSession.event.name)
+
 			if (db.events[event_index].sessions.map(v => v.name).indexOf(session.name) === -1) {
 				addSession(csSession.event.sessions[csSession.event.selected_session].name, db.events[event_index])
-				// db.events[index] = csSession.event
-			} 
+			}
+
 			const db_session = db.events[event_index].sessions[csSession.event.selected_session]
 			db_session.solves = db_session.solves.concat(session.solves)
 			return db
