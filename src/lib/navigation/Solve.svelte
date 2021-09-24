@@ -6,7 +6,6 @@
 	import type { Solve } from '$lib/storage/database'
 
 	import { Card, CardText, CardActions, Button, TextField } from "svelte-materialify"
-	import { fade, fly } from 'svelte/transition'
 	import '../../app.css'
 
 	export let solve: Solve
