@@ -1,5 +1,5 @@
 <script lang='ts'>
-	import { Card, CardActions, Button, Divider, Menu, List, ListItem, CardTitle } from 'svelte-materialify'
+	import { Card, CardActions, Button, Tooltip, Menu, List, ListItem, CardTitle, Switch } from 'svelte-materialify'
 	import { slide } from 'svelte/transition'
 
 	import type { csSession } from './importer';
@@ -14,7 +14,7 @@
 	let active = false
 </script>
 
-<Card class='pb-4'>
+<Card class='pb-4 elevation-0' style='background-color: inherit'>
 	<CardTitle style='white-space:pre-wrap; word-break:break-word;' class='pa-0'>
 	{csSession.scramble_type} session named "{csSession.name}" will go to
 	</CardTitle>
@@ -35,9 +35,12 @@
 		
 		<SessionSelect size=x-large bind:event={csSession.event}/>
 
-		<!-- <Button size="small" on:click={() => active = !active}>
-			Session times
-		</Button> -->
+		<spacer class='flex-grow-1'/>
+
+		<Tooltip top>
+			<span slot='tip'>{csSession.import ? 'Importing' : 'Ignoring'} session</span>
+			<Switch color=red bind:checked={csSession.import}/>
+		</Tooltip>
 		
 	</CardActions>
 		{#if active}
@@ -53,9 +56,3 @@
 			</div>
 		{/if}
 </Card>
-
-<style>
-	h1 {
-		font-size: 2em;
-	}
-</style>
