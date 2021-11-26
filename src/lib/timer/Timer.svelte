@@ -5,10 +5,9 @@
 
 	const dispatch = createEventDispatcher();
 
+	export let timerState = 'released';
 	$: delay_time = parseFloat(getSettingByName('Timer delay'));
-	let press_start: Date;
 	let delay_interval: ReturnType<typeof setInterval>;
-	let timerState = 'released';
 	let time = 0;
 	let interval: ReturnType<typeof setInterval>;
 	let startTime: Date;
@@ -84,7 +83,6 @@
 		if (timerState === 'released') {
 			dispatch('timerReady', { time: time });
 			timerState = 'pressed';
-			press_start = new Date();
 			if (delay_time === 0) {
 				timerState = 'ready';
 			} else {
@@ -98,7 +96,6 @@
 			dispatch('timerStart', { time: time });
 			timerState = 'running';
 			startTime = new Date();
-			//TODO: #5 Add option to change timer refresh rate
 			interval = setInterval(() => (time = getTime(startTime)), refresh_rate);
 		} else {
 			timerState = 'released';
