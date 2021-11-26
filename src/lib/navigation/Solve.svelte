@@ -5,15 +5,25 @@
 	import { database, deleteSolve } from '$lib/storage/database'
 	import type { Solve } from '$lib/storage/database'
 
+	import { createEventDispatcher } from "svelte";
+	const dispatch = createEventDispatcher()
+
 	import { Card, CardText, CardActions, Button, TextField } from "svelte-materialify"
 	import '../../app.css'
 
 	export let solve: Solve
 	export let puzzle: string
 	
-	const penalties: Array<0 | 2 | 'DNF'> = [0, 2, 'DNF']
+	const penalties: [0, 2, 'DNF'] = [0, 2, 'DNF']
 
 	let reconstruction_dialog = false
+
+	function remove(solve) {
+		deleteSolve(solve)
+		dispatch('delete', { solve: solve } )
+		console.log('deleting');
+		
+	}
 
 </script>
 
@@ -25,7 +35,7 @@
 					<div class='time {solve.penalty === 'DNF' ? 'red-text darken-4' : ''}'>
 						<TimeDisplay time={solve.time} penalty={solve.penalty} decimals={3} small_decimals={false}/>
 					</div>
-					<Button size=small class='red' fab on:click={() => deleteSolve(solve)}>
+					<Button size=small class='red' fab on:click={() => remove(solve)}>
 						<!-- Delete icon svg -->
 						<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#FFFFFF"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M16 9v10H8V9h8m-1.5-6h-5l-1 1H5v2h14V4h-3.5l-1-1zM18 7H6v12c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7z"/></svg>
 					</Button>

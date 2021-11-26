@@ -14,7 +14,7 @@
 
 	let uid = 0
 
-	const list_length = 25
+	const list_length = 20
 	let truncated = false
 	const db_solves = derived(database, db => {
 		const solves = db.events[db.selected_event].sessions[db.events[db.selected_event].selected_session].solves
@@ -93,7 +93,7 @@
 
 	<Dialog bind:active={showing_solve} on:outroend={() => showing_solve = false}>
 		{#if active_solve}
-			<Solve bind:solve={active_solve} puzzle={active_event().scramble}/>
+			<Solve bind:solve={active_solve} puzzle={active_event().scramble} on:delete={() => active_solve = $db_solves[0]}/>
 		{/if}
 	</Dialog>
 
