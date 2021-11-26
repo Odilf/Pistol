@@ -6,7 +6,7 @@
 	import Solve from './Solve.svelte'
 	import TimeDisplay from '$lib/timer/TimeDisplay.svelte'
 	
-	import { Button, Container, Dialog, List } from 'svelte-materialify'
+	import { Button, Container, Dialog, List, Snackbar } from 'svelte-materialify'
 	import { fly } from 'svelte/transition'
 	import { flip } from 'svelte/animate'
 	import { derived } from 'svelte/store'
@@ -14,7 +14,7 @@
 
 	let uid = 0
 
-	const list_length = 20
+	const list_length = 50
 	let truncated = false
 	const db_solves = derived(database, db => {
 		const solves = db.events[db.selected_event].sessions[db.events[db.selected_event].selected_session].solves

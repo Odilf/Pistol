@@ -26,6 +26,7 @@
 	const compact_width = 900
 
 	let solve_list
+	let timer
 </script>
 
 <svelte:head>
@@ -40,7 +41,7 @@
 
 <main on:dragover|preventDefault={() => isDragging = true}>
 	<header>
-		<EventSelect/>
+		<EventSelect {timer}/>
 	</header>
 	
 	<body>
@@ -52,7 +53,7 @@
 		
 		<div class="center" transition:fade>
 			<Scramble/>
-			<Timing {solve_list}/>
+			<Timing {solve_list} bind:timer/>
 			<QuickStats/>
 		</div>
 		

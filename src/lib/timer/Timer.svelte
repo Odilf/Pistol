@@ -66,11 +66,11 @@
 		}
 	}
 
-	function stop(cancel = false) {
+	export function stop(cancel = false) {
 		if (timerState === 'running') {
 			time = getTime(startTime);
 
-			timerState = 'pressed';
+			timerState = cancel ? 'released' : 'pressed';
 			clearInterval(interval);
 
 			if (!cancel) {
@@ -109,6 +109,8 @@
 </script>
 
 <svelte:window on:keydown={handleKeydown} on:keyup={handleKeyup} />
+
+<svelte:options accessors={true}/>
 
 <div class={timerState} on:touchstart={() => {prepare(); stop();}} on:touchend={() => lift()}>
 	<TimeDisplay {time} />

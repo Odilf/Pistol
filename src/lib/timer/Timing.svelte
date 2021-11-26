@@ -8,6 +8,7 @@
 	import { onDestroy } from 'svelte';
 
 	export let solve_list
+	export let timer
 
 	$: timer_type = getSettingByName('Input method')
 
@@ -30,12 +31,7 @@
 		}
 		addSolve(solve, active_event())
 
-		if (solve_list) {
-			solve_list.scrollToTop()
-		} else {
-			console.log('AAAAAAAAAAAAAAAAAAAA', solve_list);
-			
-		}
+		solve_list.scrollToTop()
 	}
 </script>
 
@@ -46,7 +42,7 @@
 	</div>
 	{:else}
 	<div transition:fly={{ y: -200}}>
-		<Timer bind:this={timer_type} on:timerEnd={submit}/>
+		<Timer on:timerEnd={submit} bind:this={timer}/>
 	</div>
 	{/if}
 </main>

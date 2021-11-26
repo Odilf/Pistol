@@ -1,13 +1,16 @@
 <script lang='ts'>
 	import { selectable_events, database } from "$lib/storage/database";
-	import { Tabs, Tab } from 'svelte-materialify'
+	import { Tabs, Tab, Snackbar, Button } from 'svelte-materialify'
 	import EventManager from "$lib/navigation/events/EventManager.svelte";
-	import { tick } from "svelte";
+
+	export let timer
 	
 	$: tab_value = $selectable_events.indexOf($database.events[$database.selected_event]) + 1
 	$: if (tab_value === -1) tab_value = 0
 
 	let editing = false
+
+	let warn_snackbar = false
 
 	// Navigation with arrows
 	function handleKeydown(e) {
@@ -16,7 +19,10 @@
 		if (e.code === 'ArrowRight') move = 1
 		
 		const index = $database.events.indexOf($selectable_events[tab_value + move - 1])
-		if (index !== -1 && move) $database.selected_event = index
+		if (index !== -1 && move) {
+			$database.selected_event = index
+			changed_event()
+		}
 	}
 
 	async function editEvent() {
@@ -28,6 +34,13 @@
 			editEvent()
 		} else {
 			$database.selected_event = $database.events.indexOf(event) 
+			changed_event()
+		}
+	}
+
+	function changed_event() {
+		if (timer.timerState === 'running') {
+			warn_snackbar = true
 		}
 	}
 	
@@ -46,6 +59,19 @@
 </Tabs>
 
 <EventManager bind:active={editing} on:close={() => handleKeydown({code: 'ArrowLeft'})}/>
+
+<Snackbar class="flex-column" bind:active={warn_snackbar} bottom center>
+	Careful! Solve still going on!
+	<div class="mt-1">
+		<Button class="red-text" text
+		on:click={() => {
+			warn_snackbar = false;
+			timer.stop(true)
+			console.log('canceling time');
+		}}
+		> Cancel solve </Button>
+	</div>
+	</Snackbar>
 
 <style lang="scss">
 	div {
