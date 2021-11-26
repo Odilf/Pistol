@@ -137,7 +137,10 @@
 		align-items: center;
 		justify-content: center;
 
+		font-weight: 100;
+
 		-webkit-touch-callout: none; 
+		user-select: none;
 		-webkit-user-select: none; 
 	}
 </style>
