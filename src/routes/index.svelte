@@ -24,6 +24,8 @@
 	let isDragging
 
 	const compact_width = 900
+
+	let solve_list
 </script>
 
 <svelte:head>
@@ -50,13 +52,13 @@
 		
 		<div class="center" transition:fade>
 			<Scramble/>
-			<Timing></Timing>
+			<Timing {solve_list}/>
 			<QuickStats/>
 		</div>
 		
 		{#if width > compact_width}
 			<div class="column">
-				<SolveList/>	
+				<SolveList bind:this={solve_list}/>	
 			</div>
 		{/if}
 	</body>

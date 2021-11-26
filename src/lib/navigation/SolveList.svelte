@@ -1,12 +1,12 @@
 <script lang='ts'>
-	import { active_event, active_session, database, deleteSolve } from '$lib/storage/database'
+	import { active_event, active_session, addSolve, database, deleteSolve } from '$lib/storage/database'
 	import type { Solve as SolveType } from '$lib/storage/database'
 	import { getSettingByName } from '$lib/settings'
 	
 	import Solve from './Solve.svelte'
 	import TimeDisplay from '$lib/timer/TimeDisplay.svelte'
 	
-	import { Button, Dialog, List } from 'svelte-materialify'
+	import { Button, Container, Dialog, List } from 'svelte-materialify'
 	import { fly } from 'svelte/transition'
 	import { flip } from 'svelte/animate'
 	import { derived } from 'svelte/store'
@@ -22,10 +22,13 @@
 		return solves.slice(-list_length).reverse()
 	})
 
+	let deleted_solves: SolveType[] = []
+
 	let uid_solves: {solve: SolveType, uid: number}[]
 	$: uid_solves = $db_solves.map(solve => {
 			const index = uid_solves ? uid_solves.map(v => v.solve).indexOf(solve) : -1
 			if (index === -1) {
+				uid++
 				return {solve: solve, uid: uid}
 			}
 			return uid_solves[index]
@@ -40,12 +43,59 @@
 	let show_solves = true
 	let showing_solve = false
 
+	let container
+
+	export function scrollToTop() {
+		// container.scrollTo(0)
+		container.scrollTop = 0
+	}
+
 	function handleKeydown(e): void {
+
+		// Handle arrows
 		let index = solves.indexOf(active_solve)
-		if (index === -1) return
-		if (e.key === 'ArrowDown') index += 1
-		if (e.key === 'ArrowUp')   index -= 1
-		solves[index] && (active_solve = solves[index])
+		if (index !== -1) {
+			if (e.key === 'ArrowDown') index += 1
+			if (e.key === 'ArrowUp')   index -= 1
+			solves[index] && (active_solve = solves[index])
+		}
+
+		// Handle penalties
+		if (e.ctrlKey) {
+			console.log('caca');
+			
+			if (e.key == 1) { solves[0].penalty = 0 }
+			if (e.key == 2) { solves[0].penalty = 2 }
+			if (e.key == 3) { solves[0].penalty = 'DNF' }
+		}
+
+		// Handle penalties with alt
+		if (e.key === "¡")  { solves[0].penalty = 0 }
+		if (e.key === "™")  { solves[0].penalty = 2 }
+		if (e.key === "£")  { solves[0].penalty = 'DNF' }
+
+		// Handle ctrl+z
+		if (e.metaKey || e.ctrlKey) {
+			if (e.key === 'z') { 
+				if (e.shiftKey) {
+					if (deleted_solves.length > 0) {
+						addSolve(deleted_solves[0], active_event())
+						deleted_solves.splice(0, 1)
+					} else {
+						console.warn('No more solves in memory to recover');
+					}
+				} else {
+					if (solves.length > 0) {
+						uid_solves.splice(0, 1)
+						deleted_solves.unshift(solves[0])
+						deleteSolve(solves[0])
+					} else {
+						console.warn('No solves to delete');
+					}
+				}
+			}
+
+		}
 	}
 </script>
 
@@ -53,7 +103,7 @@
 
 <main>
 	{#if show_solves}
-	<body class="rounded-bl-xl" transition:fly={{ x: 69, duration: 500 }} >
+	<body class="rounded-bl-xl" transition:fly={{ x: 69, duration: 500 }} bind:this={container} >
 
 		{#if solves.length === 0}
 			<div class='grey-text pt-8' in:fly={{ x: 69, duration: 500 }}>
@@ -64,17 +114,17 @@
 
 		<List class="d-flex flex-column pb-0">
 				
-			{#each solves as solve (solve.date)}
+			{#each uid_solves as uid_solve (uid_solve.uid)}
 			<div animate:flip in:fly={{y: -20, duration: 800}}
 				
-				on:auxclick={() => deleteSolve(solve)}
-				on:click={e => { e.altKey && deleteSolve(solve)}}
+				on:auxclick={() => deleteSolve(uid_solve.solve)}
+				on:click={e => { e.altKey && deleteSolve(uid_solve.solve)}}
 				>
 				<Button style='flex-grow:1' class='elevation-2'
-				on:click={() => { active_solve = solve; showing_solve = true }}
+				on:click={() => { active_solve = uid_solve.solve; showing_solve = true }}
 				>
 				
-				<TimeDisplay time={solve.time} small_decimals={false} penalty={solve.penalty} {decimals}/>
+				<TimeDisplay time={uid_solve.solve.time} small_decimals={false} penalty={uid_solve.solve.penalty} {decimals}/>
 			</Button>
 			
 			</div>
@@ -124,6 +174,8 @@
 		padding: 1em;
 		padding-top: 0em;
 		background-color: var(--secondary-color);
+
+		scroll-behavior: smooth;
 	}
 	div {
 		margin-top: 0;

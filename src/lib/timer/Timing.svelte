@@ -7,6 +7,8 @@
 	import type { Solve } from '$lib/storage/database';
 	import { onDestroy } from 'svelte';
 
+	export let solve_list
+
 	$: timer_type = getSettingByName('Input method')
 
 	let scramble
@@ -14,7 +16,6 @@
 	onDestroy(unsubscribe)
 
 	async function submit(event) {
-		
 		let penalty: 0 | 2 | 'DNF' = 0
 		if ('penalty' in event.detail) {
 			penalty = event.detail.penalty
@@ -28,6 +29,13 @@
 			reconstruction: null,
 		}
 		addSolve(solve, active_event())
+
+		if (solve_list) {
+			solve_list.scrollToTop()
+		} else {
+			console.log('AAAAAAAAAAAAAAAAAAAA', solve_list);
+			
+		}
 	}
 </script>
 

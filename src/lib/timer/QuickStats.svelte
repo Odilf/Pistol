@@ -2,7 +2,7 @@
 	// import "../../app.css";
 	import { active_session, database } from '$lib/storage/database'
 	import { onDestroy } from "svelte";
-import TimeDisplay from './TimeDisplay.svelte';
+	import TimeDisplay from './TimeDisplay.svelte';
 
 	
 	let average
