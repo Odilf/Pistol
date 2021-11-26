@@ -21,8 +21,6 @@
 	function remove(solve) {
 		deleteSolve(solve)
 		dispatch('delete', { solve: solve } )
-		console.log('deleting');
-		
 	}
 
 </script>
