@@ -6,12 +6,15 @@
 
 <script lang="ts">
 	import Back from '$lib/utils/Back.svelte'
+	import KeyboardNav from '$lib/utils/KeyboardNav.svelte'
 	import '../app.css'
 </script>
 
 <svelte:head>
 	<title>About</title>
 </svelte:head>
+
+<KeyboardNav/>
 
 <body>
 	<article>

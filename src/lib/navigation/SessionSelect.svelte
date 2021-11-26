@@ -17,12 +17,21 @@
 		}
 	}
 
-	function handleClick() {
+	function addSession() {
 		adding_session = true
 		check_scrambles()
 	}
 
+	function handleKeydown(e) {
+		if (e.altKey) {
+			if (event.selected_session < event.sessions.length - 1 && e.key === 'ArrowUp') { event.selected_session += 1 }
+			if (event.selected_session !== 0 && e.key === 'ArrowDown') { event.selected_session -= 1 }
+		}
+	}
+
 </script>
+
+<svelte:window on:keydown={handleKeydown}/>
 
 <Menu disabled={!event} >
 	<div slot="activator">
@@ -35,7 +44,7 @@
 				<ListItem on:click={() => event.selected_session = i}> {session.name} </ListItem> 
 			{/each}
 		{/if}
-		<ListItem class='red darken-4' on:click={handleClick}> New session </ListItem>
+		<ListItem class='red darken-4' on:click={addSession}> New session </ListItem>
 	</List>
 </Menu>
 

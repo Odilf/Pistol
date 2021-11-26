@@ -14,6 +14,7 @@
 	import Scramble from '$lib/timer/Scramble.svelte';
 
 	import Import from '$lib/import/Import.svelte'
+	import KeyboardNav from '$lib/utils/KeyboardNav.svelte';
 
 	
 	import { fade } from 'svelte/transition'
@@ -30,6 +31,8 @@
 </svelte:head>
 
 <svelte:window bind:innerWidth={width}/>
+
+<KeyboardNav/>
 
 <Import bind:isDragging/>
 

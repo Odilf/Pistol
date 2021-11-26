@@ -2,6 +2,7 @@
 	import DashboardCard from '$lib/dashboard/DashboardCard.svelte'
 	import { database } from '$lib/storage/database'
 	import Back from '$lib/utils/Back.svelte'
+import KeyboardNav from '$lib/utils/KeyboardNav.svelte'
 
 	function generate_indices(database) {
 		const indices = []
@@ -22,6 +23,7 @@
 	$: iterator = generate_indices($database)
 </script>
 
+<KeyboardNav/>
 
 <main>
 	<Back/>
