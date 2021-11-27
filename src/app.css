@@ -1,6 +1,7 @@
 @import '@fontsource/fira-mono';
 @import "@fontsource/roboto";
 @import "@fontsource/roboto/300.css";
+@import "@fontsource/roboto/900.css";
 
 :root {
 	font-family: 'Roboto', Arial, -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu,
