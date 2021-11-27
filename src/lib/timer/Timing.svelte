@@ -8,7 +8,7 @@
 	import { onDestroy } from 'svelte';
 
 	export let solve_list
-	export let timer
+	export let timer: Timer
 
 	$: timer_type = getSettingByName('Input method')
 

@@ -49,36 +49,34 @@
 			</ListItem>
 		{/each}
 		
-		
+	{/each}
 
-		{/each}
-
-		<h2>Import and data</h2>
-		<h3>Import from csTimer or delete your data</h3>
+		<!-- <h2>Import and data</h2>
 
 		<ListItem style='width:100%'>
-			<div class="setting">
-				To import from csTimer drag and drop <br> 
-				csTimer export to timer.  
-			</div>
-		</ListItem>
+			<input type='file' on:change={e => console.log(Object.entries(e.target))}> Import from csTimer <input>
+		</ListItem> -->
 
-		<ListItem style='width:100%'>
-			<div class="setting">
-				<ConfirmationButton on:confirmation={resetSettings}> 
-					Reset settings
-				</ConfirmationButton>
-			</div>
-		</ListItem>
+	<br>
+	<br>
 
-		<ListItem style='width:100%'>
-			<div class="setting">
-				<ConfirmationButton on:confirmation={deleteAllSolves}> 
-					Delete all solves
-					<span slot='dialog'> Are you sure you want to irreversibly delete all your solves? </span>
-				</ConfirmationButton>
-			</div>
-		</ListItem>
+	<ListItem style='width:100%'>
+		<div class="setting">
+			<ConfirmationButton on:confirmation={resetSettings}> 
+				Reset settings
+			</ConfirmationButton>
+		</div>
+	</ListItem>
+
+	<ListItem style='width:100%'>
+		<div class="setting">
+			<ConfirmationButton on:confirmation={deleteAllSolves}> 
+				Delete all solves
+				<span slot='dialog'> Are you sure you want to irreversibly delete all your solves? </span>
+			</ConfirmationButton>
+		</div>
+	</ListItem>
+	
 	<br>
 	<br>
 	</div>

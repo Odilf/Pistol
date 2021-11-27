@@ -2,6 +2,7 @@
 	import { createEventDispatcher } from 'svelte';
 	import { getSettingByName } from '$lib/settings';
 	import TimeDisplay from './TimeDisplay.svelte';
+import { mdiLockCheck } from '@mdi/js';
 
 	const dispatch = createEventDispatcher();
 
@@ -51,8 +52,15 @@
 			break;
 	}
 
+	let focusTarget
+	$: focusTarget && (focusTarget.tabindex = 0)
+
 	function handleKeydown(e) {
+		focusTarget.click()
+		// console.log('clicking', focusTarget, new Date());
+		
 		if (e.code === 'Space') {
+			// console.log('space');	
 			prepare()
 		}
 		if (timer_stop_regex.test(e.key)) {
@@ -106,13 +114,17 @@
 	function getTime(start: Date, end = new Date()) {
 		return (end.getTime() - start.getTime()) / 1000;
 	}
+
+	export function click() {
+		focusTarget.click()
+	}
 </script>
 
 <svelte:window on:keydown={handleKeydown} on:keyup={handleKeyup} />
 
 <svelte:options accessors={true}/>
 
-<div class={timerState} on:touchstart={() => {prepare(); stop();}} on:touchend={() => lift()}>
+<div bind:this={focusTarget} class={timerState} on:touchstart={() => {prepare(); stop();}} on:touchend={() => lift()}>
 	<TimeDisplay {time} />
 </div>
 

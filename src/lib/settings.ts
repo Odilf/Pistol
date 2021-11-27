@@ -42,13 +42,13 @@ const default_settings: Category[] = [
 		]},
 
 		{ name: 'Visual', description: 'How the timer looks', settings: [
-			{name: 'Theme', description: 'What the colors look like', value: 0, options: ['Dark', 'Light', 'Estonia']},
+			{name: 'Theme', description: 'What the colors look like', value: 0, options: ['Dark']},
 			{name: 'Small decimals', description: 'Make decimals look smaller', value: true},
 		]},
 
-		{ name: 'Accesibility', description: 'Peepee poopoo idk what to put here', settings: [
-			{name: 'Button size', description: 'Make buttons bigger or smth', value: 1, min: 0, max: 3},
-		]},
+		// { name: 'Accesibility', description: 'Peepee poopoo idk what to put here', settings: [
+		// 	{name: 'Button size', description: 'Make buttons bigger or smth', value: 1, min: 0, max: 3},
+		// ]},
 ]
 
 export const settings = writable('settings', default_settings)

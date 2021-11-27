@@ -86,7 +86,7 @@
 		display: flex;
 		align-items: center;
 		flex-direction: column;
-		background-color: #4b0000;
+		background-color: var(--teritary-color);
 	}
 	article {
 		padding: 2em;
