@@ -6,8 +6,8 @@
 	import ImportCard from './ImportCard.svelte'
 
 	export let isDragging = false
+	export let importing = false
 
-	let importing = false
 	let csSessions: csSession[]
 
 	async function dropHandler(e) {

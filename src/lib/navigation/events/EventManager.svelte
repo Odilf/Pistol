@@ -9,9 +9,12 @@
 	let adding_event = false
 	let new_event_name: string
 	let new_event_scramble: string
+
+	import '../../../app.css'
+import { mdiHours24 } from '@mdi/js'
 </script>
 
-<Dialog bind:active class='d-flex align-center flex-column red darken-4' >
+<Dialog bind:active class='d-flex align-center flex-column darken-4' >
 	<Card style='width:95%'>
 		<CardTitle>
 			<h1> Event manager</h1>
@@ -31,9 +34,9 @@
 							{/if}
 						</Button>
 
-						<div class='pa-8 d-flex justify-center align-center flex-grow-1' style='font-size: 2em'>
+						<h2 class='pa-8 d-flex justify-center align-center flex-grow-1' style='font-size: 2em'>
 							{event.name}
-						</div>
+						</h2>
 
 						<SessionSelect {event}/>
 						<br>
@@ -108,6 +111,9 @@
 		padding: 0;
 		display: flex;
 		justify-content: center;
+	}
+	h2 {
+		font-weight: 900;
 	}
 	body {
 		background-color: inherit;

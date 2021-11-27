@@ -39,6 +39,7 @@
 	}
 
 	function changed_event() {
+		timer.click()
 		if (timer.timerState === 'running') {
 			warn_snackbar = true
 		}

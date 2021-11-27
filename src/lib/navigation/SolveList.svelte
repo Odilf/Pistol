@@ -94,8 +94,9 @@
 					}
 				}
 			}
-
 		}
+
+		solves = solves
 	}
 </script>
 
