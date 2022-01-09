@@ -10,9 +10,9 @@
 	function format_time(time: number, penalty: 0 | 2 | 'DNF') {
 		if (penalty === 2) time += 2
 		const date = new Date(time * 1000)
-		const hours = date.getHours() - 1
-		const minutes = date.getMinutes()
-		const seconds = date.getSeconds()
+		const hours = Math.floor(time / 3600)
+		const minutes = Math.floor(time / 60)
+		const seconds = Math.floor(time)
 		
 		let whole = ''
 		if (hours) {
