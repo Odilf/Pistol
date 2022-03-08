@@ -1,6 +1,17 @@
+@import "@fontsource/inter";
+@import "@fontsource/roboto-mono";
+
+
 /* Write your global styles here, in PostCSS syntax */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import "@fontsource/inter";
+
+:root {
+	@apply text-black;
+}
+
+button {
+	@apply transition hover:scale-105 active:scale-95 active:rotate-2;
+}

@@ -2,4 +2,6 @@
   import "../app.css";
 </script>
 
-<slot />
+<body class='absolute inset-0 w-full h-full bg-primary'>
+	<slot />
+</body>
