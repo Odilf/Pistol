@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { TabGroup, TabList, Tab, TabPanel, TabPanels } from '@rgossiaux/svelte-headlessui'
-	
 	export let events: string[] = [
 		'3x3',
 		'2x2',
