@@ -75,7 +75,7 @@
 
 <svelte:window on:keydown={handleKeydown} on:keyup={handleKeyup} />
 
-<span class="{state} pointer-none select-none text-[10em] transition-all font-extralight">
+<span class="{state} pointer-none select-none text-[10em] transition-all duration-200 font-extralight">
 	<TimeDisplay {time} decimalScalar={0.75}/>
 </span>
 
@@ -84,7 +84,7 @@
 		color: red;
 	}
 	.ready {
-		color: lightblue;
+		color: darkblue;
 	}
 	.finished {
 		color: wheat;

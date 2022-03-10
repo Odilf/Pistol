@@ -5,7 +5,7 @@
 	const dispatch = createEventDispatcher()
 	
 	export let events: Event[]
-	let selected = 0
+	export let selected = 0
 
 	function sendClick(selected: number) {
 		const event = events[selected]
@@ -29,19 +29,14 @@
 
 <svelte:window on:keydown={handleKeydown}/>
 
-<div class='flex rounded p-2 bg-secondary text-primary shadow-xl'>
+<div class='flex rounded p-2 bg-secondary text-primary shadow-xl w-fit mx-auto'>
 	{#each events as event, i}
 	<button class='p-2 rounded transition px-4 mx-1 clickable
 	{selected === i ? 'bg-primary text-secondary shadow' : ''}'
 	on:click={() => selected = i}>
-	<div>
-		{event.name}
-	</div>
-	<!-- <div>
-		{#if selected === i}	
-		<SessionSelect sessions={event.sessions}/>
-		{/if}
-	</div> -->
+		<div>
+			{event.abbreviation}
+		</div>
 	</button>
 	{/each}
 

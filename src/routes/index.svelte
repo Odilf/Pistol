@@ -5,46 +5,39 @@
 
 	import { Solve, Event, Session } from "$lib/data/architecture";
 	import { user } from "$lib/user";
-	import { addSolve, getSolves, solves } from "$lib/data/database";
-
-
-	const events: Event[] = [
-		new Event('3x3'),
-		new Event('2x2'),
-		new Event('6x6'),
-	]
+	import { addSolve, getSolves, getUserEvents } from "$lib/data/database";
+	import { onMount } from "svelte";
 
 	let selectedEvent = 0
-	
-	// $: console.log($solves);
-	
-	// $: selectedEvent && getSolves(events[selectedEvent].sessions[0], events[selectedEvent])
 
-	function handleChange(e: { detail: { event: Event; session: Session; }; }): void {
-		console.log('Changing event or session');
-		
-		const selection = e.detail
-		getSolves(selection.session, selection.event)
+	let events = [new Event('3x3')]
+
+	onMount(() => {
+		(async() => events = await getUserEvents())()
+	})
+
+	
+	
+	$: solves = getSolves(events[selectedEvent]?.sessions[0], events[selectedEvent], 12)
+
+	function handleTime(time: number) {
+		const solve = new Solve(time, "R U R' U'")
+		addSolve(solve, events[selectedEvent]?.sessions[0], events[selectedEvent])
 	}
 </script>
 
-
 <main class='w-full h-full max-h-full flex flex-col items-center justify-center'>
-	<div class='flex-1 overflow-scroll'>
-		<hr>
+	<div class='flex-1 w-full flex-col items-center justify-center overflow-y-scroll'>>
 		User: {$user?.displayName}
-		<EventCaroussel {events} on:change={handleChange}/>
+		<button on:click={async() => events = await getUserEvents()}> caca </button>
+		<EventCaroussel {events} bind:selected={selectedEvent}/>
 	</div>
-	<div class='overflow-scroll'>
-		<Timer pressDelay={0} on:time={e => {
-			const time = e.detail
-			// console.log('Time is', time);
-			const solve = new Solve(time, "R U R' U'")
-			// solves = [new Solve(time, "R U R' U'"), ...solves]
-			addSolve(solve, events[selectedEvent].sessions[0], events[selectedEvent])
-		}}/>
+
+	<div class='overflow-y-scroll'>
+		<Timer pressDelay={300} on:time={e => handleTime(e.detail)}/>
 	</div>
-	<div class='flex-1 overflow-scroll'>
+
+	<div class='flex-1 w-full flex-col items-center justify-center overflow-y-scroll'>
 		<SolveList solves={$solves}/>
 	</div>
 </main>
