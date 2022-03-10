@@ -1,50 +1,42 @@
-[debug] [2022-03-08T07:08:02.839Z] ----------------------------------------------------------------------
-[debug] [2022-03-08T07:08:02.841Z] Command:       /usr/local/bin/firebase /Users/odilf/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/bin/firebase emulators:start
-[debug] [2022-03-08T07:08:02.841Z] CLI Version:   10.2.2
-[debug] [2022-03-08T07:08:02.841Z] Platform:      darwin
-[debug] [2022-03-08T07:08:02.841Z] Node Version:  v12.18.1
-[debug] [2022-03-08T07:08:02.844Z] Time:          Tue Mar 08 2022 08:08:02 GMT+0100 (Central European Standard Time)
-[debug] [2022-03-08T07:08:02.844Z] ----------------------------------------------------------------------
+[debug] [2022-03-10T19:10:19.258Z] ----------------------------------------------------------------------
+[debug] [2022-03-10T19:10:19.259Z] Command:       /usr/local/bin/firebase /Users/odilf/.cache/firebase/tools/lib/node_modules/firebase-tools/lib/bin/firebase emulators:start
+[debug] [2022-03-10T19:10:19.259Z] CLI Version:   10.2.2
+[debug] [2022-03-10T19:10:19.259Z] Platform:      darwin
+[debug] [2022-03-10T19:10:19.259Z] Node Version:  v12.18.1
+[debug] [2022-03-10T19:10:19.265Z] Time:          Thu Mar 10 2022 20:10:19 GMT+0100 (Central European Standard Time)
+[debug] [2022-03-10T19:10:19.265Z] ----------------------------------------------------------------------
 [debug] 
-[debug] [2022-03-08T07:08:02.894Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2022-03-08T07:08:02.894Z] > authorizing via signed-in user (odysseas.maheras@gmail.com)
+[debug] [2022-03-10T19:10:19.318Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-03-10T19:10:19.319Z] > authorizing via signed-in user (odysseas.maheras@gmail.com)
 [info] i  emulators: Starting emulators: auth, database {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: auth, database"}}
-[debug] [2022-03-08T07:08:02.907Z] [hub] writing locator at /var/folders/7w/sh8lvtx51q59cw3_x_qk0yb80000gn/T/hub-pistol-44e79.json
-[debug] [2022-03-08T07:08:02.913Z] > refreshing access token with scopes: []
-[debug] [2022-03-08T07:08:02.913Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
- <request body omitted>
-[debug] [2022-03-08T07:08:03.052Z] <<< HTTP RESPONSE 200 {"date":"Tue, 08 Mar 2022 07:08:03 GMT","cache-control":"no-cache, no-store, max-age=0, must-revalidate","pragma":"no-cache","expires":"Mon, 01 Jan 1990 00:00:00 GMT","content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","server":"scaffolding on HTTPServer2","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3=\":443\"; ma=2592000,h3-29=\":443\"; ma=2592000,h3-Q050=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
-[debug] [2022-03-08T07:08:03.101Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/pistol-44e79 [none]
-[debug] [2022-03-08T07:08:03.397Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/pistol-44e79 200
-[debug] [2022-03-08T07:08:03.398Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/pistol-44e79 {"projectId":"pistol-44e79","projectNumber":"787656565309","displayName":"Pistol","name":"projects/pistol-44e79","resources":{"hostingSite":"pistol-44e79","realtimeDatabaseInstance":"pistol-44e79-default-rtdb"},"state":"ACTIVE"}
-[debug] [2022-03-08T07:08:03.399Z] database rules config:  [{"instance":"pistol-44e79-default-rtdb","rules":"/Users/odilf/Documents/Documents - Odysseas’s MacBook Air/Code/Pistol/database.rules.json"}]
-[debug] [2022-03-08T07:08:03.406Z] Ignoring unsupported arg: projectId {"metadata":{"emulator":{"name":"database"},"message":"Ignoring unsupported arg: projectId"}}
-[debug] [2022-03-08T07:08:03.407Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"database"},"message":"Ignoring unsupported arg: auto_download"}}
-[debug] [2022-03-08T07:08:03.407Z] Ignoring unsupported arg: rules {"metadata":{"emulator":{"name":"database"},"message":"Ignoring unsupported arg: rules"}}
-[debug] [2022-03-08T07:08:03.407Z] Starting Database Emulator with command {"binary":"java","args":["-Duser.language=en","-jar","/Users/odilf/.cache/firebase/emulators/firebase-database-emulator-v4.7.3.jar","--host","localhost","--port",9000],"optionalArgs":["port","host","functions_emulator_port","functions_emulator_host"],"joinArgs":false} {"metadata":{"emulator":{"name":"database"},"message":"Starting Database Emulator with command {\"binary\":\"java\",\"args\":[\"-Duser.language=en\",\"-jar\",\"/Users/odilf/.cache/firebase/emulators/firebase-database-emulator-v4.7.3.jar\",\"--host\",\"localhost\",\"--port\",9000],\"optionalArgs\":[\"port\",\"host\",\"functions_emulator_port\",\"functions_emulator_host\"],\"joinArgs\":false}"}}
+[debug] [2022-03-10T19:10:19.335Z] [hub] writing locator at /var/folders/7w/sh8lvtx51q59cw3_x_qk0yb80000gn/T/hub-pistol-44e79.json
+[debug] [2022-03-10T19:10:19.342Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/pistol-44e79 [none]
+[debug] [2022-03-10T19:10:19.694Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/pistol-44e79 200
+[debug] [2022-03-10T19:10:19.694Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/pistol-44e79 {"projectId":"pistol-44e79","projectNumber":"787656565309","displayName":"Pistol","name":"projects/pistol-44e79","resources":{"hostingSite":"pistol-44e79","realtimeDatabaseInstance":"pistol-44e79-default-rtdb"},"state":"ACTIVE"}
+[debug] [2022-03-10T19:10:19.695Z] database rules config:  [{"instance":"pistol-44e79-default-rtdb","rules":"/Users/odilf/Documents/Documents/Code/Pistol-1/database.rules.json"}]
+[debug] [2022-03-10T19:10:19.701Z] Ignoring unsupported arg: projectId {"metadata":{"emulator":{"name":"database"},"message":"Ignoring unsupported arg: projectId"}}
+[debug] [2022-03-10T19:10:19.702Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"database"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2022-03-10T19:10:19.702Z] Ignoring unsupported arg: rules {"metadata":{"emulator":{"name":"database"},"message":"Ignoring unsupported arg: rules"}}
+[debug] [2022-03-10T19:10:19.702Z] Starting Database Emulator with command {"binary":"java","args":["-Duser.language=en","-jar","/Users/odilf/.cache/firebase/emulators/firebase-database-emulator-v4.7.3.jar","--host","localhost","--port",9000],"optionalArgs":["port","host","functions_emulator_port","functions_emulator_host"],"joinArgs":false} {"metadata":{"emulator":{"name":"database"},"message":"Starting Database Emulator with command {\"binary\":\"java\",\"args\":[\"-Duser.language=en\",\"-jar\",\"/Users/odilf/.cache/firebase/emulators/firebase-database-emulator-v4.7.3.jar\",\"--host\",\"localhost\",\"--port\",9000],\"optionalArgs\":[\"port\",\"host\",\"functions_emulator_port\",\"functions_emulator_host\"],\"joinArgs\":false}"}}
 [info] i  database: Database Emulator logging to database-debug.log {"metadata":{"emulator":{"name":"database"},"message":"Database Emulator logging to \u001b[1mdatabase-debug.log\u001b[22m"}}
-[debug] [2022-03-08T07:08:06.675Z] 08:08:06.673 [NamespaceSystem-akka.actor.default-dispatcher-4] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
- {"metadata":{"emulator":{"name":"database"},"message":"08:08:06.673 [NamespaceSystem-akka.actor.default-dispatcher-4] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started\n"}}
-[debug] [2022-03-08T07:08:06.878Z] 08:08:06.878 [main] INFO com.firebase.server.forge.App$ - Listening at localhost:9000
- {"metadata":{"emulator":{"name":"database"},"message":"08:08:06.878 [main] INFO com.firebase.server.forge.App$ - Listening at localhost:9000\n"}}
-[info] i  ui: downloading ui-v1.6.5.zip... {"metadata":{"emulator":{"name":"ui"},"message":"downloading ui-v1.6.5.zip..."}}
-[debug] [2022-03-08T07:08:12.178Z] >>> [apiv2][query] GET https://storage.googleapis.com/firebase-preview-drop/emulator/ui-v1.6.5.zip 
-[debug] [2022-03-08T07:08:12.424Z] <<< [apiv2][status] GET https://storage.googleapis.com/firebase-preview-drop/emulator/ui-v1.6.5.zip 200
-[debug] [2022-03-08T07:08:12.425Z] <<< [apiv2][body] GET https://storage.googleapis.com/firebase-preview-drop/emulator/ui-v1.6.5.zip [stream]
-[debug] [2022-03-08T07:08:14.024Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
-[debug] [2022-03-08T07:08:14.025Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
-[debug] [2022-03-08T07:08:14.025Z] Starting Emulator UI with command {"binary":"node","args":["/Users/odilf/.cache/firebase/emulators/ui-v1.6.5/server.bundle.js"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"/Users/odilf/.cache/firebase/emulators/ui-v1.6.5/server.bundle.js\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
+[debug] [2022-03-10T19:10:21.519Z] 20:10:21.517 [NamespaceSystem-akka.actor.default-dispatcher-5] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started
+ {"metadata":{"emulator":{"name":"database"},"message":"20:10:21.517 [NamespaceSystem-akka.actor.default-dispatcher-5] INFO akka.event.slf4j.Slf4jLogger - Slf4jLogger started\n"}}
+[debug] [2022-03-10T19:10:21.722Z] 20:10:21.722 [main] INFO com.firebase.server.forge.App$ - Listening at localhost:9000
+ {"metadata":{"emulator":{"name":"database"},"message":"20:10:21.722 [main] INFO com.firebase.server.forge.App$ - Listening at localhost:9000\n"}}
+[debug] [2022-03-10T19:10:27.323Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2022-03-10T19:10:27.324Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2022-03-10T19:10:27.324Z] Starting Emulator UI with command {"binary":"node","args":["/Users/odilf/.cache/firebase/emulators/ui-v1.6.5/server.bundle.js"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"/Users/odilf/.cache/firebase/emulators/ui-v1.6.5/server.bundle.js\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
 [info] i  ui: Emulator UI logging to ui-debug.log {"metadata":{"emulator":{"name":"ui"},"message":"Emulator UI logging to \u001b[1mui-debug.log\u001b[22m"}}
-[debug] [2022-03-08T07:08:14.213Z] Web / API server started at localhost:4000
+[debug] [2022-03-10T19:10:27.535Z] Web / API server started at localhost:4000
  {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at localhost:4000\n"}}
-[debug] [2022-03-08T07:08:14.357Z] >>> HTTP REQUEST PUT http://localhost:9000/.settings/rules.json?ns=pistol-44e79-default-rtdb  
+[debug] [2022-03-10T19:10:27.642Z] >>> HTTP REQUEST PUT http://localhost:9000/.settings/rules.json?ns=pistol-44e79-default-rtdb  
  {
   "rules": {
     ".read": "now < 1649196000000",  // 2022-4-6
     ".write": "now < 1649196000000",  // 2022-4-6
   }
 }
-[debug] [2022-03-08T07:08:14.823Z] <<< HTTP RESPONSE 200 {"content-length":"15","content-type":"application/json; charset=utf-8","access-control-allow-origin":"*","cache-control":"no-cache","x-firebase-project-id":"pistol-44e79-default-rtdb","x-firebase-project-number":"123456789","x-firebase-uuid":"a6384162-7a06-476d-b605-177d18aa6ed3"}
+[debug] [2022-03-10T19:10:28.092Z] <<< HTTP RESPONSE 200 {"content-length":"15","content-type":"application/json; charset=utf-8","access-control-allow-origin":"*","cache-control":"no-cache","x-firebase-project-id":"pistol-44e79-default-rtdb","x-firebase-project-number":"123456789","x-firebase-uuid":"be5f7e3c-49d3-48a5-92b3-042ae9c7b436"}
 [info] 
 ┌─────────────────────────────────────────────────────────────┐
 │ ✔  All emulators ready! It is now safe to connect your app. │

@@ -1,17 +1,16 @@
 <script lang="ts">
-	import type { Solve } from "$lib/database/architecture";	
+	import type { Solve } from "$lib/data/architecture";
+	import { flip } from "svelte/animate";	
+import TimeDisplay from "./TimeDisplay.svelte";
 
 	export let solves: Solve[]
-	export let length = 10
-
-	$: slice = solves.slice(0, length)
 </script>
 
 
 <div>
-	{#each slice as solve, i}
-	<div style:opacity={1 - i/length}>
-		{solve.time}	
-	</div>
+	{#each solves.reverse() as solve, i (solve.date.getTime())}
+		<div style:opacity={ 1 - (i/solves.length)} animate:flip>
+			<TimeDisplay time={solve.time} />
+		</div>
 	{/each}
 </div>

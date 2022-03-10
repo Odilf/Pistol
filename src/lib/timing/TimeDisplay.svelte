@@ -2,7 +2,7 @@
 	import { snackbar } from "$lib/utils";
 
 	export let time: number
-	export let decimalScalar: number = 0.75
+	export let decimalScalar: number = 1
 
 	$: decimals = (time % 1).toFixed(2).substring(2)
 
@@ -13,6 +13,6 @@
 	}
 </script>
 
-<div class='text-[1em] font-mono font-light' on:click={copyTime}>
-	{Math.floor(time)}.<span style='font-size: {decimalScalar}em'>{decimals}</span>
+<div class='text-[1em] font-mono font-light' on:dblclick={copyTime}>
+	{Math.floor(time)}.<span style:font-size='{decimalScalar}em'>{decimals}</span>
 </div>

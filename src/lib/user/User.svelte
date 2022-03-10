@@ -1,5 +1,5 @@
 <script>
-	import { user, login, signOut } from "./user";
+	import { user, login, signOut } from ".";
 </script>
 
 <div class='text-3xl flex flex-col items-center p-2 bg-accent rounded-xl'>

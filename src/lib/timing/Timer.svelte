@@ -76,7 +76,7 @@
 <svelte:window on:keydown={handleKeydown} on:keyup={handleKeyup} />
 
 <span class="{state} pointer-none select-none text-[10em] transition-all font-extralight">
-	<TimeDisplay {time}/>
+	<TimeDisplay {time} decimalScalar={0.75}/>
 </span>
 
 <style lang='postcss'>

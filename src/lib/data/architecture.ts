@@ -1,4 +1,7 @@
-enum Penalty {
+import { ref } from "firebase/database"
+import { db } from "./database"
+
+export enum Penalty {
 	None = "none",
 	Plus2 = "+2",
 	DNF = "DNF",
@@ -61,15 +64,9 @@ export class Solve {
 
 export class Session {
 	name: string
-	solves: Solve[]
 
 	constructor(name: string) {
 		this.name = name
-		this.solves = []
-	}
-
-	addSolve(solve: Solve): void {
-		this.solves = [...this.solves, solve]
 	}
 }
 
