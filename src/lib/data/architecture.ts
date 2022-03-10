@@ -1,50 +1,19 @@
-import { ref } from "firebase/database"
-import { db } from "./database"
-
 export enum Penalty {
 	None = "none",
 	Plus2 = "+2",
 	DNF = "DNF",
 }
 
-export type ScrambleType = '3x3' | '2x2' | '4x4' | '5x5' | '6x6' | '7x7' 
-						 | 'Clock' | 'Megaminx' | 'Pyraminx' | 'Skewb' | 'Square1'
-						 | '4BLD' | '5BLD' | 'MBLD'
+const scrambleTypes = ['3x3', '2x2', '4x4', '5x5', '6x6', '7x7', 
+					   'Clock', 'Megaminx', 'Pyraminx', 'Skewb', 'Square1',
+					   '4BLD', '5BLD', 'MBLD'] as const
 
-interface EventType {
+export type ScrambleType = (typeof scrambleTypes)[number]
+
+interface EventDescriptor {
 	name: string
 	abbreviation: string
 	scramble: ScrambleType
-}
-
-export const events: EventType[] = [
-	{ name: '3x3x3', abbreviation: '3x3', scramble: '3x3' },
-	{ name: '2x2x2', abbreviation: '2x2', scramble: '2x2' },
-	{ name: '4x4x4', abbreviation: '4x4', scramble: '4x4' },
-	{ name: '5x5x5', abbreviation: '5x5', scramble: '5x5' },
-	{ name: '6x6x6', abbreviation: '6x6', scramble: '6x6' },
-	{ name: '7x7x7', abbreviation: '7x7', scramble: '7x7' },
-
-	{ name: '3x3x3 Blindfolded', abbreviation: '3BLD', scramble: '3x3' },
-	{ name: '3x3x3 Fewest Moves', abbreviation: 'FMC', scramble: '3x3' },
-	{ name: '3x3x3 One-Handed', abbreviation: 'OH', scramble: '3x3' },
-
-	{ name: 'Clock', abbreviation: 'Clock', scramble: 'Clock' },
-	{ name: 'Megaminx', abbreviation: 'Megaminx', scramble: 'Megaminx' },
-	{ name: 'Pyraminx', abbreviation: 'Pyraminx', scramble: 'Pyraminx' },
-	{ name: 'Skewb', abbreviation: 'Skewb', scramble: 'Skewb' },
-	{ name: 'Square1', abbreviation: 'Square1', scramble: 'Square1' },
-
-	{ name: '4x4x4 Blindfolded', abbreviation: '4BLD', scramble: '4x4' },
-	{ name: '5x5x5 Blindfolded', abbreviation: '5BLD', scramble: '5x5' },
-	{ name: '3x3x3 Multi-Blind', abbreviation: 'MBLD', scramble: 'MBLD' },
-]
-
-export function getEventType(abbreviation: string): EventType {
-	const event = events.find(event => event.abbreviation === abbreviation)
-	if (!event) 
-		console.error(`Tried to find event ${abbreviation}, which doesn't exist`)
-	return event
 }
 
 export class Solve {
@@ -72,21 +41,47 @@ export class Session {
 
 export class Event {
 	name: string
-	type: EventType
+	abbreviation: string
+	scrambleType: ScrambleType
 	sessions: Session[]
 
-	constructor(name: string, type: EventType = null) {
+	constructor(name: string, abbreviation?: string, scrambleType?: ScrambleType) {
 		this.name = name
 
-		if (type) {
-			this.type = type
+		this.abbreviation = abbreviation || name
+
+		if (!scrambleType) {
+			if (!scrambleTypes.includes(this.abbreviation as ScrambleType)) {
+				console.error(`Tried to create event with scramble that doesn\'t exist (${this.abbreviation})`);
+			} else {
+				this.scrambleType = this.abbreviation as ScrambleType
+			}
 		} else {
-			this.type = getEventType(this.name)
+			this.scrambleType = scrambleType
 		}
 		this.sessions = [new Session('Main')]
 	}
-
-	addSession(session: Session): void {
-		this.sessions = [...this.sessions, session]
-	}
 }
+
+export const defaultEvents: Event[] = [
+	new Event('3x3x3', '3x3'),
+	new Event('2x2x2', '2x2'),
+	new Event('4x4x4', '4x4'),
+	new Event('5x5x5', '5x5'),
+	new Event('6x6x6', '6x6'),
+	new Event('7x7x7', '7x7'),
+
+	new Event('3x3x3 Blindfolded', '3BLD', '3x3'),
+	new Event('3x3x3 Fewest Moves', 'FMC', '3x3'),
+	new Event('3x3x3 One-Handed', 'OH', '3x3'),
+
+	new Event('Clock'),
+	new Event('Megaminx'),
+	new Event('Pyraminx'),
+	new Event('Skewb'),
+	new Event('Square1'),
+
+	new Event('4x4x4 Blindfolded', '4BLD', '4x4'),
+	new Event('5x5x5 Blindfolded', '5BLD', '5x5'),
+	new Event('3x3x3 Multi-Blind', 'MBLD', '3x3'),
+]
