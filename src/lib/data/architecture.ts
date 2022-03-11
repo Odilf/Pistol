@@ -6,15 +6,9 @@ export enum Penalty {
 
 const scrambleTypes = ['3x3', '2x2', '4x4', '5x5', '6x6', '7x7', 
 					   'Clock', 'Megaminx', 'Pyraminx', 'Skewb', 'Square1',
-					   '4BLD', '5BLD', 'MBLD'] as const
+					   '4BLD', '5BLD', 'MBLD', 'Other'] as const
 
 export type ScrambleType = (typeof scrambleTypes)[number]
-
-interface EventDescriptor {
-	name: string
-	abbreviation: string
-	scramble: ScrambleType
-}
 
 export class Solve {
 	time: number
