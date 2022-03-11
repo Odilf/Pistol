@@ -1,5 +1,8 @@
 @import "@fontsource/inter";
 @import "@fontsource/roboto-mono";
+@import "@fontsource/roboto";
+@import "@fontsource/roboto/100.css";
+@import "@fontsource/roboto/300.css";
 
 /* Write your global styles here, in PostCSS syntax */
 @tailwind base;
@@ -12,5 +15,5 @@
 }
 
 .clickable {
-	@apply transition hover:scale-105 active:scale-95 active:rotate-2;
+	@apply transition hover:scale-105 active:scale-95 active:rotate-2 odd:active:-rotate-2;
 }
