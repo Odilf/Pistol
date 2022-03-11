@@ -13,6 +13,6 @@
 	}
 </script>
 
-<div class='text-[1em] font-mono font-light' on:dblclick={copyTime}>
+<div class='text-[1em] font-mono' on:dblclick={copyTime}>
 	{Math.floor(time)}.<span style:font-size='{decimalScalar}em'>{decimals}</span>
 </div>
