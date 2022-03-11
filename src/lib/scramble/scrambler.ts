@@ -8,7 +8,7 @@ import { getRandomScramble as getRandomScrambleSkewb } from "./vendor/cstimer/sr
 import { getRandomScramble as getRandomScrambleSq1 } from "./vendor/cstimer/src/js/scramble/scramble_sq1_new";
 import type { ScrambleType } from "$lib/data/architecture";
 
-export async function getRandomScramble(scrambleType: ScrambleType, seed = new Date().getMilliseconds()): Promise<string> {
+export function getRandomScramble(scrambleType: ScrambleType, seed = new Date().getMilliseconds()): string {
 
 	let scramble: string[] = []
 	let length = 69
