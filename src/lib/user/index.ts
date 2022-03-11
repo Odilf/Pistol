@@ -1,5 +1,3 @@
-import type { Settings } from '$lib/data/settings'
-
 import { app } from '$lib/data/firebase'
 import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth"
 import { writable } from "svelte/store"
