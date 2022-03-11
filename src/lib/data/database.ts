@@ -1,7 +1,7 @@
 import { app } from './firebase'
 import { getDatabase, connectDatabaseEmulator, ref, onValue, set, query, orderByKey, limitToLast, get, remove } from "firebase/database";
 import { browser } from "$app/env";
-import { type Session, type Solve, Event, defaultEvents } from './architecture';
+import { type Session, Solve, Event, defaultEvents } from './architecture';
 import { writable } from 'svelte/store';
 import type { Writable } from 'svelte/store';
 
