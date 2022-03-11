@@ -1,7 +1,7 @@
 import { app } from './firebase'
-import { getDatabase, connectDatabaseEmulator, ref, onValue, set, query, orderByKey, limitToLast, get } from "firebase/database";
+import { getDatabase, connectDatabaseEmulator, ref, onValue, set, query, orderByKey, limitToLast, get, remove } from "firebase/database";
 import { browser } from "$app/env";
-import { type Session, type Solve, type Event, defaultEvents } from './architecture';
+import { type Session, type Solve, Event, defaultEvents } from './architecture';
 import { writable } from 'svelte/store';
 import type { Writable } from 'svelte/store';
 
@@ -10,8 +10,9 @@ import { user } from '$lib/user';
 export const db = browser && getDatabase(app);
 
 let uid = null
-user.subscribe(user => {
+user.subscribe(async(user) => {
 	uid = user && `User-${user.uid}`
+	getUserEvents()
 })
 
 const solvesPrefix = 'Solves'
@@ -49,19 +50,29 @@ if (browser) {
 	}
 }
 
-export async function addSolve(solve: Solve, session: Session, event: Event) {
-	const sessionRef = ref(db, `${uid}/${solvesPrefix}/${event.name}/${session.name}/${solve.date.getTime()}`)
-	delete solve.date
-
-	await set(sessionRef, solve)
+function sesssionPath(event: Event, session: Session): string {
+	return `${uid}/${solvesPrefix}/${event.abbreviation}/${session.name}`
 }
 
-export function getSolves(session: Session, event: Event, amount: number = null): Writable<Solve[]> {
+export async function addSolve(solve: Solve, event: Event, session: Session) {
+	try {
+		const sessionRef = ref(db, `${sesssionPath(event, session)}/${solve.date.getTime()}`)
+		delete solve.date
+		await set(sessionRef, solve)
+	} catch {
+		console.error('Something went wrong when adding time', {
+			solve, session, event
+		});
+	}
+
+}
+
+export function getSolves(event: Event, session: Session, amount: number = null): Writable<Solve[]> {
 	if (!db) {
 		console.log('Database isn\'t yet initialized');
 		return writable([])
 	}
-	const sessionRef = ref(db, `${uid}/${solvesPrefix}/${event.name}/${session.name}`)
+	const sessionRef = ref(db, `${sesssionPath(event, session)}`)
 
 	const solvesQuery = amount ? query(sessionRef, orderByKey(), limitToLast(amount)) : query(sessionRef, orderByKey())
 
@@ -74,15 +85,33 @@ export function getSolves(session: Session, event: Event, amount: number = null)
 	return solves
 }
 
+export const events = writable(defaultEvents as Event[])
+
 export async function getUserEvents(): Promise<Event[]> {
+	if (!uid) {
+		console.log('Not signed in yet!');
+		return [new Event('caca', 'c', '3x3')]
+	}
+
+	console.log('Getting events of user', uid);
+	
 	const eventRef = ref(db, `${uid}/${eventsPrefix}`)
 	let snapshot = await get(eventRef)
-	const events = snapshot.val() as Event[]
+	const dbEvents = snapshot.val() as Event[]
 
-	if (!events) {
+	if (!dbEvents) {
 		console.log('No events!');
 		await set(eventRef, defaultEvents)
 	}
 
-	return defaultEvents
+	events.set(dbEvents)
+
+	return dbEvents
+}
+
+export async function deleteSolve(solve: Solve, event: Event, session: Session) {
+	console.log('Deleting solve', solve);
+	
+	const solveRef = ref(db, `${sesssionPath(event, session)}/${solve.date.getTime()}`)
+	remove(solveRef)
 }
