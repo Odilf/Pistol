@@ -18,6 +18,7 @@
 
 	function handleKeydown(e: KeyboardEvent) {
 		if (e.key !== " ") return
+		e.preventDefault()
 
 		if (state === State.Released) {
 			state = State.Pressed
@@ -75,7 +76,7 @@
 
 <svelte:window on:keydown={handleKeydown} on:keyup={handleKeyup} />
 
-<span class="{state} pointer-none select-none text-[10em] transition-all duration-200 font-extralight">
+<span class="{state} pointer-none select-none text-[10em] transition-all duration-200 font-thin">
 	<TimeDisplay {time} decimalScalar={0.75}/>
 </span>
 
