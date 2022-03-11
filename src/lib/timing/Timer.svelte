@@ -1,5 +1,5 @@
 <script lang="ts">
-	import TimeDisplay from "./TimeDisplay.svelte"
+	import TimeDisplay from "$lib/UI/TimeDisplay.svelte"
 	
 	export let pressDelay: number
 	export let refreshRate: number = 69

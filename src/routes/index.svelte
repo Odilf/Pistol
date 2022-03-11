@@ -1,5 +1,5 @@
 <script lang='ts'>
-	import EventTabs from "$lib/UI/EventTabs.svelte";
+	import EventTabs from "$lib/navigation/EventTabs.svelte";
 	import Timer from "$lib/timing/Timer.svelte";
 	import SolveList from "$lib/timing/SolveList.svelte";
 
@@ -7,11 +7,13 @@
 	import { user } from "$lib/user";
 	import { addSolve, deleteSolve, events, getSolves } from "$lib/data/database";
 
-	import { fly, slide } from 'svelte/transition';
-	import Scramble from "$lib/timing/Scramble.svelte";
+	import { fly } from 'svelte/transition';
+	import Scramble from "$lib/UI/Scramble.svelte";
+	import { onMount } from "svelte";
 
 	
 	$: solves = getSolves(selection.event, selection.session, 12)
+	onMount(() => solves = getSolves(selection.event, selection.session))
 
 	function handleTime(time: number) {
 		const solve = new Solve(time, "R U R' U'")
@@ -45,7 +47,7 @@
 		<EventTabs events={$events} bind:selection/>
 
 		<div class='m-4'>
-			<Scramble scrambleType={selection.event.scrambleType}/>
+			<Scramble scramble="R U R' U'"/>
 		</div>
 	</div>
 

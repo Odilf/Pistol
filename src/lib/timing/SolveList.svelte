@@ -1,8 +1,9 @@
 <script lang="ts">
 	import type { Solve } from "$lib/data/architecture";
+	import TimeDisplay from "$lib/UI/TimeDisplay.svelte";
+	
 	import { flip } from "svelte/animate";	
 	import { fly } from "svelte/transition";	
-	import TimeDisplay from "./TimeDisplay.svelte";
 
 	export let solves: Solve[]
 
