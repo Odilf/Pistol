@@ -4,7 +4,7 @@ const config = {
   theme: {
 	fontFamily: {
 		'sans': ['InterVariable', 'ui-sans-serif', 'system-ui', ],
-		'mono': ['Roboto Mono'],
+		'mono': ['Roboto'],
 	},
     extend: {
 		colors: {
