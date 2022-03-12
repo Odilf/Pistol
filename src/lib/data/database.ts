@@ -49,15 +49,13 @@ function sesssionPath(event: Event, session: Session): string {
 }
 
 export async function addSolve(solve: Solve, event: Event, session: Session) {
-	try {
-		const sessionRef = ref(db, `${sesssionPath(event, session)}/${solve.date.getTime()}`)
-		delete solve.date
-		await set(sessionRef, solve)
-	} catch {
-		console.error('Something went wrong when adding time', {
-			solve, session, event
-		});
+	if (!uid) {
+		console.log('User not logged in when adding solve')
+		return
 	}
+	const sessionRef = ref(db, `${sesssionPath(event, session)}/${solve.date.getTime()}`)
+	delete solve.date
+	await set(sessionRef, solve)
 
 }
 
@@ -66,6 +64,7 @@ export function getSolves(event: Event, session: Session, amount: number = null)
 		console.log('Database isn\'t yet initialized');
 		return writable([])
 	}
+
 	const sessionRef = ref(db, `${sesssionPath(event, session)}`)
 
 	const solvesQuery = amount ? query(sessionRef, orderByKey(), limitToLast(amount)) : query(sessionRef, orderByKey())
