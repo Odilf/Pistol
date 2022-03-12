@@ -30,6 +30,8 @@
     "@fontsource/roboto-mono": "^4.5.3",
     "cubing": "^0.25.13",
     "firebase": "^9.6.8",
-    "svelte-local-storage-store": "^0.2.6"
+    "lodash.isequal": "^4.5.0",
+    "svelte-local-storage-store": "^0.2.6",
+    "tailwind-scrollbar-hide": "^1.1.7"
   }
 }

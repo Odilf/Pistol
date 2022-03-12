@@ -9,17 +9,13 @@ import { browser } from "$app/env";
 	export let selection: { event: Event; session: Session; }
 	$: selection = getSelection(selected, 0)
 
-	$: buttons = browser && container && container.children
-	// let container = browser && document.getElementById('container')
 	let container: HTMLDivElement
-
-	$: container && console.log(container)
-
-	$: buttons && buttons.item(selected).scrollIntoView({behavior: "smooth", block: "center", inline: "center"})
-
-	container && container.scrollTo(200, 0)
-	
-	// console.log(container.scrollLeft);
+	$: buttons = browser && container && container.children
+	$: buttons && buttons.item(selected).scrollIntoView({
+		behavior: "smooth", 
+		block: "center", 
+		inline: "center"
+	})
 	
 
 	function getSelection(selectedEvent: number, selectedSession: number) {
@@ -57,7 +53,7 @@ import { browser } from "$app/env";
 	</svg>
 </button>
 
-<div bind:this={container} class='flex rounded p-2 bg-secondary text-primary shadow-lg w-fit box-content m-3 max-w-full mx-auto overflow-x-scroll'>
+<div bind:this={container} class='flex rounded p-2 scrollbar-hide bg-secondary text-primary shadow-lg w-fit box-content m-3 max-w-full mx-auto overflow-x-scroll'>
 
 	{#each events as event, i}
 		<button class='p-2 rounded transition px-4 mx-1 clickable
