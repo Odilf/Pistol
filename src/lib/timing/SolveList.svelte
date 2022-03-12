@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { Solve } from "$lib/data/architecture";
 	import TimeDisplay from "$lib/UI/TimeDisplay.svelte";
-	
+
 	import { flip } from "svelte/animate";	
 	import { fly } from "svelte/transition";	
 
@@ -9,12 +9,13 @@
 
 	let duration = 400
 	export { duration as transitionDuration }
+	export const minSolveLength = 5
 
-	$: length = Math.max(solves.length, 8)
+	$: length = Math.max(solves?.length, minSolveLength) || minSolveLength
 </script>
 
 <div class='flex flex-col text-lg items-center'>
-	{#if solves.length}
+	{#if solves?.length}
 		{#each solves.reverse() as solve, i (solve.date.getTime())}
 			<div style:opacity={ 1 - ((i)/length)} animate:flip={{ duration }} in:fly|local={{y: -20, duration }} class='transition'>
 				<TimeDisplay time={solve.time} />
