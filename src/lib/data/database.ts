@@ -9,12 +9,6 @@ import { user } from '$lib/user';
 
 export const db = browser && getDatabase(app);
 
-let uid = null
-user.subscribe(async(user) => {
-	uid = user && `User-${user.uid}`
-	getUserEvents()
-})
-
 const solvesPrefix = 'Solves'
 const eventsPrefix = 'Events'
 const settingsPrefix = 'Settings'
@@ -87,10 +81,14 @@ export function getSolves(event: Event, session: Session, amount: number = null)
 
 export const events = writable(defaultEvents as Event[])
 
-export async function getUserEvents(): Promise<Event[]> {
+async function getUserEvents(): Promise<void> {
+	if (!db) {
+		console.log('Database not yet initialized');
+		return
+	}
 	if (!uid) {
-		console.log('Not signed in yet!');
-		return [new Event('caca', 'c', '3x3')]
+		console.log('Tried to retrieve user events without a loggen in user');
+		return
 	}
 
 	console.log('Getting events of user', uid);
@@ -105,8 +103,6 @@ export async function getUserEvents(): Promise<Event[]> {
 	}
 
 	events.set(dbEvents)
-
-	return dbEvents
 }
 
 export async function deleteSolve(solve: Solve, event: Event, session: Session) {
@@ -115,3 +111,9 @@ export async function deleteSolve(solve: Solve, event: Event, session: Session) 
 	const solveRef = ref(db, `${sesssionPath(event, session)}/${solve.date.getTime()}`)
 	remove(solveRef)
 }
+
+let uid = null
+user.subscribe(async(user) => {
+	uid = user && `User-${user.uid}`
+	getUserEvents()
+})
