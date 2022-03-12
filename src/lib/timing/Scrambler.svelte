@@ -2,7 +2,6 @@
 	import type { Session, Event } from "$lib/data/architecture";
 	import { events } from "$lib/data/database";
 	import isEqual from 'lodash.isequal'	
-import EventTabs from "$lib/navigation/EventTabs.svelte";
 
 	import { getRandomScramble} from '$lib/scramble/scrambler'
 	import Scramble from "$lib/UI/Scramble.svelte";
@@ -27,10 +26,19 @@ import EventTabs from "$lib/navigation/EventTabs.svelte";
 		})
 	}
 
+	function populateEmpty(scrambleEvents: ScrambleEvent[]) {
+		return scrambleEvents.map(scrambleEvent => {
+			if (!scrambleEvent.scrambles) scrambleEvent.scrambles = [getRandomScramble(scrambleEvent.event.scrambleType)]
+			return scrambleEvent
+		})
+	}
+
 	function getScrambleEvent(scrambles: ScrambleEvent[], event: Event): ScrambleEvent {
-		const scrambleEvent = scrambles.find(scrambleEvent => isEqual(scrambleEvent.event, event))
+		const scrambleEvent = scrambles.find(scrambleEvent => scrambleEvent.event?.name === event?.name)
 
 		if (!scrambleEvent) {
+			console.log("Didn't find event", event, 'in', scrambles)	;
+			
 			return {
 				event: null,
 				scrambles: ['']
@@ -45,8 +53,9 @@ import EventTabs from "$lib/navigation/EventTabs.svelte";
 	}
 
 	function getLastScramble(scrambleEvents: ScrambleEvent[], event: Event) {
-		const scrambles = getScrambles(scrambleEvents, event)
+		console.log("Searching for ", event, 'in', scrambleEvents);
 		
+		const scrambles = getScrambles(scrambleEvents, event)
 		return scrambles[scrambles.length - 1]
 	}
 
@@ -62,12 +71,16 @@ import EventTabs from "$lib/navigation/EventTabs.svelte";
 	}
 
 	let scrambles = populateScrambles($events)
-
-	$: console.log(scrambles);
+	$: scrambles = populateEmpty(scrambles)
 	
+	export let activeScramble = ''
+	$: activeScramble = getLastScramble(scrambles, selection?.event)
+
+	$: console.log(activeScramble)
+	$: console.log(getLastScramble(scrambles, selection?.event))
 	
 </script>
 
 {#if selection}
-	<Scramble scramble={getLastScramble(scrambles, selection.event)}/>
+	<Scramble scramble={activeScramble}/>
 {/if}
