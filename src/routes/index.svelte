@@ -28,7 +28,7 @@
 	let selection = null
 
 	function handleKeydown(e: KeyboardEvent) {
-		if (e.code === 'KeyZ' && e.altKey) {
+		if (e.code === 'KeyZ' && (e.altKey || e.metaKey)) {
 			if ($solves.length) {
 				deleteSolve($solves[0], selection.event, selection.session)
 			}
