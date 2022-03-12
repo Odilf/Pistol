@@ -1,0 +1,73 @@
+<script lang="ts">
+	import type { Session, Event } from "$lib/data/architecture";
+	import { events } from "$lib/data/database";
+	import isEqual from 'lodash.isequal'	
+import EventTabs from "$lib/navigation/EventTabs.svelte";
+
+	import { getRandomScramble} from '$lib/scramble/scrambler'
+	import Scramble from "$lib/UI/Scramble.svelte";
+	
+
+	type ScrambleEvent = {
+		event: Event,
+		scrambles: string[]
+	}
+
+	export let selection: {
+		event: Event,
+		session: Session
+	}
+
+	function populateScrambles(events: Event[]) {
+		return events.map(event => {
+			return {
+				event,
+				scrambles: [getRandomScramble(event.scrambleType)],
+			}
+		})
+	}
+
+	function getScrambleEvent(scrambles: ScrambleEvent[], event: Event): ScrambleEvent {
+		const scrambleEvent = scrambles.find(scrambleEvent => isEqual(scrambleEvent.event, event))
+
+		if (!scrambleEvent) {
+			return {
+				event: null,
+				scrambles: ['']
+			}
+		}
+
+		return scrambleEvent
+	}
+
+	function getScrambles(scrambles: ScrambleEvent[], event: Event) {
+		return getScrambleEvent(scrambles, event).scrambles
+	}
+
+	function getLastScramble(scrambleEvents: ScrambleEvent[], event: Event) {
+		const scrambles = getScrambles(scrambleEvents, event)
+		
+		return scrambles[scrambles.length - 1]
+	}
+
+	function addScramble(scrambleEvents: ScrambleEvent[], event: Event) {
+		const scrambleEvent = getScrambleEvent(scrambleEvents, event)
+		
+		scrambleEvent.scrambles = [...scrambleEvent.scrambles, getRandomScramble(scrambleEvent.event.scrambleType)]
+		scrambles = scrambles
+	}
+
+	export function requestNewScramble() {
+		addScramble(scrambles, selection.event)
+	}
+
+	let scrambles = populateScrambles($events)
+
+	$: console.log(scrambles);
+	
+	
+</script>
+
+{#if selection}
+	<Scramble scramble={getLastScramble(scrambles, selection.event)}/>
+{/if}

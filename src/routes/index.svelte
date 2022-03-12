@@ -10,21 +10,22 @@
 	import { fly } from 'svelte/transition';
 	import Scramble from "$lib/UI/Scramble.svelte";
 	import { onMount } from "svelte";
+	import Scrambler from "$lib/timing/Scrambler.svelte";
 
-	
-	$: solves = getSolves(selection.event, selection.session, 12)
-	onMount(() => solves = getSolves(selection.event, selection.session))
+	let requestNewScramble
+	$: solves = selection && getSolves(selection.event, selection.session, 12)
+	onMount(() => selection = {
+		event: $events[0],
+		session: $events[0].sessions[0],
+	})
 
 	function handleTime(time: number) {
 		const solve = new Solve(time, "R U R' U'")
 		addSolve(solve, selection.event, selection.session)
-
+		requestNewScramble()
 	}
 
-	let selection = {
-		event: $events[0],
-		session: $events[0].sessions[0]
-	}
+	let selection = null
 
 	function handleKeydown(e: KeyboardEvent) {
 		if (e.code === 'KeyZ' && e.altKey) {
@@ -42,12 +43,10 @@
 
 		User: {$user?.displayName}
 
-		<!-- <button on:click={async() => $events = await getUserEvents()}> caca </button> -->
-
 		<EventTabs events={$events} bind:selection/>
 
 		<div class='m-4'>
-			<Scramble scramble="R U R' U'"/>
+			<Scrambler bind:requestNewScramble {selection}/>
 		</div>
 	</div>
 
