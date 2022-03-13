@@ -1,7 +1,7 @@
 import { createSnackbar } from "./snackbar";
-import { cursorPosition } from "./cursorPosition";
+import { cursorPosition, pressedKeys } from "./deviceState"
 
 export { 
 	createSnackbar as snackbar,
-	cursorPosition,
+	cursorPosition, pressedKeys
 };
