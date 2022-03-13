@@ -37,8 +37,6 @@
 		const scrambleEvent = scrambles.find(scrambleEvent => scrambleEvent.event?.name === event?.name)
 
 		if (!scrambleEvent) {
-			console.log("Didn't find event", event, 'in', scrambles)	;
-			
 			return {
 				event: null,
 				scrambles: ['']
@@ -53,8 +51,6 @@
 	}
 
 	function getLastScramble(scrambleEvents: ScrambleEvent[], event: Event) {
-		console.log("Searching for ", event, 'in', scrambleEvents);
-		
 		const scrambles = getScrambles(scrambleEvents, event)
 		return scrambles[scrambles.length - 1]
 	}
@@ -75,9 +71,6 @@
 	
 	export let activeScramble = ''
 	$: activeScramble = getLastScramble(scrambles, selection?.event)
-
-	$: console.log(activeScramble)
-	$: console.log(getLastScramble(scrambles, selection?.event))
 	
 </script>
 
