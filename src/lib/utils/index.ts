@@ -1,5 +1,7 @@
 import { createSnackbar } from "./snackbar";
+import { cursorPosition } from "./cursorPosition";
 
 export { 
-	createSnackbar as snackbar 
+	createSnackbar as snackbar,
+	cursorPosition,
 };
