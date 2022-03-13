@@ -79,7 +79,7 @@
 		{#await activeScramble}
 			Loading...
 		{:then scramble} 
-			<Scramble {scramble}/>
+			<Scramble {scramble} scrambleType={selection.event.scrambleType}/>
 		{/await}
 	{/if}
 </div>

@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { browser } from '$app/env';
-	import { Alg } from 'cubing/alg';
+	import type { ScrambleType } from '$lib/data/architecture';
+	import { getPuzzleIDFromScrambleType } from '$lib/utils/cubingjsBridge';
 
-	import { TwistyPlayer } from 'cubing/twisty'
+	import { TwistyPlayer, type PuzzleID } from 'cubing/twisty'
 	import { onMount } from 'svelte';
 	import { spring } from 'svelte/motion'
 	import { fade } from 'svelte/transition'
@@ -12,14 +13,15 @@
 	export let alg: string = ''
 	export let move: number = null
 	export let hintFacelets: 'floating' | 'none' | 'auto' = 'auto'
-	// export let puzzle: string = '3x3'
-	
+
+	export let puzzle: PuzzleID = null
+	export let scrambleType: ScrambleType = '3x3'
+
 	const twistyPlayer = browser && new TwistyPlayer({
 		alg,
 		// puzzle,
 		background: 'none',
 		controlPanel: 'none',
-		hintFacelets
 	})
 
 	// TODO: #99 Very much clunky. Surely there's a better way
@@ -29,7 +31,7 @@
 
 		let timestamp = 0
 		for (const move of moves.slice(0, moveNumber + 1)) {
-			if (move[1] == '2') timestamp += 1500
+			if (move[move.length - 1] == '2') timestamp += 1500
 			else timestamp += 1000
 		}
 
@@ -42,6 +44,10 @@
 	
 	$: twistyPlayer.alg = alg
 	$: twistyPlayer && twistyPlayer.experimentalModel.timestampRequest.set($timestamp)
+
+	$: twistyPlayer.hintFacelets = hintFacelets
+
+	$: twistyPlayer.puzzle = puzzle || getPuzzleIDFromScrambleType(scrambleType)
 
 	onMount(() => container.appendChild(twistyPlayer))
 
