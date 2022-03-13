@@ -11,17 +11,22 @@
 	let container: HTMLDivElement
 	let cubeWrapper: HTMLDivElement
 
+	function getRects() {
+		containerRect = container?.getBoundingClientRect()
+		cubeWrapperRect = cubeWrapper?.getBoundingClientRect()
+	}
+
 	$: containerRect = container?.getBoundingClientRect()
 	$: cubeWrapperRect = cubeWrapper?.getBoundingClientRect()
 
 	$: if (hovering != null) {
-		$x = containerRect.width * hovering / moves.length
+		$x = containerRect?.width * hovering / moves.length
 	}
 
 	$: offset = containerRect?.x - cubeWrapperRect?.width/2
-	
-
 </script>
+
+<svelte:window on:resize={getRects}/>
 
 <div class='w-fit text-center mx-auto max-w-screen-md font-light {scramble.length > 100 ? 'text-lg' : 'text-2xl'} cursor-pointer'
 	on:mouseleave={() => hovering = undefined} bind:this={container}>
