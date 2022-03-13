@@ -22,15 +22,11 @@
 		hintFacelets
 	})
 
-	const caca = new Alg(alg)
-	console.log(caca.units());
-
 	// TODO: #99 Very much clunky. Surely there's a better way
 	function getTimestamp(alg: string, moveNumber: number) {
-		if (moveNumber == null) {
-			return Infinity
-		}
 		const moves = alg.split(' ')
+		if (moveNumber == null) moveNumber = moves.length
+
 		let timestamp = 0
 		for (const move of moves.slice(0, moveNumber + 1)) {
 			if (move[1] == '2') timestamp += 1500
@@ -42,8 +38,8 @@
 	
 
 	const timestamp = spring(getTimestamp(alg, move), { stiffness: 0.1, damping: 0.8 })
-	$: timestamp.set(getTimestamp(alg, move))
-
+	$: $timestamp = getTimestamp(alg, move)
+	
 	$: twistyPlayer.alg = alg
 	$: twistyPlayer && twistyPlayer.experimentalModel.timestampRequest.set($timestamp)
 
