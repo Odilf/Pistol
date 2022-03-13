@@ -4,7 +4,7 @@ export enum Penalty {
 	DNF = "DNF",
 }
 
-const scrambleTypes = ['3x3', '2x2', '4x4', '5x5', '6x6', '7x7', 
+const scrambleTypes = ['3x3', '2x2', '4x4', '5x5', '6x6', '7x7', '3BLD',
 					   'Clock', 'Megaminx', 'Pyraminx', 'Skewb', 'Square1',
 					   '4BLD', '5BLD', 'MBLD', 'Other'] as const
 
@@ -65,7 +65,7 @@ export const defaultEvents: Event[] = [
 	new Event('6x6x6', '6x6'),
 	new Event('7x7x7', '7x7'),
 
-	new Event('3x3x3 Blindfolded', '3BLD', '3x3'),
+	new Event('3x3x3 Blindfolded', '3BLD', '3BLD'),
 	new Event('3x3x3 Fewest Moves', 'FMC', '3x3'),
 	new Event('3x3x3 One-Handed', 'OH', '3x3'),
 

@@ -9,7 +9,7 @@
 
 	type ScrambleEvent = {
 		event: Event,
-		scrambles: string[]
+		scrambles: Promise<string>[]
 	}
 
 	export let selection: {
@@ -39,7 +39,7 @@
 		if (!scrambleEvent) {
 			return {
 				event: null,
-				scrambles: ['']
+				scrambles: []
 			}
 		}
 
@@ -69,11 +69,17 @@
 	let scrambles = populateScrambles($events)
 	$: scrambles = populateEmpty(scrambles)
 	
-	export let activeScramble = ''
+	export let activeScramble: Promise<string> = new Promise(() => '')
 	$: activeScramble = getLastScramble(scrambles, selection?.event)
 	
 </script>
 
-{#if selection}
-	<Scramble scramble={activeScramble}/>
-{/if}
+<div class='w-full'>
+	{#if selection}
+		{#await activeScramble}
+			Loading...
+		{:then scramble} 
+			<Scramble {scramble}/>
+		{/await}
+	{/if}
+</div>
