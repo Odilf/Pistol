@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { ScrambleType } from '$lib/data/architecture';
-import ScramblePreview from './ScramblePreview.svelte';
+	import ScramblePreview from './ScramblePreview.svelte';
 
 	export let scramble: string
 	export let scrambleType: ScrambleType
