@@ -71,14 +71,30 @@
 	
 	export let activeScramble: Promise<string> = new Promise(() => '')
 	$: activeScramble = getLastScramble(scrambles, selection?.event)
+
+	let showHistory = false
 	
 </script>
 
-<div class='w-full'>
+{#if showHistory}
+	{#each getScrambles(scrambles, selection.event).slice(0, -1) as scramble, i}
+		{#await scramble}
+			Loading...
+		{:then scramble} 
+			<div class='w-full absolute' style:transform='translateY({(i + 1) * 40}px)' on:click={() => showHistory = true}>
+				<Scramble {scramble} scrambleType={selection.event.scrambleType}/>
+			</div>
+		{/await}
+		
+	{/each}
+{/if}
+
+
+<div class='w-full text-center' on:click={() => showHistory = true}>
 	{#if selection}
 		{#await activeScramble}
 			Loading...
-		{:then scramble} 
+		{:then scramble}
 			<Scramble {scramble} scrambleType={selection.event.scrambleType}/>
 		{/await}
 	{/if}
