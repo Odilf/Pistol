@@ -1,8 +1,6 @@
 <script lang="ts">
 	import type { Session, Event } from "$lib/data/architecture";
 	import { events } from "$lib/data/database";
-	import isEqual from 'lodash.isequal'	
-
 	import { getRandomScramble} from '$lib/scramble/scrambler'
 	import Scramble from "$lib/UI/Scramble.svelte";
 	
