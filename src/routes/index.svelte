@@ -13,9 +13,13 @@
 
 	let requestNewScramble: { (): void; (): void; }
 	$: solves = selection && getSolves(selection.event, selection.session, 12)
-	onMount(() => selection = {
-		event: $events[0],
-		session: $events[0].sessions[0],
+	onMount(() => {
+			selection = {
+			event: $events[0],
+			session: $events[0].sessions[0],
+		}
+
+		solves = getSolves(selection.event, selection.session, 12)
 	})
 
 	function handleTime(time: number) {
