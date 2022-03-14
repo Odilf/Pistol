@@ -8,11 +8,10 @@
 	import { addSolve, deleteSolve, events, getSolves } from "$lib/data/database";
 
 	import { fly } from 'svelte/transition';
-	import Scramble from "$lib/UI/Scramble.svelte";
 	import { onMount } from "svelte";
 	import Scrambler from "$lib/timing/Scrambler.svelte";
 
-	let requestNewScramble
+	let requestNewScramble: { (): void; (): void; }
 	$: solves = selection && getSolves(selection.event, selection.session, 12)
 	onMount(() => selection = {
 		event: $events[0],
