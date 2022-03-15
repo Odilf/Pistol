@@ -16,10 +16,7 @@
 	let state: State = State.Released
 	let stateTimeout: NodeJS.Timeout
 
-	function handleKeydown(e: KeyboardEvent) {
-		if (e.key !== " ") return
-		e.preventDefault()
-
+	function down() {
 		if (state === State.Released) {
 			state = State.Pressed
 
@@ -35,9 +32,7 @@
 		}
 	}
 
-	function handleKeyup(e: KeyboardEvent) {
-		if (e.key !== " ") return
-
+	function up() {
 		if (state === State.Pressed) {
 			clearTimeout(stateTimeout)
 			state = State.Released
@@ -51,6 +46,18 @@
 		if (state === State.Finished) {
 			state = State.Released
 		}
+	}
+
+	function handleKeydown(e: KeyboardEvent) {
+		if (e.key !== " ") return
+		e.preventDefault()
+
+		down()
+	}
+
+	function handleKeyup(e: KeyboardEvent) {
+		if (e.key !== " ") return
+		up()
 	}
 
 	let start: Date
@@ -72,13 +79,22 @@
 		dispatch('time', time)
 	}
 
+	function handelTouchstart() {
+		down()
+	}
+
+	function handleTouchend() {
+		up()
+	}
+
 </script>
 
-<svelte:window on:keydown={handleKeydown} on:keyup={handleKeyup} />
+<svelte:window on:keydown={handleKeydown} on:keyup={handleKeyup}/>
 
-<span class="{state} pointer-none select-none text-[10em] transition-all duration-200 font-thin">
+<div class="{state} pointer-none select-none text-[8em] md:text-[10em] transition-all duration-200 font-thin"
+on:touchstart={handelTouchstart} on:touchend={handleTouchend}>
 	<TimeDisplay {time} decimalScalar={0.75}/>
-</span>
+</div>
 
 <style lang='postcss'>
 	.pressed {
