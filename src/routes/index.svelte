@@ -3,13 +3,14 @@
 	import Timer from "$lib/timing/Timer.svelte";
 	import SolveList from "$lib/timing/SolveList.svelte";
 
-	import { Penalty, Solve } from "$lib/data/architecture";
+	import { Solve } from "$lib/data/architecture";
 	import { user } from "$lib/profile";
 	import { addSolve, deleteSolve, events, getSolves } from "$lib/data/database";
 
 	import { fly } from 'svelte/transition';
 	import { onMount } from "svelte";
 	import Scrambler from "$lib/timing/Scrambler.svelte";
+import Header from "$lib/UI/Header.svelte";
 
 	let requestNewScramble: { (): void; (): void; }
 	$: solves = selection && getSolves(selection.event, selection.session, 12)
@@ -45,10 +46,11 @@
 
 <main class='w-full h-full max-h-full flex flex-col items-center justify-center'>
 	<div class='flex-1 w-full flex-col items-center justify-center overflow-y-scroll'>
+		<Header/>
 
-		User: {$user?.displayName}. 
+		<!-- User: {$user?.displayName}. 
 		
-		<button on:click={() => location.href = '/profile'}> Profile page </button>
+		<button on:click={() => location.href = '/profile'}> Profile page </button> -->
 
 		<EventTabs events={$events} bind:selection/>
 

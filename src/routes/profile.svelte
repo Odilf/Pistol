@@ -9,12 +9,12 @@
 
 	let showSidebar = false
 
-	$: menuItems = {
-		'Dashboard': { component: Dashboard, props: null },
-		'Events':  { component: EventManager, props: { events: $events} },
-		'Stats': null,
-		'Settings': null,
-	}
+	$: menuItems = [
+		'Dashboard',
+		'Events',
+		'Stats',
+		'Settings',
+	]
 	
 	let selectedItem: string
 
@@ -31,23 +31,29 @@
 
 {:else}
 
-	<header>
-		<!-- <button on:click={() => location.href='/'}> Back </button> -->
-		<button class='bg-secondary p-4 text-primary rounded clickable md:hidden'
-		on:click={() => showSidebar = !showSidebar}> Show menu </button>
+<header class='bg-secondary text-primary flex'>
+		<button class='p-4 rounded clickable md:hidden sticky top-0'
+		on:click={() => showSidebar = !showSidebar}>
+			<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+				<path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+			</svg>
+		</button>
+
+		<button class='clickable ml-4' on:click={() => location.href = '/'}>
+			Return
+		</button>
 	</header>
 
 	<main class='flex h-full'>
 		<Sidebar bind:enabled={showSidebar}>
 			<menu slot='menu'>
-				<Menu items={Object.keys(menuItems)} bind:selected={selectedItem}/>
+				<Menu items={menuItems} bind:selected={selectedItem}/>
 			</menu>
 			
 			<div class='bg-secondary/10 h-full mx-8 overflow-y-scroll p-2 py-8'>
 				{#if selectedItem === 'Events'}
 					<EventManager userEvents={$events}/>
 				{/if}
-				<!-- <svelte:component this={menuItems[selectedItem]?.component} {...menuItems[selectedItem]?.props}/> -->
 			</div>
 		</Sidebar>
 	</main>

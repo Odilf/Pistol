@@ -7,6 +7,6 @@
 	<slot name='menu'/>
 </div>
 
-<main class='ml-0 md:ml-72 {enabled ? 'ml-72' : ''} transition w-full'>
+<main class='translate-x-0 md:ml-72 {enabled ? 'translate-x-72' : ''} transition w-full'>
 	<slot/>
 </main>
