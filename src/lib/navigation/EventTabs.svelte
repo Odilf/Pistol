@@ -1,7 +1,8 @@
 <script lang="ts">
-import { browser } from "$app/env";
-
+	import { browser } from "$app/env";
 	import type { Event, Session } from "$lib/data/architecture";
+import { isOverflown } from "$lib/utils/overflow";
+import { afterUpdate } from "svelte";
 	
 	export let events: Event[]
 	let selected = 0
@@ -16,7 +17,6 @@ import { browser } from "$app/env";
 		block: "center", 
 		inline: "center"
 	})
-	
 
 	function getSelection(selectedEvent: number, selectedSession: number) {
 		const event = events[selectedEvent]
@@ -39,22 +39,28 @@ import { browser } from "$app/env";
 	function increase() {
 		if (selected < events.length - 1) selected += 1
 	}
+
+	let overflowing = false
+	$: afterUpdate(() => {
+			overflowing = isOverflown(container)
+		})
 </script>
 
-<svelte:window on:keydown={handleKeydown}/>
+<svelte:window on:keydown={handleKeydown} on:resize={() => overflowing = isOverflown(container)}/>
 
-<button on:click={() => container.scrollLeft = 200 }> Caca </button>
+<!-- <button on:click={() => overflowing = isOverflown(container) }> Caca </button> -->
 
 <div class='flex items-center'>
 
+{#if overflowing}
 <button class='clickable h-10' on:click={() => decrease()}>
 	<svg xmlns="http://www.w3.org/2000/svg" class="h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width={4}>
 		<path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
 	</svg>
 </button>
+{/if}
 
 <div bind:this={container} class='flex rounded p-2 scrollbar-hide bg-secondary text-primary shadow-lg w-fit box-content m-3 max-w-full mx-auto overflow-x-scroll'>
-
 	{#each events as event, i}
 		<button class='p-2 rounded transition px-4 mx-1 clickable
 		{selected === i ? 'bg-primary text-secondary shadow' : ''}'
@@ -66,10 +72,11 @@ import { browser } from "$app/env";
 	{/each}	
 </div>
 
+{#if overflowing}
 <button class='clickable h-10' on:click={() => increase()}>
 	<svg xmlns="http://www.w3.org/2000/svg" class="h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width={4}>
 		<path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
 	</svg>
 </button>
-
+{/if}
 </div>
