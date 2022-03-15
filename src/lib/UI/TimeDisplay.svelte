@@ -34,10 +34,10 @@
 	}
 </script>
 
-<div class='text-[1em] font-mono' on:dblclick={copyTime}>
+<span class='text-[1em] font-mono' on:dblclick={copyTime}>
 	{#if realDecimals}
 		{formatSeconds(seconds)}.<span style:font-size='{decimalScalar}em'>{decimals}</span>
 	{:else}
 		{formatSeconds(seconds)}
 	{/if}
-</div>
+</span>

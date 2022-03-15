@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Solve } from "$lib/data/architecture";
-	import TimeDisplay from "$lib/UI/TimeDisplay.svelte";
+	import SolveDisplay from "$lib/UI/SolveDisplay.svelte";
 
 	import { flip } from "svelte/animate";	
 	import { fly } from "svelte/transition";	
@@ -18,7 +18,7 @@
 	{#if solves?.length}
 		{#each solves.reverse() as solve, i (solve.date.getTime())}
 			<div style:opacity={ 1 - ((i)/length)} animate:flip={{ duration }} in:fly|local={{y: -20, duration }} class='transition'>
-				<TimeDisplay time={solve.time} />
+				<SolveDisplay {solve}/>
 			</div>
 		{/each}
 	{:else}

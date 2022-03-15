@@ -3,7 +3,7 @@
 	import Timer from "$lib/timing/Timer.svelte";
 	import SolveList from "$lib/timing/SolveList.svelte";
 
-	import { Solve } from "$lib/data/architecture";
+	import { Penalty, Solve } from "$lib/data/architecture";
 	import { user } from "$lib/profile";
 	import { addSolve, deleteSolve, events, getSolves } from "$lib/data/database";
 
@@ -22,8 +22,10 @@
 		solves = getSolves(selection.event, selection.session, 12)
 	})
 
-	function handleTime(time: number) {
-		const solve = new Solve(time, "R U R' U'")
+	let activeScramble: Promise<string>
+
+	async function handleTime(time: number) {
+		const solve = new Solve(time, await activeScramble)
 		addSolve(solve, selection.event, selection.session)
 		requestNewScramble()
 	}
@@ -51,7 +53,7 @@
 		<EventTabs events={$events} bind:selection/>
 
 		<div class='m-4'>
-			<Scrambler bind:requestNewScramble {selection}/>
+			<Scrambler bind:requestNewScramble {selection} bind:activeScramble/>
 		</div>
 	</div>
 
