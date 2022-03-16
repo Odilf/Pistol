@@ -1,7 +1,3 @@
-import { createSnackbar } from "./snackbar";
-import { cursorPosition, pressedKeys } from "./deviceState"
-
-export { 
-	createSnackbar as snackbar,
-	cursorPosition, pressedKeys
-};
+export { createSnackbar as snackbar } from "./snackbar";
+export { cursorPosition, pressedKeys } from "./deviceState"
+export { clickOutside } from './clickOutside'

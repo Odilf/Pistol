@@ -6,6 +6,7 @@
 	import EventManager from '$lib/profile/EventManager.svelte';
 	import { user } from '$lib/profile'
 	import { events } from '$lib/data/database';
+import { clickOutside } from '$lib/utils';
 
 	let showSidebar = false
 
