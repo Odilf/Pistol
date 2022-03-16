@@ -3,7 +3,7 @@
 import Login from "$lib/profile/Login.svelte";
 </script>
 
-<div class='w-full bg-secondary text-primary flex p-2 mb-3 text-lg'>
+<div class='w-full bg-secondary text-primary flex p-2 md:p-4 mb-3 text-lg'>
 	<button class='font-black text-2xl mx-2 clickable'>
 		Pistol
 	</button>

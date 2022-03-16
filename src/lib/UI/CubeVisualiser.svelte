@@ -53,4 +53,6 @@
 
 </script>
 
-<div bind:this={container} out:fade={{ duration: 100 }}/>
+{#if browser}
+	<div bind:this={container} out:fade={{ duration: 100 }}/>
+{/if}
