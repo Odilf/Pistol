@@ -1,10 +1,10 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	// import { browser } from '$app/env';
 	import type { ScrambleType } from '$lib/data/architecture';
 	import { getPuzzleIDFromScrambleType } from '$lib/utils/cubingjsBridge';
 
 	// import { TwistyPlayer,  } from 'cubing/twisty'
-	import type { PuzzleID, TwistyPlayerConfig } from 'cubing/twisty'
+	import type { PuzzleID, TwistyPlayerConfig, TwistyPlayer } from 'cubing/twisty'
 	import { onMount } from 'svelte';
 	import { spring } from 'svelte/motion'
 	import { fade } from 'svelte/transition'
@@ -19,7 +19,7 @@
 	export let puzzle: PuzzleID = null
 	export let scrambleType: ScrambleType = '3x3'
 
-	let twistyPlayer = null
+	let twistyPlayer: Promise<TwistyPlayer> = null
 	// const twistyPlayer = browser && new TwistyPlayer({
 	// 	alg,
 	// 	background: 'none',
@@ -27,6 +27,8 @@
 	// })
 
 	async function getTwistyPlayer(settings: TwistyPlayerConfig) {
+		console.log('getting twistyPlayer');
+		
 		const { TwistyPlayer } = await import('cubing/twisty')
 		return new TwistyPlayer(settings)
 	}
@@ -57,15 +59,19 @@
 	const timestamp = spring(getTimestamp(alg, move), { stiffness: 0.1, damping: 0.8 })
 	$: $timestamp = getTimestamp(alg, move)
 	
-	$: twistyPlayer.alg = alg
-	$: twistyPlayer && twistyPlayer.experimentalModel.timestampRequest.set($timestamp)
+	$: twistyPlayer.then(twistyPlayer => {
+		twistyPlayer.alg = alg
+		twistyPlayer.experimentalModel.timestampRequest.set($timestamp)
+		twistyPlayer.hintFacelets = hintFacelets
+		twistyPlayer.puzzle = puzzle || getPuzzleIDFromScrambleType(scrambleType)
 
-	$: twistyPlayer.hintFacelets = hintFacelets
+	})
 
-	$: twistyPlayer.puzzle = puzzle || getPuzzleIDFromScrambleType(scrambleType)
-
-	onMount(() => container.appendChild(twistyPlayer))
+	twistyPlayer.then(twistyPlayer => {
+		container.appendChild(twistyPlayer)
+	})
+	// onMount(() => container.appendChild(twistyPlayer))
 
 </script>
 
-<div bind:this={container} out:fade={{ duration: 100 }}/>
+<div bind:this={container} out:fade={{ duration: 100 }}/> -->
