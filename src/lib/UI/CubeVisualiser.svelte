@@ -1,4 +1,4 @@
-<!-- <script lang="ts">
+<script lang="ts">
 	// import { browser } from '$app/env';
 	import type { ScrambleType } from '$lib/data/architecture';
 	import { getPuzzleIDFromScrambleType } from '$lib/utils/cubingjsBridge';
@@ -74,4 +74,4 @@
 
 </script>
 
-<div bind:this={container} out:fade={{ duration: 100 }}/> -->
+<div bind:this={container} out:fade={{ duration: 100 }}/>
