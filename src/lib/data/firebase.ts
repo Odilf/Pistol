@@ -1,14 +1,15 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
+import { initializeApp, type FirebaseOptions } from "firebase/app";
+// import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
+const firebaseConfig: FirebaseOptions = {
   apiKey: "AIzaSyBNiS8Tx7fiG4aWvo4XCoRSw1jNj6iMyW8",
   authDomain: "pistol-44e79.firebaseapp.com",
+  databaseURL: "https://pistol-44e79-default-rtdb.europe-west1.firebasedatabase.app",
   projectId: "pistol-44e79",
   storageBucket: "pistol-44e79.appspot.com",
   messagingSenderId: "787656565309",

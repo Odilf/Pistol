@@ -1,12 +1,14 @@
-<!-- <script lang="ts">
-	import { browser } from '$app/env';
+<script lang="ts">
+	// import { browser } from '$app/env';
 	import type { ScrambleType } from '$lib/data/architecture';
 	import { getPuzzleIDFromScrambleType } from '$lib/utils/cubingjsBridge';
 
-	import { TwistyPlayer, type PuzzleID } from 'cubing/twisty'
+	// import { TwistyPlayer,  } from 'cubing/twisty'
+	import type { PuzzleID, TwistyPlayerConfig } from 'cubing/twisty'
 	import { onMount } from 'svelte';
 	import { spring } from 'svelte/motion'
 	import { fade } from 'svelte/transition'
+	import { browser } from '$app/env';
 	
 	let container: HTMLDivElement
 
@@ -17,12 +19,25 @@
 	export let puzzle: PuzzleID = null
 	export let scrambleType: ScrambleType = '3x3'
 
-	const twistyPlayer = browser && new TwistyPlayer({
+	let twistyPlayer = null
+	// const twistyPlayer = browser && new TwistyPlayer({
+	// 	alg,
+	// 	background: 'none',
+	// 	controlPanel: 'none',
+	// })
+
+	async function getTwistyPlayer(settings: TwistyPlayerConfig) {
+		const { TwistyPlayer } = await import('cubing/twisty')
+		return new TwistyPlayer(settings)
+	}
+
+	if (browser) {
+		twistyPlayer = getTwistyPlayer({
 		alg,
-		// puzzle,
 		background: 'none',
 		controlPanel: 'none',
-	})
+		})
+	}
 
 	// TODO: #99 Very much clunky. Surely there's a better way
 	function getTimestamp(alg: string, moveNumber: number) {
@@ -53,4 +68,4 @@
 
 </script>
 
-<div bind:this={container} out:fade={{ duration: 100 }}/> -->
+<div bind:this={container} out:fade={{ duration: 100 }}/>

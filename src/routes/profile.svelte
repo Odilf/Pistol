@@ -17,8 +17,6 @@
 	]
 	
 	let selectedItem: string
-
-	$: console.log({ events: $events });
 </script>
 
 {#if !$user}

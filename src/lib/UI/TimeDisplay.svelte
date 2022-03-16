@@ -4,9 +4,11 @@
 	export let time: number
 	export let decimalScalar: number = 1
 	export let numberOfDecimals: number = null
-	$: realDecimals = numberOfDecimals | (time > 3600 ? 0 : time > 60 ? 2 : 3)
+	$: realDecimals = numberOfDecimals | (time > 3600 ? 0 : 2)
+	
+	// $: realDecimals = 2
 
-	$: decimals = (time % 1).toFixed(realDecimals).substring(realDecimals)
+	$: decimals = (time % 1).toFixed(realDecimals).substring(2, 2 + realDecimals)
 	$: seconds = Math.floor(time)
 
 	function copyTime() {
