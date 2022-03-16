@@ -3,12 +3,12 @@
 	import type { ScrambleType } from '$lib/data/architecture';
 	import { getPuzzleIDFromScrambleType } from '$lib/utils/cubingjsBridge';
 
-	// import { TwistyPlayer,  } from 'cubing/twisty'
-	import type { PuzzleID, TwistyPlayerConfig, TwistyPlayer } from 'cubing/twisty'
-	import { onMount } from 'svelte';
+	import { TwistyPlayer,  } from 'cubing/twisty'
+	import type { PuzzleID, TwistyPlayerConfig } from 'cubing/twisty'
 	import { spring } from 'svelte/motion'
 	import { fade } from 'svelte/transition'
 	import { browser } from '$app/env';
+	import { onMount } from 'svelte';
 	
 	let container: HTMLDivElement
 
@@ -19,12 +19,12 @@
 	export let puzzle: PuzzleID = null
 	export let scrambleType: ScrambleType = '3x3'
 
-	let twistyPlayer: Promise<TwistyPlayer> = null
-	// const twistyPlayer = browser && new TwistyPlayer({
-	// 	alg,
-	// 	background: 'none',
-	// 	controlPanel: 'none',
-	// })
+	// let twistyPlayer: Promise<TwistyPlayer> = null
+	const twistyPlayer = browser && new TwistyPlayer({
+		alg,
+		background: 'none',
+		controlPanel: 'none',
+	})
 
 	async function getTwistyPlayer(settings: TwistyPlayerConfig) {
 		console.log('getting twistyPlayer');
@@ -33,13 +33,13 @@
 		return new TwistyPlayer(settings)
 	}
 
-	if (browser) {
-		twistyPlayer = getTwistyPlayer({
-		alg,
-		background: 'none',
-		controlPanel: 'none',
-		})
-	}
+	// if (browser) {
+	// 	twistyPlayer = getTwistyPlayer({
+	// 	alg,
+	// 	background: 'none',
+	// 	controlPanel: 'none',
+	// 	})
+	// }
 
 	// TODO: #99 Very much clunky. Surely there's a better way
 	function getTimestamp(alg: string, moveNumber: number) {
@@ -59,19 +59,19 @@
 	const timestamp = spring(getTimestamp(alg, move), { stiffness: 0.1, damping: 0.8 })
 	$: $timestamp = getTimestamp(alg, move)
 	
-	$: twistyPlayer.then(twistyPlayer => {
-		twistyPlayer.alg = alg
-		twistyPlayer.experimentalModel.timestampRequest.set($timestamp)
-		twistyPlayer.hintFacelets = hintFacelets
+	$: twistyPlayer && (
+		twistyPlayer.alg = alg,
+		twistyPlayer.experimentalModel.timestampRequest.set($timestamp),
+		twistyPlayer.hintFacelets = hintFacelets,
 		twistyPlayer.puzzle = puzzle || getPuzzleIDFromScrambleType(scrambleType)
 
-	})
+	)
 
-	twistyPlayer.then(twistyPlayer => {
-		container.appendChild(twistyPlayer)
-	})
-	// onMount(() => container.appendChild(twistyPlayer))
+	// twistyPlayer.then(twistyPlayer => {
+	// 	container.appendChild(twistyPlayer)
+	// })
+	onMount(() => container.appendChild(twistyPlayer))
 
-</script>
+</script> 
 
 <div bind:this={container} out:fade={{ duration: 100 }}/>
