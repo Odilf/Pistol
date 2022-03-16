@@ -1,11 +1,18 @@
 import { browser } from "$app/env";
 import type { ScrambleType } from "$lib/data/architecture";
-import { src_url_equal } from "svelte/internal";
+import { Alg } from 'cubing/alg'
 // import { randomScrambleForEvent } from "cubing/scramble";
 
-async function getCubingjsSrambler() {
-	const { randomScrambleForEvent } = await import('cubing/scramble') 
-	return randomScrambleForEvent
+type Scrambler = (scrambleType: ScrambleType) => Promise<Alg>
+
+async function getCubingjsSrambler(): Promise<Scrambler> {
+	if (browser) {
+		const { randomScrambleForEvent } = await import('cubing/scramble') 
+		return randomScrambleForEvent
+	} else {
+		const randomScrambleForEvent = (_) => new Alg('')
+		return new Promise(randomScrambleForEvent)
+	}
 }
 
 const scrambleTypeDict = {
@@ -29,20 +36,16 @@ const scrambleTypeDict = {
 	'MBLD': '333mb',
 }
 
-export let randomScrambleForEvent = async(scrambleType: ScrambleType) => {
-	return null
-}
-
-if (browser) {
-	getCubingjsSrambler().then(scrambler => {
-		randomScrambleForEvent = scrambler
-	})
-}
+export let randomScrambleForEventPromise: Promise<Scrambler> = getCubingjsSrambler()
 
 export async function getRandomScramble(scrambleType: ScrambleType) {
+	const randomScrambleForEvent = await randomScrambleForEventPromise
+
 	const eventID = scrambleTypeDict[scrambleType]
 	if (!eventID) {
 		console.error('Unsuported event:', scrambleType);
 	}
-	return (await randomScrambleForEvent(eventID)).toString()
+	const scramble = (await randomScrambleForEvent(eventID)).toString()
+
+	return scramble
 }
