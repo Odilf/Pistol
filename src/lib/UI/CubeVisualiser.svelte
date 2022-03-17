@@ -9,7 +9,7 @@
 	import { fade } from 'svelte/transition'
 	import { browser } from '$app/env';
 	
-	let container: HTMLDivElement
+	export let container: HTMLDivElement
 
 	export let alg: string = ''
 	export let move: number = null
@@ -18,16 +18,9 @@
 	export let puzzle: PuzzleID = null
 	export let scrambleType: ScrambleType = '3x3'
 
-	let twistyPlayer: Promise<TwistyPlayer> = null
-	// const twistyPlayer = browser && new TwistyPlayer({
-	// 	alg,
-	// 	background: 'none',
-	// 	controlPanel: 'none',
-	// })
+	export let twistyPlayer: Promise<TwistyPlayer> = null
 
 	async function getTwistyPlayer(settings: TwistyPlayerConfig) {
-		console.log('getting twistyPlayer');
-		
 		const { TwistyPlayer } = await import('cubing/twisty')
 		return new TwistyPlayer(settings)
 	}
@@ -68,8 +61,8 @@
 
 	twistyPlayer.then(twistyPlayer => {
 		container.appendChild(twistyPlayer)
+		container = container
 	})
-	// onMount(() => container.appendChild(twistyPlayer))
 
 </script>
 

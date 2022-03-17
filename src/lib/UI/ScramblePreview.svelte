@@ -37,9 +37,7 @@
 {#if hovering != null && (pressedKeys.meta || showPreview)}
 	<div class='absolute opacity-80 mt-2'
 	style:left='{$x}px'
-	style:top='{$y}px'
-	bind:this={cubeWrapper}
-	>
-		<CubeVisualiser alg={scramble} move={hovering} {scrambleType}/>
+	style:top='{$y}px'>
+		<CubeVisualiser bind:container={cubeWrapper} alg={scramble} move={hovering} {scrambleType}/>
 	</div>	
 {/if}
