@@ -6,7 +6,6 @@
 	import EventManager from '$lib/profile/EventManager.svelte';
 	import { user } from '$lib/profile'
 	import { events } from '$lib/data/database';
-import { clickOutside } from '$lib/utils';
 
 	let showSidebar = false
 
@@ -30,7 +29,7 @@ import { clickOutside } from '$lib/utils';
 
 {:else}
 
-<header class='bg-secondary text-primary flex'>
+<header class='bg-secondary text-primary flex min-h-[3em]'>
 		<button class='p-4 rounded clickable md:hidden sticky top-0'
 		on:click={() => showSidebar = !showSidebar}>
 			<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -38,20 +37,22 @@ import { clickOutside } from '$lib/utils';
 			</svg>
 		</button>
 
-		<button class='clickable ml-4' on:click={() => location.href = '/'}>
+		<button class='clickable ml-4 font-bold' on:click={() => location.href = '/'}>
 			Return
 		</button>
 	</header>
 
 	<main class='flex h-full'>
 		<Sidebar bind:enabled={showSidebar}>
-			<menu slot='menu'>
+			<menu slot='menu' class='text-2xl'>
 				<Menu items={menuItems} bind:selected={selectedItem}/>
 			</menu>
 			
 			<div class='bg-secondary/10 h-full mx-8 overflow-y-scroll p-2 py-8'>
 				{#if selectedItem === 'Events'}
 					<EventManager userEvents={$events}/>
+				{:else if selectedItem === 'Dashboard'}
+					<Dashboard/>
 				{/if}
 			</div>
 		</Sidebar>

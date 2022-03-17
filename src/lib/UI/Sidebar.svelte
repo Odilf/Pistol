@@ -1,7 +1,5 @@
 <script lang="ts">
-import { clickOutside } from "$lib/utils";
-
-
+	import { clickOutside } from "$lib/utils";
 	export let enabled = false
 </script>
 
