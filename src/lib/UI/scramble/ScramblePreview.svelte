@@ -1,5 +1,5 @@
 <script lang="ts">
-	import CubeVisualiser from "$lib/UI/CubeVisualiser.svelte";
+	import CubeVisualiser from "$lib/UI/basic/CubeVisualiser.svelte";
 	import { spring } from 'svelte/motion'
 	import { pressedKeys } from '$lib/utils';
 	import type { ScrambleType } from "$lib/data/architecture";

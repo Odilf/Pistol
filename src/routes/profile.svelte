@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Menu from '$lib/UI/Menu.svelte'
-	import Sidebar from '$lib/UI/Sidebar.svelte'
+	import Menu from '$lib/UI/basic/Menu.svelte'
+	import Sidebar from '$lib/UI/misc/Sidebar.svelte'
 	import Login from '$lib/profile/Login.svelte'
 	import Dashboard from '$lib/profile/Dashboard.svelte';
 	import EventManager from '$lib/profile/EventManager.svelte';

@@ -2,7 +2,7 @@
 	import type { Session, Event } from "$lib/data/architecture";
 	import { events } from "$lib/data/database";
 	import { getRandomScramble} from '$lib/scramble/scrambler'
-	import Scramble from "$lib/UI/Scramble.svelte";
+	import Scramble from "$lib/UI/scramble/Scramble.svelte";
 	
 
 	type ScrambleEvent = {

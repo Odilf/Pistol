@@ -10,7 +10,7 @@
 	import { fly } from 'svelte/transition';
 	import { onMount } from "svelte";
 	import Scrambler from "$lib/timing/Scrambler.svelte";
-import Header from "$lib/UI/Header.svelte";
+	import Header from "$lib/UI/misc/Header.svelte";
 
 	let requestNewScramble: { (): void; (): void; }
 	$: solves = selection && getSolves(selection.event, selection.session, 12)

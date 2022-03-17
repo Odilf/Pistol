@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { Solve } from "$lib/data/architecture";
-	import SolveDisplay from "$lib/UI/SolveDisplay.svelte";
+	import SolveDisplay from "$lib/UI/solves/SolveDisplay.svelte";
 
 	import { flip } from "svelte/animate";	
 	import { fly } from "svelte/transition";	
