@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { browser } from "$app/env";
 	import type { Event, Session } from "$lib/data/architecture";
+import { holdKeyboardShorcuts } from "$lib/data/stores";
 import { isOverflown } from "$lib/utils/overflow";
 import { afterUpdate } from "svelte";
 	
@@ -29,7 +30,7 @@ import { afterUpdate } from "svelte";
 		else if (e.key === 'ArrowRight') increase()
 		else return
 
-		e.preventDefault()
+		!$holdKeyboardShorcuts && e.preventDefault()
 	}
 
 	function decrease() {
@@ -42,18 +43,16 @@ import { afterUpdate } from "svelte";
 
 	let overflowing = false
 	$: afterUpdate(() => {
-			overflowing = isOverflown(container)
-		})
+		overflowing = isOverflown(container)
+	})
 </script>
 
 <svelte:window on:keydown={handleKeydown} on:resize={() => overflowing = isOverflown(container)}/>
 
-<!-- <button on:click={() => overflowing = isOverflown(container) }> Caca </button> -->
-
 <div class='flex items-center'>
 
 {#if overflowing}
-<button class='clickable h-10' on:click={() => decrease()}>
+<button class='clickable h-10' on:click={() => decrease()} disabled={container.scrollLeft === 0}>
 	<svg xmlns="http://www.w3.org/2000/svg" class="h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width={4}>
 		<path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
 	</svg>

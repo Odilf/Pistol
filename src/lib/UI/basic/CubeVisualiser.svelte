@@ -9,7 +9,7 @@
 	import { fade } from 'svelte/transition'
 	import { browser } from '$app/env';
 	
-	export let container: HTMLDivElement
+	export let container: HTMLDivElement = null
 
 	export let alg: string = ''
 	export let move: number = null

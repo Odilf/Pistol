@@ -28,7 +28,8 @@
 </script>
 
 <div on:mouseleave={handleMouseleave}>
-	<div class='relative flex flex-wrap mx-auto justify-center w-fit max-w-screen-md font-light {scramble.length > 100 ? 'text-lg' : 'text-2xl'} cursor-pointer z-10'>
+	<div class='relative flex flex-wrap mx-auto justify-center w-fit max-w-screen-md font-light 
+	{scramble.length > 100 ? 'text-[1em]' : 'text-[1.5em]'} cursor-pointer z-10'>
 		{#each moves as move, i}
 			<span id={(hovering === i) && 'hovering'} class='{hovering >= i ? 'text-blue-400' : ''} mx-[1.5px] transition' 
 				on:mouseenter={e => { hovering = i; handleMouseenter(e)}}>

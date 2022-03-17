@@ -4,23 +4,25 @@
 	import SolveList from "$lib/timing/SolveList.svelte";
 
 	import { Solve } from "$lib/data/architecture";
-	import { user } from "$lib/profile";
-	import { addSolve, deleteSolve, events, getSolves } from "$lib/data/database";
+	import { addSolve, deleteSolve, events, getSolves as getDBSolves } from "$lib/data/database";
 
 	import { fly } from 'svelte/transition';
 	import { onMount } from "svelte";
 	import Scrambler from "$lib/timing/Scrambler.svelte";
 	import Header from "$lib/UI/misc/Header.svelte";
+import { holdKeyboardShorcuts } from "$lib/data/stores";
 
-	let requestNewScramble: { (): void; (): void; }
-	$: solves = selection && getSolves(selection.event, selection.session, 12)
+	$: getSolves = () => getDBSolves(selection.event, selection.session, 12)
+
+	let requestNewScramble: () => void;
+	$: solves = selection && getSolves()
 	onMount(() => {
-			selection = {
+		selection = {
 			event: $events[0],
 			session: $events[0].sessions[0],
 		}
 
-		solves = getSolves(selection.event, selection.session, 12)
+		solves = getSolves()
 	})
 
 	let activeScramble: Promise<string>
@@ -34,12 +36,16 @@
 	let selection = null
 
 	function handleKeydown(e: KeyboardEvent) {
-		if (e.code === 'KeyZ' && (e.altKey || e.metaKey)) {
+		if (!$holdKeyboardShorcuts && e.code === 'KeyZ' && (e.altKey || e.metaKey)) {
 			if ($solves.length) {
-				deleteSolve($solves[0], selection.event, selection.session)
+				deleteSolve($solves[$solves.length - 1], selection.event, selection.session)
+				solves = getSolves()
 			}
 		}
 	}
+
+	$: console.log($solves);
+	
 </script>
 
 <svelte:window on:keydown={handleKeydown}/>
@@ -47,10 +53,6 @@
 <main class='w-full h-full max-h-full flex flex-col items-center justify-center'>
 	<div class='flex-1 w-full flex-col items-center justify-center overflow-y-scroll'>
 		<Header/>
-
-		<!-- User: {$user?.displayName}. 
-		
-		<button on:click={() => location.href = '/profile'}> Profile page </button> -->
 
 		<EventTabs events={$events} bind:selection/>
 
@@ -65,8 +67,8 @@
 
 	<div class='flex-1 w-full flex-col items-center justify-center overflow-y-scroll'>
 		{#key selection}
-			<div in:fly={{x: -20, duration: 400}}>
-				<SolveList solves={$solves}/>
+			<div in:fly|local={{x: -20, duration: 400}}>
+				<SolveList solves={$solves} {selection}/>
 			</div>
 		{/key}
 	</div>

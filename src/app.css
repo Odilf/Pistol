@@ -3,6 +3,7 @@
 @import "@fontsource/roboto";
 @import "@fontsource/roboto/100.css";
 @import "@fontsource/roboto/300.css";
+@import "@fontsource/roboto/900.css";
 
 /* Write your global styles here, in PostCSS syntax */
 @tailwind base;

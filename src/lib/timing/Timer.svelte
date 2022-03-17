@@ -1,4 +1,6 @@
 <script lang="ts">
+import { holdKeyboardShorcuts, isOverlayActive } from "$lib/data/stores";
+
 	import TimeDisplay from "$lib/UI/solves/TimeDisplay.svelte"
 	
 	export let pressDelay: number
@@ -16,7 +18,7 @@
 	let state: State = State.Released
 	let stateTimeout: NodeJS.Timeout
 
-	function down() {
+	function press() {
 		if (state === State.Released) {
 			state = State.Pressed
 
@@ -32,7 +34,7 @@
 		}
 	}
 
-	function up() {
+	function release() {
 		if (state === State.Pressed) {
 			clearTimeout(stateTimeout)
 			state = State.Released
@@ -49,15 +51,19 @@
 	}
 
 	function handleKeydown(e: KeyboardEvent) {
+		if ($isOverlayActive || $holdKeyboardShorcuts) return
 		if (e.key !== " ") return
 		e.preventDefault()
 
-		down()
+		console.log('pressing');
+		
+		press()
 	}
 
 	function handleKeyup(e: KeyboardEvent) {
+		if ($isOverlayActive) return
 		if (e.key !== " ") return
-		up()
+		release()
 	}
 
 	let start: Date
@@ -80,11 +86,11 @@
 	}
 
 	function handelTouchstart() {
-		down()
+		press()
 	}
 
 	function handleTouchend() {
-		up()
+		release()
 	}
 
 </script>
