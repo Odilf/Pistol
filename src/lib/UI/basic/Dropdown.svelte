@@ -1,7 +1,6 @@
 <script lang="ts">
-import { clickOutside } from "$lib/utils";
-import { fly } from "svelte/transition";
-
+	import { clickOutside } from "$lib/utils";
+	import { fly } from "svelte/transition";
 	import Menu from "./Menu.svelte";
 
 	export let items: string[]
