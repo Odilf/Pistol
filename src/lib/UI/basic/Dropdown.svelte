@@ -26,11 +26,3 @@ import { fly } from "svelte/transition";
 		</div>
 	{/if}
 </div>
-
-<style>
-	.caca {
-		position: absolute;
-		bottom: -10px;
-		left: 10px;
-	}
-</style>
