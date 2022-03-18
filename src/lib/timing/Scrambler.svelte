@@ -74,7 +74,7 @@
 	
 </script>
 
-{#if showHistory}
+<!-- {#if showHistory}
 	{#each getScrambles(scrambles, selection.event).slice(0, -1) as scramble, i}
 		{#await scramble}
 			Loading...
@@ -85,10 +85,10 @@
 		{/await}
 		
 	{/each}
-{/if}
+{/if} -->
 
 
-<div class='w-full text-center' on:click={() => showHistory = true}>
+<div class='w-full text-center text-xl' on:click={() => showHistory = true}>
 	{#if selection}
 		{#await activeScramble}
 			Loading...

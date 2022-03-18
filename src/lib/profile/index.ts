@@ -1,12 +1,14 @@
 import { app } from '$lib/data/firebase'
-import { getAuth, signInWithPopup, GoogleAuthProvider, signOut } from "firebase/auth"
+import { getAuth, signInWithPopup, GoogleAuthProvider, signOut, onAuthStateChanged } from "firebase/auth"
 import { writable } from "svelte/store"
 
 const provider = new GoogleAuthProvider()
 const auth = getAuth(app)
 
-export const user = writable(auth.currentUser)
-auth.onAuthStateChanged(v => user.set(v))
+const userStore = writable(auth.currentUser)
+export { userStore as user}
+
+onAuthStateChanged(auth, user => userStore.set(user))
 
 export function login() {
 	signInWithPopup(auth, provider).then(result => {

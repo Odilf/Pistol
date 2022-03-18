@@ -7,17 +7,14 @@
 	import { fly } from "svelte/transition";	
 
 	export let solves: Solve[]
-	export let selection
+	export let selection: { session: Session, event: Event }
 
 	let duration = 400
 	export { duration as transitionDuration }
 	export const minSolveLength = 5
 
 	$: length = Math.max(solves?.length, minSolveLength) || minSolveLength
-
-	$: console.log('from solve list', solves);
 	
-
 	let showingSolve: Solve
 </script>
 
@@ -38,4 +35,4 @@
 	{/if}
 </div>
 
-<SolveCard solve={showingSolve} deletable belongs={selection}/>
+<SolveCard solve={showingSolve} editable belongs={selection}/>

@@ -1,5 +1,5 @@
 import {  ref, onValue, set, query, orderByKey, limitToLast, remove } from "firebase/database"
-import type { Session, Solve, Event } from '../architecture'
+import type { Session, Solve, Event, Penalty } from '../architecture'
 import { writable } from 'svelte/store'
 import type { Writable } from 'svelte/store'
 import { db, retrieveData } from './main'
@@ -48,6 +48,11 @@ export async function deleteSolve(solve: Solve, event: Event, session: Session) 
 	
 	const solveRef = ref(db, `${sesssionPath(event, session)}/${solve.date.getTime()}`)
 	remove(solveRef)
+}
+
+export async function updateSolvePenalty(solve: Solve, event: Event, session: Session, penalty: Penalty) {
+	solve.penalty = penalty
+	await addSolve(solve, event, session)
 }
 
 let uid = null

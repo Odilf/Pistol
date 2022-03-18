@@ -17,5 +17,6 @@
 </button>
 
 {#if reconstructing}
-	<input bind:value type='text' class='p-2 bg-primary text-secondary rounded' placeholder="Something like R U R' U'">
+	<input bind:value type='text' class='p-2 bg-primary text-secondary rounded w-full' 
+	placeholder="Something like R U R' U'">
 {/if}

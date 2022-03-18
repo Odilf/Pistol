@@ -27,7 +27,7 @@
 	$: moveRect = moveElement?.getBoundingClientRect()
 
 	$: if (hovering != null) {
-		$x = moveRect?.x - cubeWrapperRect?.width/2 | 0
+		$x = Math.max(moveRect?.x - cubeWrapperRect?.width/2 | 0, 0)
 		$y = moveRect?.y | 0
 	}
 </script>
@@ -35,7 +35,7 @@
 <svelte:window on:resize={getRects}/>
 
 {#if hovering != null && (pressedKeys.meta || showPreview)}
-	<div class='absolute opacity-80 mt-2'
+	<div class='fixed opacity-80 mt-2'
 	style:left='{$x}px'
 	style:top='{$y}px'>
 		<CubeVisualiser bind:container={cubeWrapper} alg={scramble} move={hovering} {scrambleType}/>
