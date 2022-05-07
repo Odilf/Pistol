@@ -9,30 +9,33 @@
 	export let solves: Solve[]
 	export let selection: { session: Session, event: Event }
 
-	let duration = 400
 	export { duration as transitionDuration }
 	export const minSolveLength = 5
+	let duration = 400
 
 	$: length = Math.max(solves?.length, minSolveLength) || minSolveLength
+	const getOpacity = (i: number) => 1 - (i/length)
 	
 	let showingSolve: Solve
 </script>
 
 <div class='flex flex-col text-lg items-center'>
-	{#if solves?.length}
-		{#each [...solves].reverse() as solve, i (solve.date.getTime())}
-			<button style:opacity={ 1 - ((i)/length)} animate:flip={{ duration }} in:fly|local={{y: -20, duration }} class='transition clickable'
+	{#each [...solves || []].reverse() as solve, i (solve.date.getTime())}
+		<button 
+			style:opacity={getOpacity(i)} 
+			animate:flip={{ duration }} 
+			in:fly|local={{y: -20, duration }} 
+			class='transition clickable'
 			on:click={() => showingSolve = solve}>
-				<SolveDisplay {solve}/>
-			</button>
-		{/each}
+			<SolveDisplay {solve}/>
+		</button>
 	{:else}
 		<p class='opacity-30'>
 			No solves yet. 
 			<br>
 			Start solving!
 		</p>
-	{/if}
+	{/each}
 </div>
 
-<SolveCard solve={showingSolve} editable belongs={selection}/>
+<!-- <SolveCard solve={showingSolve} editable belongs={selection}/> -->
