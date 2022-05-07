@@ -14,10 +14,10 @@ export class Solve {
 	time: number
 	date: Date
 	penalty: Penalty
-	scramble: string
+	scramble?: string
 	reconstruction?: string
 
-	constructor(time: number, scramble: string, penalty = Penalty.None) {
+	constructor(time: number, scramble?: string, penalty = Penalty.None) {
 		this.time = time
 		this.scramble = scramble
 		this.penalty = penalty
@@ -65,7 +65,7 @@ export const defaultEvents: Event[] = [
 	new Event('6x6x6', '6x6'),
 	new Event('7x7x7', '7x7'),
 
-	new Event('3x3x3 Blindfolded', '3BLD', '3BLD'),
+	new Event('3x3x3 Blindfolded', '3BLD'),
 	new Event('3x3x3 Fewest Moves', 'FMC', '3x3'),
 	new Event('3x3x3 One-Handed', 'OH', '3x3'),
 
