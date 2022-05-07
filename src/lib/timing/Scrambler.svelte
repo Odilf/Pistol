@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { Session, Event } from "$lib/data/architecture";
 	import { events } from "$lib/data/database";
+	import Loading from "$lib/navigation/Loading.svelte";
 	import { getRandomScramble} from '$lib/scramble/scrambler'
 	import Scramble from "$lib/UI/scramble/Scramble.svelte";
 	
@@ -91,7 +92,7 @@
 <div class='w-full text-center text-xl' on:click={() => showHistory = true}>
 	{#if selection}
 		{#await activeScramble}
-			Loading...
+			<Loading/>
 		{:then scramble}
 			<Scramble {scramble} scrambleType={selection.event.scrambleType}/>
 		{/await}
