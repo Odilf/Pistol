@@ -9,3 +9,4 @@ node_modules
 firebase-debug.log
 database-debug.log
 .pnpm-debug.log
+ui-debug.log
