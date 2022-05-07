@@ -31,7 +31,9 @@ export function getSolves(event: Event, session: Session, amount: number = null)
 	}
 
 	const sessionRef = ref(db, `${sesssionPath(event, session)}`)
-	const solvesQuery = amount ? query(sessionRef, orderByKey(), limitToLast(amount)) : query(sessionRef, orderByKey())
+	const solvesQuery = amount 
+	? query(sessionRef, orderByKey(), limitToLast(amount)) 
+	: query(sessionRef, orderByKey())
 
 	const solves = writable([] as Solve[])
 
