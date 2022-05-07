@@ -54,8 +54,6 @@ import { holdKeyboardShorcuts, isOverlayActive } from "$lib/data/stores";
 		if ($isOverlayActive || $holdKeyboardShorcuts) return
 		if (e.key !== " ") return
 		e.preventDefault()
-
-		console.log('pressing');
 		
 		press()
 	}
