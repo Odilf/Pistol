@@ -59,7 +59,7 @@ import { afterUpdate } from "svelte";
 </button>
 {/if}
 
-<div bind:this={container} class='flex rounded p-2 scrollbar-hide bg-secondary text-primary shadow-lg w-fit box-content m-3 max-w-full mx-auto overflow-x-scroll'>
+<div bind:this={container} class='flex rounded p-2 scrollbar-hide bg-secondary text-primary shadow box-content mx-auto overflow-x-scroll'>
 	{#each events as event, i}
 		<button class='p-2 rounded transition px-4 mx-1 clickable
 		{selected === i ? 'bg-primary text-secondary shadow' : ''}'
