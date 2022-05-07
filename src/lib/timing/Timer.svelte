@@ -73,7 +73,7 @@ import { holdKeyboardShorcuts, isOverlayActive } from "$lib/data/stores";
 
 	function startTimer(): void {
 		start = new Date()
-		timerInterval = setInterval(() => time += refreshRate/1000, refreshRate)
+		timerInterval = setInterval(() => time = (new Date().getTime() - start.getTime())/1000, refreshRate)
 	}
 
 	function stopTimer(): void {
