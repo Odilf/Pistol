@@ -1,6 +1,8 @@
 {
-  "rules": {
-    ".read": "now < 1649196000000",  // 2022-4-6
-    ".write": "now < 1649196000000",  // 2022-4-6
-  }
+	"rules": {
+		"$uid": {
+			".read": true,
+			".write": "$uid.contains(auth.uid)"
+		}
+	}
 }
