@@ -27,9 +27,9 @@
 
 	if (browser) {
 		twistyPlayer = getTwistyPlayer({
-		alg,
-		background: 'none',
-		controlPanel: 'none',
+			alg,
+			background: 'none',
+			controlPanel: 'none',
 		})
 	}
 
@@ -51,7 +51,7 @@
 	const timestamp = spring(getTimestamp(alg, move), { stiffness: 0.1, damping: 0.8 })
 	$: $timestamp = getTimestamp(alg, move)
 	
-	$: twistyPlayer.then(twistyPlayer => {
+	$: twistyPlayer?.then(twistyPlayer => {
 		twistyPlayer.alg = alg
 		twistyPlayer.experimentalModel.timestampRequest.set($timestamp)
 		twistyPlayer.hintFacelets = hintFacelets
@@ -59,7 +59,7 @@
 
 	})
 
-	twistyPlayer.then(twistyPlayer => {
+	twistyPlayer?.then(twistyPlayer => {
 		container.appendChild(twistyPlayer)
 		container = container
 	})
