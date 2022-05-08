@@ -79,3 +79,8 @@ export const defaultEvents: Event[] = [
 	new Event('5x5x5 Blindfolded', '5BLD', '5x5'),
 	new Event('3x3x3 Multi-Blind', 'MBLD', '3x3'),
 ]
+
+export interface Selection {
+	event: Event
+	session: Session
+}
