@@ -18,3 +18,7 @@
 .clickable {
 	@apply transition hover:scale-105 active:scale-95 active:rotate-2 odd:active:-rotate-2;
 }
+
+body {
+	@apply bg-primary;
+}
