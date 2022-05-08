@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { Solve, Selection } from "$lib/data/architecture";
-	import { addSolve, deleteSolve } from "$lib/data/database";
+	import { type Solve, type Selection, Penalty } from "$lib/data/architecture";
+	import { addSolve, deleteSolve, updateSolvePenalty } from "$lib/data/database";
 	import Overlay from "$lib/UI/basic/Overlay.svelte";
 	import SolveCard from "$lib/UI/solves/SolveCard.svelte";
 	import SolveDisplay from "$lib/UI/solves/SolveDisplay.svelte";
@@ -26,7 +26,7 @@
 	
 	let showingSolve: Solve
 
-	// Keyboard delete solve and undo
+	// Keyboard delete solve, undo and penalty editing
 	let deletedSolves = []
 	function handleKeydown(e: KeyboardEvent) {
 		if (!$selection) return
@@ -43,6 +43,14 @@
 				deletedSolves.pop()
 			}
 		}
+
+		const updateLastSolve = (penalty: Penalty) => updateSolvePenalty(solves.at(-1), $selection, penalty)
+		if (e.code === 'Digit1' && (e.altKey)) 
+			updateLastSolve(Penalty.None)
+		else if (e.code === 'Digit2' && (e.altKey)) 
+			updateLastSolve(Penalty.Plus2)
+		else if (e.code === 'Digit3' && (e.altKey)) 
+			updateLastSolve(Penalty.DNF)
 	}
 </script>
 
