@@ -5,23 +5,23 @@
 	export let scramble: string
 	export let scrambleType: ScrambleType
 	export let previewDelay = 800
+	export let disablePreview = false
 	export let center = true
 
 	$: moves = scramble?.split(' ') || ['']
 	let hovering: number
-
-
 	
 	let unhoverTimeout: NodeJS.Timeout
 	let previewTimeout: NodeJS.Timeout
 	let showPreview = false
 
-	function handleMouseenter(e: MouseEvent) {
+	function handleMouseenter(_: MouseEvent) {
+		if (disablePreview) return
 		previewTimeout = setTimeout(() => showPreview = true, previewDelay)
 		clearTimeout(unhoverTimeout)
 	}
 
-	function handleMouseleave(e: MouseEvent) {
+	function handleMouseleave(_: MouseEvent) {
 		unhoverTimeout = setTimeout(() => hovering = undefined, 0)
 		clearTimeout(previewTimeout)
 		showPreview = false
