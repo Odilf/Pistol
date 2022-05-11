@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { defaultEvents, type Event } from "$lib/data/architecture";
 	import { deleteEvent as deleteEventFromDB, addEvent } from "$lib/data/database";
+	import { user } from ".";
 	
 	export let userEvents: Event[]
 
@@ -10,9 +11,9 @@
 
 	function handleClick(event: Event) {
 		if (isActive(event, userEvents)) {
-			deleteEventFromDB(event, defaultEvents)
+			deleteEventFromDB(event, defaultEvents, $user)
 		} else {
-			addEvent(event, defaultEvents)
+			addEvent(event, defaultEvents, $user)
 		}
 	}
 

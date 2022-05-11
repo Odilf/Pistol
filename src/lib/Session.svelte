@@ -8,6 +8,7 @@
 	import Scrambler from './timing/Scrambler.svelte';
 	import SolveList from './timing/SolveList.svelte';
 	import Timer from './timing/Timer.svelte';
+	import { fly } from 'svelte/transition'
 
 	export let selection: Selection = {
 		event: defaultEvents[0],
@@ -41,7 +42,9 @@
 		<Timer pressDelay={300} on:time={e => handleTime(e.detail)}/>
 	</div>
 
-	<div class='flex-1 max-h-[17rem] overflow-hidden'>
-		<SolveList solves={$solves}/>
-	</div>
+	{#key solves}
+		<div class='flex-1 max-h-[17rem] overflow-hidden' in:fly={{ y: 20 }}>
+			<SolveList solves={$solves}/>
+		</div>
+	{/key}
 </div>

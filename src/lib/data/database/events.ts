@@ -3,12 +3,13 @@ import { type Event, defaultEvents } from '../architecture'
 import { writable } from 'svelte/store'
 import { db } from './main'
 import { user } from "$lib/profile"
+import type { User } from "firebase/auth"
 
 export const events = writable(defaultEvents as Event[])
 
 const eventsPrefix = 'Events'
 
-export function getUserEvents(uid: string): void {
+export function getUserEvents(uid: string, ): void {
 	if (!db) {
 		console.log('Database not yet initialized');
 		return
@@ -20,7 +21,7 @@ export function getUserEvents(uid: string): void {
 
 	console.log('Getting events of user', uid);
 	
-	const eventRef = ref(db, `${uid}/${eventsPrefix}`)
+	const eventRef = ref(db, `User-${uid}/${eventsPrefix}`)
 	onValue(eventRef, snapshot => {
 		console.log('Events are getting updated!');
 		
@@ -38,27 +39,27 @@ export function getUserEvents(uid: string): void {
 }
 
 
-export async function deleteEvent(event: Event, events: Event[]) {
-// 	// getUserEvents()
-// 	console.log('Deleting', event, 'from', events);
+export async function deleteEvent(event: Event, events: Event[], user: User) {
+	// getUserEvents()
+	console.log('Deleting', event, 'from', events);
 	
-// 	const index = events.map(event => event.name).indexOf(event.name)
-// 	if (index === -1) return
+	const index = events.map(event => event.name).indexOf(event.name)
+	if (index === -1) return
 
-// 	const eventRef = ref(db, `${uid}/${eventsPrefix}/${index}`)
-// 	await remove(eventRef)
+	const eventRef = ref(db, `User-${user.uid}/${eventsPrefix}/${index}`)
+	await remove(eventRef)
 }
 
-export async function addEvent(event: Event, events: Event[]) {
-// 	// getUserEvents()
-// 	const index = events.map(event => event.name).indexOf(event.name)
+export async function addEvent(event: Event, events: Event[], user: User) {
+	// getUserEvents()
+	const index = events.map(event => event.name).indexOf(event.name)
 
-// 	if (index === -1) {
-// 		console.log('Event not found, and I dont know what to do');
-// 	}
+	if (index === -1) {
+		console.log('Event not found, and I dont know what to do');
+	}
 
-// 	const eventRef = ref(db, `${uid}/${eventsPrefix}/${index}`)
-// 	await set(eventRef, event)
+	const eventRef = ref(db, `User-${user.uid}/${eventsPrefix}/${index}`)
+	await set(eventRef, event)
 }
 
 user.subscribe(user => user && getUserEvents(user.uid))
