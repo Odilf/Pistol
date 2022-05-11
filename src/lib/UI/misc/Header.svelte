@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { user } from "$lib/profile";
-import Login from "$lib/profile/Login.svelte";
+	import Login from "$lib/profile/Login.svelte";
 </script>
 
 <div class='w-full bg-secondary text-primary flex p-2 md:p-4 mb-3 text-lg'>

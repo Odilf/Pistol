@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { type Solve, type Selection, Penalty } from "$lib/data/architecture";
 	import { addSolve, deleteSolve, updateSolvePenalty } from "$lib/data/database";
+	import { user } from "$lib/profile";
 	import Overlay from "$lib/UI/basic/Overlay.svelte";
 	import SolveCard from "$lib/UI/solves/SolveCard.svelte";
 	import SolveDisplay from "$lib/UI/solves/SolveDisplay.svelte";
@@ -36,15 +37,15 @@
 			
 			if (!e.shiftKey) {
 				const solve = solves.at(-1)
-				deleteSolve(solve, $selection)
+				deleteSolve(solve, $selection, $user)
 				deletedSolves.push(solve)
 			} else if (deletedSolves.length > 0) {
-				addSolve(deletedSolves.at(-1), $selection)
+				addSolve(deletedSolves.at(-1), $selection, $user)
 				deletedSolves.pop()
 			}
 		}
 
-		const updateLastSolve = (penalty: Penalty) => updateSolvePenalty(solves.at(-1), $selection, penalty)
+		const updateLastSolve = (penalty: Penalty) => updateSolvePenalty(solves.at(-1), $selection, penalty, $user)
 		if (e.code === 'Digit1' && (e.altKey)) 
 			updateLastSolve(Penalty.None)
 		else if (e.code === 'Digit2' && (e.altKey)) 

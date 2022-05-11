@@ -1,5 +1,7 @@
 type Category = 'Timing' | 'Appearance'
 
+const settingsPrefix = 'Settings'
+
 export interface Settings {
 	[name: string]: {
 		value: unknown,

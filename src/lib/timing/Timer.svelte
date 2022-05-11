@@ -1,6 +1,5 @@
 <script lang="ts">
-import { holdKeyboardShorcuts, isOverlayActive } from "$lib/data/stores";
-
+	import { holdKeyboardShorcuts, isOverlayActive } from "$lib/data/stores";
 	import TimeDisplay from "$lib/UI/solves/TimeDisplay.svelte"
 	
 	export let pressDelay: number
@@ -96,8 +95,9 @@ import { holdKeyboardShorcuts, isOverlayActive } from "$lib/data/stores";
 <svelte:window on:keydown={handleKeydown} on:keyup={handleKeyup}/>
 
 <div class="{state} pointer-none select-none text-[8em] md:text-[10em] transition-all duration-200 font-thin"
-on:touchstart={handelTouchstart} on:touchend={handleTouchend}>
-	<TimeDisplay {time} decimalScalar={0.75}/>
+on:touchstart={handelTouchstart} on:touchend={handleTouchend}
+>
+		<TimeDisplay {time} decimalScalar={0.75}/>
 </div>
 
 <style lang='postcss'>

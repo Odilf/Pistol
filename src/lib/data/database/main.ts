@@ -2,7 +2,6 @@ import { connectDatabaseEmulator, getDatabase } from "firebase/database"
 import { browser } from "$app/env"
 import { app } from "../firebase"
 import { user } from "$lib/profile";
-import { getUserEvents } from "./events";
 
 export const db = browser && getDatabase(app);
 
@@ -16,9 +15,6 @@ if (browser) {
 		}
 	}
 }
-
-
-const settingsPrefix = 'Settings'
 
 export function shapeData<T>(data: T[], getter: (data: T) => string) {
 	let object = {}
@@ -42,9 +38,3 @@ export function retrieveData<T>(data: Map<unknown, T>, propertyName: string, get
 
 	return result
 }
-
-export let uid = null
-user.subscribe(async(user) => {
-	uid = user && `User-${user.uid}`
-	getUserEvents()
-})

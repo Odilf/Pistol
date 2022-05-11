@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { browser } from "$app/env";
 	import type { Event, Session } from "$lib/data/architecture";
-import { holdKeyboardShorcuts } from "$lib/data/stores";
-import { isOverflown } from "$lib/utils/overflow";
-import { afterUpdate } from "svelte";
+	import { holdKeyboardShorcuts } from "$lib/data/stores";
+	import { isOverflown } from "$lib/utils/overflow";
+	import { afterUpdate } from "svelte";
 	
 	export let events: Event[]
 	let selected = 0
@@ -26,11 +26,12 @@ import { afterUpdate } from "svelte";
 	}
 
 	function handleKeydown(e: KeyboardEvent) {
-		if (e.key === 'ArrowLeft') decrease()
-		else if (e.key === 'ArrowRight') increase()
-		else return
+		if (e.altKey || e.shiftKey) {
+			if (e.key === 'ArrowLeft') decrease()
+			else if (e.key === 'ArrowRight') increase()
+		}
 
-		!$holdKeyboardShorcuts && e.preventDefault()
+		// !$holdKeyboardShorcuts && e.preventDefault()
 	}
 
 	function decrease() {
@@ -49,7 +50,7 @@ import { afterUpdate } from "svelte";
 
 <svelte:window on:keydown={handleKeydown} on:resize={() => overflowing = isOverflown(container)}/>
 
-<div class='flex items-center'>
+<div class='flex items-center w-full'>
 
 {#if overflowing}
 <button class='clickable h-10' on:click={() => decrease()} disabled={container.scrollLeft === 0}>
