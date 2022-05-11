@@ -2,9 +2,8 @@
 </script> -->
 
 <script lang="ts">
-import { isOverlayActive } from "$lib/data/stores";
-
-import { createEventDispatcher } from "svelte";
+	import { isOverlayActive } from "$lib/data/stores";
+	import { createEventDispatcher } from "svelte";
 
 	import { fade } from "svelte/transition";
 	export let enabled = true
@@ -14,17 +13,19 @@ import { createEventDispatcher } from "svelte";
 
 	function handleClick(e: MouseEvent) {
 		if (fragile && e.target === e.currentTarget) {
-			enabled = false
-			dispatch('close')
+			close()
 		}
 	}
 
 	function handleKeydown(e: KeyboardEvent) {
-		console.log(e);
-		
 		if (fragile && e.key === 'Escape') {
-			enabled = false
+			close()
 		}
+	}
+
+	function close() {
+		enabled = false
+		dispatch('close')
 	}
 
 	$: $isOverlayActive = enabled
