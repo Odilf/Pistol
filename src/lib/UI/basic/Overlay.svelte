@@ -19,8 +19,18 @@ import { createEventDispatcher } from "svelte";
 		}
 	}
 
+	function handleKeydown(e: KeyboardEvent) {
+		console.log(e);
+		
+		if (fragile && e.key === 'Escape') {
+			enabled = false
+		}
+	}
+
 	$: $isOverlayActive = enabled
 </script>
+
+<svelte:window on:keydown={handleKeydown}/>
 
 {#if enabled}
 
