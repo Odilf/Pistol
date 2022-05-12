@@ -29,6 +29,7 @@
 		console.log('Made time', time);
 		const solve = new Solve(time, await activeScramble)
 		addSolve(solve, selection, user)
+		requestNewScramble()
 	}
 
 </script>
