@@ -1,76 +1,97 @@
 <script lang="ts">
-	import type { Session, Event } from "$lib/data/architecture";
-	import { events } from "$lib/data/database";
+import { browser } from "$app/env";
+
+	import { type Event, defaultEvents } from "$lib/data/architecture";
 	import Loading from "$lib/navigation/Loading.svelte";
 	import { getRandomScramble} from '$lib/scramble/scrambler'
 	import Scramble from "$lib/UI/scramble/Scramble.svelte";
-	
+	import { writable } from "svelte-local-storage-store";
 
-	type ScrambleEvent = {
-		event: Event,
-		scrambles: Promise<string>[]
-	}
-
-	export let selection: {
-		event: Event,
-		session: Session
-	}
-
-	function populateScrambles(events: Event[]) {
-		return events.map(event => {
-			return {
-				event,
-				scrambles: [getRandomScramble(event.scrambleType)],
-			}
-		})
-	}
-
-	function populateEmpty(scrambleEvents: ScrambleEvent[]) {
-		return scrambleEvents.map(scrambleEvent => {
-			if (!scrambleEvent.scrambles) scrambleEvent.scrambles = [getRandomScramble(scrambleEvent.event.scrambleType)]
-			return scrambleEvent
-		})
-	}
-
-	function getScrambleEvent(scrambles: ScrambleEvent[], event: Event): ScrambleEvent {
-		const scrambleEvent = scrambles.find(scrambleEvent => scrambleEvent.event?.name === event?.name)
-
-		if (!scrambleEvent) {
-			return {
-				event: null,
-				scrambles: []
-			}
-		}
-
-		return scrambleEvent
-	}
-
-	function getScrambles(scrambles: ScrambleEvent[], event: Event) {
-		return getScrambleEvent(scrambles, event).scrambles
-	}
-
-	function getLastScramble(scrambleEvents: ScrambleEvent[], event: Event) {
-		const scrambles = getScrambles(scrambleEvents, event)
-		return scrambles[scrambles.length - 1]
-	}
-
-	function addScramble(scrambleEvents: ScrambleEvent[], event: Event) {
-		const scrambleEvent = getScrambleEvent(scrambleEvents, event)
-		
-		scrambleEvent.scrambles = [...scrambleEvent.scrambles, getRandomScramble(scrambleEvent.event.scrambleType)]
-		scrambles = scrambles
-	}
-
+	export let event: Event
 	export function requestNewScramble() {
-		addScramble(scrambles, selection.event)
+		console.log('bleep bloop getting new scramble!');
+		const data = globalScrambles[event.name]
+		data.index += 1
+
+		if (data.scrambles.length <= data.index + 2) {
+			console.log('getting new scramble');
+			
+			getRandomScramble(event.scrambleType).then(scramble => {
+				data.scrambles = [
+					...data.scrambles, 
+					scramble
+				]
+
+				globalScrambles = globalScrambles
+			})
+		}
+		
+		globalScrambles = globalScrambles
 	}
 
-	let scrambles = populateScrambles($events)
-	$: scrambles = populateEmpty(scrambles)
-	
-	export let activeScramble: Promise<string> = new Promise(() => '')
-	$: activeScramble = getLastScramble(scrambles, selection?.event)
+	export let activeScramble: string = null
 
+	const cache = writable('cachedScrambles', null as Scrambles)
+	let globalScrambles: Scrambles = Object.assign({}, $cache)
+
+	// Initialize scrambles if it's the first time that user logs in and cache isn't built yet (or incomplete)
+	if (!$cache || !Object.values($cache).every(({ scrambles }) => scrambles.length >= 2)) {
+		console.warn('Initializing solves since we couldn\'t find cache');
+		initializeScrambles()
+	}
+
+	// Set active scramble
+	$: if (!browser) {
+		activeScramble = ''
+	} else if (globalScrambles[event.name]) {
+		const { scrambles, index } = globalScrambles[event.name]
+		activeScramble = scrambles ? scrambles[index] : 'caca'
+	}
+	
+	// Keep cache updated
+	$: for (const eventName in globalScrambles) {
+		const { scrambles } = globalScrambles[eventName]
+
+		if (scrambles?.length > 1) {
+			$cache[eventName] = {
+				scrambles: scrambles.slice(-2),
+				index: 0,
+			} 
+		} else {
+			console.log('resseting cache');
+			$cache = Object.assign({}, globalScrambles)
+		}
+	}
+
+	interface Scrambles {
+		[event: string]: {
+			scrambles: string[],
+			index: number, 
+		}
+	}
+
+	function initializeScrambles() {
+		console.log('initializing scrambles');
+		
+		globalScrambles = {}
+		defaultEvents.forEach(async(event, i) => {
+			globalScrambles[event.name] = {
+				scrambles: [await getRandomScramble(event.scrambleType)],
+				index: 0,
+			}
+
+			// Janky way to add second scramble after first one
+			if (i === defaultEvents.length - 1) {
+				defaultEvents.forEach(async(event) => {
+					const { scrambles } = globalScrambles[event.name]
+					globalScrambles[event.name].scrambles = [...scrambles, await getRandomScramble(event.scrambleType)]
+					console.log('added second to', event.name);
+				})
+			}
+		})
+	}
+
+	
 	let showHistory = false
 	
 </script>
@@ -86,15 +107,18 @@
 		{/await}
 		
 	{/each}
-{/if} -->
+{/if}  -->
 
+<div>
+	we currently have {globalScrambles[event.name]?.scrambles.length} scrmables
+</div>
 
 <div class='w-full text-center text-xl' on:click={() => showHistory = true}>
-	{#if selection}
-		{#await activeScramble}
+	{#if event}
+		{#if !activeScramble}
 			<Loading/>
-		{:then scramble}
-			<Scramble {scramble} scrambleType={selection.event.scrambleType}/>
-		{/await}
+		{:else}
+			<Scramble scramble={activeScramble} scrambleType={event.scrambleType}/>
+		{/if}
 	{/if}
 </div>

@@ -49,7 +49,8 @@ export function createFirebaseStore<T>(
 			let value = await snapshot.val() as T
 			
 			if (value == null && bool(value)) {
-				console.log('Setting default value of', path);
+				console.log(`Setting ${path} to default (${initialValue})`);
+				
 				await dbSet(pathQuery, initialValue)
 			}
 
@@ -61,8 +62,6 @@ export function createFirebaseStore<T>(
 	return {
 		subscribe,
 		set: (value: T) => {
-			// console.log('setting value cause client requested it', value);
-			
 			pathQuery && dbSet(pathQuery, value)
 			set(value)
 		},

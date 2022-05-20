@@ -7,7 +7,7 @@
 	
 	export let events: Event[]
 	let selected = 0
-
+	
 	export let selection: { event: Event; session: Session; }
 	$: selection = getSelection(selected, 0)
 
