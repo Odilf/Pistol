@@ -5,8 +5,7 @@ import { writable } from "svelte/store"
 const provider = new GoogleAuthProvider()
 const auth = getAuth(app)
 
-const userStore = writable(auth.currentUser)
-export { userStore as user}
+export const userStore = writable(auth.currentUser)
 
 onAuthStateChanged(auth, user => userStore.set(user))
 
