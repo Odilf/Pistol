@@ -1,11 +1,12 @@
 <script lang="ts">
-import { browser } from "$app/env";
-
+	import { browser } from "$app/env";
 	import { type Event, defaultEvents } from "$lib/data/architecture";
 	import Loading from "$lib/navigation/Loading.svelte";
 	import { getRandomScramble} from '$lib/scramble/scrambler'
+import Overlay from "$lib/UI/basic/Overlay.svelte";
 	import Scramble from "$lib/UI/scramble/Scramble.svelte";
 	import { writable } from "svelte-local-storage-store";
+	import { crossfade, fly, scale } from "svelte/transition";
 
 	export let event: Event
 	export function requestNewScramble() {
@@ -91,34 +92,56 @@ import { browser } from "$app/env";
 		})
 	}
 
-	
 	let showHistory = false
+
+	const [send, receive] = crossfade({
+		duration: 200,
+		fallback: scale
+	});
+
+	const duration = 400
 	
 </script>
 
-<!-- {#if showHistory}
-	{#each getScrambles(scrambles, selection.event).slice(0, -1) as scramble, i}
-		{#await scramble}
-			Loading...
-		{:then scramble} 
-			<div class='w-full absolute' style:transform='translateY({(i + 1) * 40}px)' on:click={() => showHistory = true}>
-				<Scramble {scramble} scrambleType={selection.event.scrambleType}/>
-			</div>
-		{/await}
-		
-	{/each}
-{/if}  -->
-
-<div>
-	we currently have {globalScrambles[event.name]?.scrambles.length} scrmables
-</div>
-
-<div class='w-full text-center text-xl' on:click={() => showHistory = true}>
+<div class='w-full text-center text-xl relative' on:click={() => showHistory = true}>
 	{#if event}
 		{#if !activeScramble}
 			<Loading/>
-		{:else}
+		{:else if !showHistory}
+		<div class='max-w-2xl'
+		in:receive={{ key: activeScramble, duration }}
+		out:send={{ key: activeScramble, duration }}>
 			<Scramble scramble={activeScramble} scrambleType={event.scrambleType}/>
+		</div>
 		{/if}
 	{/if}
 </div>
+
+<Overlay bind:enabled={showHistory} fragile>
+	<div class='w-full text-center text-xl relative'>
+		{#if event}
+			{#if !activeScramble}
+				<Loading/>
+			{:else}
+			<div class='max-w-2xl mx-auto'
+			in:receive={{ key: activeScramble, duration }}
+			out:send={{ key: activeScramble, duration }}>
+				<Scramble scramble={activeScramble} scrambleType={event.scrambleType}/>
+			</div>
+			{/if}
+		{/if}
+
+
+		<div class='w-full absolute' 
+		on:click={() => showHistory = false}>
+			{#if showHistory}
+				{#each globalScrambles[event.name].scrambles as scramble, i}
+					<div class='my-5' transition:fly={{ y: (i + 1) * 10, duration: (i + 1) * 200 }}
+					style:transform='scale({1 - 0.05 * (i + 1)})'>
+						<Scramble {scramble} scrambleType={event.scrambleType}/>
+					</div>
+				{/each}
+			{/if} 
+		</div>
+	</div>
+</Overlay>
