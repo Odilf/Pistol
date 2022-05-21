@@ -10,13 +10,10 @@ import Overlay from "$lib/UI/basic/Overlay.svelte";
 
 	export let event: Event
 	export function requestNewScramble() {
-		console.log('bleep bloop getting new scramble!');
 		const data = globalScrambles[event.name]
 		data.index += 1
 
 		if (data.scrambles.length <= data.index + 2) {
-			console.log('getting new scramble');
-			
 			getRandomScramble(event.scrambleType).then(scramble => {
 				data.scrambles = [
 					...data.scrambles, 
