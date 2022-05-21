@@ -6,13 +6,10 @@
 	import Scrambler from './timing/Scrambler.svelte';
 	import SolveList from './timing/SolveList.svelte';
 	import Timer from './timing/Timer.svelte';
-	import { defaultEvents, Penalty, Solve, type Selection } from '$lib/data/architecture'
+	import { Penalty, Solve, type Selection } from '$lib/data/architecture'
 	import { createFirebaseStore } from '$lib/data/firebase-store'
 	
-	export let selection: Selection = {
-		event: defaultEvents[0],
-		session: defaultEvents[0].sessions[0],
-	}
+	export let selection: Selection
 
 	const selectionStore = writable(selection)
 	setContext('selection', selectionStore)
@@ -22,12 +19,11 @@
 
 	$: path = `Solves/${selection.event.name}/${selection.session.name}` as const
 
-	$: solvesStore = createFirebaseStore(path, {} as { [date: number]: Solve }, { amount: 10 }, { delay: 0 })
+	$: solvesStore = createFirebaseStore(path, {} as { [date: number]: Solve }, { amount: 10 })
 	$: solves = Object.entries($solvesStore).map(([date, solve]) => {
 		solve.date = new Date(parseInt(date))
 		return solve
 	})
-	
 
 	async function handleTime(time: number) {
 		const solve = new Solve(time, activeScramble)
