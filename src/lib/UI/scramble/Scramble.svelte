@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { ScrambleType } from '$lib/data/architecture';
+import { mod } from '$lib/utils';
 	import ScramblePreview from './ScramblePreview.svelte';
 
 	export let scramble: string
@@ -26,14 +27,28 @@
 		clearTimeout(previewTimeout)
 		showPreview = false
 	}
+
+	function handleKeydown(e: KeyboardEvent) {
+		if (hovering == null) return 
+
+		if (e.key === 'ArrowLeft') {
+			hovering = mod(hovering - 1, moves.length)
+		}
+
+		if (e.key === 'ArrowRight') {
+			hovering = mod(hovering + 1, moves.length)
+		}
+	}
 </script>
 
-<div on:mouseleave={handleMouseleave} class='relative'>
-	<div class='relative flex flex-wrap w-fit max-w-screen-md font-light 
-	{scramble.length > 120 ? 'text-[1em]' : 'text-[1.5em]'} cursor-pointer z-10
+<svelte:window on:keydown={handleKeydown}/>
+
+<div on:mouseleave={handleMouseleave} class='relative z-0 max-w-md'>
+	<div class='flex flex-wrap font-light
+	{scramble.length > 120 ? 'text-[1em]' : 'text-[1.5em]'} cursor-pointer
 	{center ? 'mx-auto justify-center' : ''}'>
 		{#each moves as move, i}
-			<span id={(hovering === i) && 'hovering'} class='{hovering >= i ? 'text-blue-400' : ''} mx-[1.5px] transition' 
+			<span id={(hovering === i) && 'hovering'} class='{hovering >= i ? 'text-blue-400' : ''} mx-[1.5px] transition z-10' 
 				on:mouseenter={e => { hovering = i; handleMouseenter(e)}}>
 				{move}
 			</span>
