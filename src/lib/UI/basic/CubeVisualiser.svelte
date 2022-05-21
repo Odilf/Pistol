@@ -8,6 +8,7 @@
 	import { spring } from 'svelte/motion'
 	import { fade } from 'svelte/transition'
 	import { browser } from '$app/env';
+	import { inferTypeFromAlg } from '$lib/scramble/inferer';
 	
 	export let container: HTMLDivElement = null
 
@@ -16,7 +17,10 @@
 	export let hintFacelets: 'floating' | 'none' | 'auto' = 'auto'
 
 	export let puzzle: PuzzleID = null
-	export let scrambleType: ScrambleType = '3x3'
+	export let scrambleType: ScrambleType = null 
+	$: if (!scrambleType) {
+		scrambleType = inferTypeFromAlg(alg)
+	}
 
 	export let twistyPlayer: Promise<TwistyPlayer> = null
 

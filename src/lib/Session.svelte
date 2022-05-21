@@ -71,7 +71,7 @@
 
 	{#key selection}
 		<div class='flex-1 max-h-[17rem] overflow-hidden' in:fly={{ y: 20 }}>
-			<SolveList {solves}/>
+			<SolveList bind:solves/>
 		</div>
 	{/key}
 </div>

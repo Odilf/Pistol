@@ -1,13 +1,18 @@
 <script lang="ts">
 	import type { ScrambleType } from '$lib/data/architecture';
-import { mod } from '$lib/utils';
+	import { inferTypeFromAlg } from '$lib/scramble/inferer';
+	import { mod } from '$lib/utils';
 	import ScramblePreview from './ScramblePreview.svelte';
 
 	export let scramble: string
-	export let scrambleType: ScrambleType
+	export let scrambleType: ScrambleType = null
 	export let previewDelay = 800
 	export let disablePreview = false
 	export let center = true
+
+	$: if (!scrambleType) {
+		scrambleType = inferTypeFromAlg(scramble)
+	}
 
 	$: moves = scramble?.split(' ') || ['']
 	let hovering: number
