@@ -1,5 +1,7 @@
 // Import the functions you need from the SDKs you need
+import { browser } from "$app/env";
 import { initializeApp, type FirebaseOptions } from "firebase/app";
+import { connectDatabaseEmulator, getDatabase } from "firebase/database";
 // import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -19,3 +21,16 @@ const firebaseConfig: FirebaseOptions = {
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
+
+export const db = browser && getDatabase(app);
+
+if (browser) {
+	if (location.hostname === "localhost") {
+		try {
+			// Point to the RTDB emulator running on localhost.
+			connectDatabaseEmulator(db, "localhost", 9000);
+		} catch {
+			console.warn("Failed to connect to database emulator");			
+		}
+	}
+}

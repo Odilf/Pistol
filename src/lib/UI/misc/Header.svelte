@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { user } from "$lib/profile";
+	import { userStore as user } from "$lib/profile";
 	import Login from "$lib/profile/Login.svelte";
 </script>
 
@@ -13,7 +13,7 @@
 	<div class='mx-2'>
 		{#if $user}
 			<button class='font-extralight text-2xl clickable' on:click={() => location.href = '/profile'}> 
-				{$user.displayName} 
+		{$user.displayName} 
 			</button>
 		{:else}
 			<Login/>

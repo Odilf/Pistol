@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import { defaultEvents, type Event } from "$lib/data/architecture";
 	import { deleteEvent as deleteEventFromDB, addEvent } from "$lib/data/database";
 	import { user } from ".";
@@ -39,4 +39,4 @@
 	.disabled {
 		@apply bg-black opacity-50;
 	}
-</style>
+</style> -->

@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { browser } from "$app/env";
 	import type { Event, Session } from "$lib/data/architecture";
-	import { holdKeyboardShorcuts } from "$lib/data/stores";
 	import { isOverflown } from "$lib/utils/overflow";
 	import { afterUpdate } from "svelte";
 	
@@ -30,8 +29,6 @@
 			if (e.key === 'ArrowLeft') decrease()
 			else if (e.key === 'ArrowRight') increase()
 		}
-
-		// !$holdKeyboardShorcuts && e.preventDefault()
 	}
 
 	function decrease() {

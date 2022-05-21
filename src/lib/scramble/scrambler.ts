@@ -1,7 +1,6 @@
 import { browser } from "$app/env";
 import type { ScrambleType } from "$lib/data/architecture";
 import { Alg } from 'cubing/alg'
-// import { randomScrambleForEvent } from "cubing/scramble";
 
 type Scrambler = (scrambleType: ScrambleType) => Promise<Alg>
 

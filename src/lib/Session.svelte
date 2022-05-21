@@ -1,16 +1,14 @@
 <script lang="ts">
-	import { defaultEvents, Solve, type Selection } from '$lib/data/architecture'
-	import type { User } from 'firebase/auth'
 	import { setContext } from 'svelte';
 	import { writable } from 'svelte/store';
-
-	// import { addSolve, getSolves } from './data/database';
+	import { fly } from 'svelte/transition'
+	
 	import Scrambler from './timing/Scrambler.svelte';
 	import SolveList from './timing/SolveList.svelte';
 	import Timer from './timing/Timer.svelte';
-	import { fly } from 'svelte/transition'
-	import { createFirebaseStore } from './data/database/store';
-
+	import { defaultEvents, Solve, type Selection } from '$lib/data/architecture'
+	import { createFirebaseStore } from '$lib/data/firebase-store'
+	
 	export let selection: Selection = {
 		event: defaultEvents[0],
 		session: defaultEvents[0].sessions[0],
@@ -23,42 +21,59 @@
 	let activeScramble: string
 
 	$: path = `Solves/${selection.event.name}/${selection.session.name}` as const
-	$: solvesStore = createFirebaseStore(path, [], { amount: 10 })
+
+	$: solvesStore = createFirebaseStore(path, {} as { [date: number]: Solve }, { amount: 10 }, { delay: 0 })
+	$: solves = Object.entries($solvesStore).map(([date, solve]) => {
+		solve.date = new Date(parseInt(date))
+		return solve
+	})
 	
 
 	async function handleTime(time: number) {
-		// console.log('Made time', time);
-		// const solve = new Solve(time, await activeScramble)
-		// addSolve(solve, selection, user)
-		// requestNewScramble()
+		const solve = new Solve(time, activeScramble)
+		$solvesStore[new Date().getTime()] = solve
+		requestNewScramble()
+	}
+
+	let deletedSolves = []
+	function handleKeydown(e: KeyboardEvent) {
+		if (e.code === 'KeyZ' && (e.altKey || e.metaKey)) {
+			if (!e.shiftKey && solves.length > 0) {
+				const solve = solves.at(-1)
+				solvesStore.delete(solve.date.getTime())
+				deletedSolves.push(solve)
+			} else if (deletedSolves.length > 0) {
+				const solve = deletedSolves.at(-1)
+				$solvesStore[solve.date.getTime()] = solve 
+				deletedSolves.pop()
+			}
+		}
+
+		// const updateLastSolve = (penalty: Penalty) => updateSolvePenalty(solves.at(-1), $selection, penalty, $user)
+		// if (e.code === 'Digit1' && (e.altKey)) 
+		// 	updateLastSolve(Penalty.None)
+		// else if (e.code === 'Digit2' && (e.altKey)) 
+		// 	updateLastSolve(Penalty.Plus2)
+		// else if (e.code === 'Digit3' && (e.altKey)) 
+		// 	updateLastSolve(Penalty.DNF)
 	}
 
 </script>
 
-<button on:click={() => {
-	$solvesStore = [
-		'this', 'is', 'a', 'test',
-		'this', 'is', 'twoo', 'test',
-		'caca', 'culo', 'pedo', 'pis',
-	]
-}} class='clickable p-2 m-2'> Populate </button>
-
-<button on:click={() => requestNewScramble()}>
-	request new scramble
-</button> 
+<svelte:window on:keydown={handleKeydown} />
 
 <div class='flex flex-col h-full justify-center items-center'>
 	<div class='my-6'>
 		<Scrambler bind:requestNewScramble event={selection.event} bind:activeScramble />
 	</div>
 
-	<!-- <div class='flex-1 flex items-center'>
+	<div class='flex-1 flex items-center'>
 		<Timer pressDelay={300} on:time={e => handleTime(e.detail)}/>
 	</div>
 
-	{#key solves}
+	{#key selection}
 		<div class='flex-1 max-h-[17rem] overflow-hidden' in:fly={{ y: 20 }}>
-			<SolveList solves={$solves}/>
+			<SolveList {solves}/>
 		</div>
-	{/key} -->
+	{/key}
 </div>

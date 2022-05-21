@@ -1,5 +1,5 @@
 import { userStore as globalUserStore } from "$lib/profile";
-import { db as globalDb } from "./main";
+import { db as globalDb } from "./firebase";
 import { createDelayedStore } from "$lib/utils/delayedStore";
 import type { User } from "firebase/auth";
 import { get, limitToLast, onValue, orderByKey, query, ref, set as dbSet, type Database } from "firebase/database";
@@ -30,6 +30,7 @@ export function createFirebaseStore<T>(
 	const { subscribe, set, update } = createDelayedStore<T>(initialValue, delayOptions)
 
 	let pathQuery = null;
+	let currentPath = '';
 
 	userStore.subscribe(user => {
 		if (!user) {
@@ -37,6 +38,7 @@ export function createFirebaseStore<T>(
 			return
 		}
 
+		currentPath = `User-${user.uid}/${path}`
 		let pathRef = ref(db, `User-${user.uid}/${path}`)
 		pathQuery = query(pathRef)
 
@@ -66,6 +68,14 @@ export function createFirebaseStore<T>(
 			set(value)
 		},
 		update,
+		delete: (key: string | number) => {
+			update(value => {
+				delete value[key]
+				return value
+			})
+
+			dbSet(ref(db, `${currentPath}/${key}`), null)
+		}
 	}
 }
 

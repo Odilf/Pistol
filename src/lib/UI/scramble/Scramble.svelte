@@ -28,7 +28,7 @@
 	}
 </script>
 
-<div on:mouseleave={handleMouseleave}>
+<div on:mouseleave={handleMouseleave} class='relative'>
 	<div class='relative flex flex-wrap w-fit max-w-screen-md font-light 
 	{scramble.length > 120 ? 'text-[1em]' : 'text-[1.5em]'} cursor-pointer z-10
 	{center ? 'mx-auto justify-center' : ''}'>

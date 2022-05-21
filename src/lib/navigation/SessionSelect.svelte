@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { Session } from "$lib/data/architecture";
-
 	export let sessions: Session[]
 </script>
 

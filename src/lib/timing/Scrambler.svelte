@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { browser } from "$app/env";
-	import { type Event, defaultEvents } from "$lib/data/architecture";
-	import Loading from "$lib/navigation/Loading.svelte";
-	import { getRandomScramble} from '$lib/scramble/scrambler'
-import Overlay from "$lib/UI/basic/Overlay.svelte";
-	import Scramble from "$lib/UI/scramble/Scramble.svelte";
 	import { writable } from "svelte-local-storage-store";
-	import { crossfade, fly, scale } from "svelte/transition";
+	import { crossfade, fly } from "svelte/transition";
+
+	import Loading from "$lib/navigation/Loading.svelte";
+	import Overlay from "$lib/UI/basic/Overlay.svelte";
+	import Scramble from "$lib/UI/scramble/Scramble.svelte";
+	import { type Event, defaultEvents } from "$lib/data/architecture";
+	import { getRandomScramble} from '$lib/scramble/scrambler'
 
 	export let event: Event
 	export function requestNewScramble() {
