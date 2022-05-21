@@ -12,7 +12,7 @@ export type Path = `${Top}${Bottom | ''}`
 
 export function createFirebaseStore<T>(
 	path: Path, 
-	initialValue: T = null, 
+	initialValue: T, 
 	dbInfo: { 
 		db?: Database
 		userStore?: Writable<User>
@@ -50,7 +50,7 @@ export function createFirebaseStore<T>(
 		get(pathQuery).then(async(snapshot) => {
 			let value = await snapshot.val() as T
 			
-			if (value == null && bool(value)) {
+			if (value == null || !bool(value)) {
 				console.log(`Setting ${path} to default (${initialValue})`);
 				
 				await dbSet(pathQuery, initialValue)
