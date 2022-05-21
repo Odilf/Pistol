@@ -5,8 +5,9 @@
 	import { defaultEvents, type Event } from "$lib/data/architecture";
 	import { createFirebaseStore } from "$lib/data/firebase-store"
 
-	let events = createFirebaseStore<Event[]>('Events', defaultEvents)
 	
+	const events = createFirebaseStore<Event[]>('Events', defaultEvents)
+
 	let	selection = {
 		event: $events[0],
 		session: $events[0].sessions[0]
@@ -16,7 +17,7 @@
 <main class='absolute inset-0 flex flex-col justify-center items-center bg-primary overflow-scroll'>
 	<Header />
 	
-	<EventTabs events={$events} bind:selection />
+	<EventTabs bind:events={$events} bind:selection />
 	
 	<Session {selection}/>
 </main>
