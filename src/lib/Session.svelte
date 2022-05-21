@@ -6,7 +6,7 @@
 	import Scrambler from './timing/Scrambler.svelte';
 	import SolveList from './timing/SolveList.svelte';
 	import Timer from './timing/Timer.svelte';
-	import { defaultEvents, Solve, type Selection } from '$lib/data/architecture'
+	import { defaultEvents, Penalty, Solve, type Selection } from '$lib/data/architecture'
 	import { createFirebaseStore } from '$lib/data/firebase-store'
 	
 	export let selection: Selection = {
@@ -38,10 +38,12 @@
 	let deletedSolves = []
 	function handleKeydown(e: KeyboardEvent) {
 		if (e.code === 'KeyZ' && (e.altKey || e.metaKey)) {
-			if (!e.shiftKey && solves.length > 0) {
-				const solve = solves.at(-1)
-				solvesStore.delete(solve.date.getTime())
-				deletedSolves.push(solve)
+			if (!e.shiftKey) {
+				if (solves.length > 0) {
+					const solve = solves.at(-1)
+					solvesStore.delete(solve.date.getTime())
+					deletedSolves.push(solve)
+				}
 			} else if (deletedSolves.length > 0) {
 				const solve = deletedSolves.at(-1)
 				$solvesStore[solve.date.getTime()] = solve 
@@ -49,13 +51,13 @@
 			}
 		}
 
-		// const updateLastSolve = (penalty: Penalty) => updateSolvePenalty(solves.at(-1), $selection, penalty, $user)
-		// if (e.code === 'Digit1' && (e.altKey)) 
-		// 	updateLastSolve(Penalty.None)
-		// else if (e.code === 'Digit2' && (e.altKey)) 
-		// 	updateLastSolve(Penalty.Plus2)
-		// else if (e.code === 'Digit3' && (e.altKey)) 
-		// 	updateLastSolve(Penalty.DNF)
+		const updateLastSolve = (penalty: Penalty) => $solvesStore[solves.at(-1).date.getTime()].penalty = penalty
+		if (e.code === 'Digit1' && (e.altKey)) 
+			updateLastSolve(Penalty.None)
+		else if (e.code === 'Digit2' && (e.altKey)) 
+			updateLastSolve(Penalty.Plus2)
+		else if (e.code === 'Digit3' && (e.altKey)) 
+			updateLastSolve(Penalty.DNF)
 	}
 
 </script>
