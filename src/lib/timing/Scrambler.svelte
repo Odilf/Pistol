@@ -96,14 +96,14 @@ import Overlay from "$lib/UI/basic/Overlay.svelte";
 
 	const [send, receive] = crossfade({
 		duration: 200,
-		fallback: scale
+		fallback: fly
 	});
 
 	const duration = 400
 	
 </script>
 
-<div class='w-full text-center text-xl relative' on:click={() => showHistory = true}>
+<div class='w-full text-center text-xl relative' on:dblclick={() => showHistory = true}>
 	{#if event}
 		{#if !activeScramble}
 			<Loading/>
@@ -118,30 +118,14 @@ import Overlay from "$lib/UI/basic/Overlay.svelte";
 </div>
 
 <Overlay bind:enabled={showHistory} fragile>
-	<div class='w-full text-center text-xl relative'>
-		{#if event}
-			{#if !activeScramble}
-				<Loading/>
-			{:else}
-			<div class='max-w-2xl mx-auto'
+	<div class='text-center'>
+		{#each globalScrambles[event.name].scrambles as scramble, i}
+			<div class='mt-5' 
 			in:receive={{ key: activeScramble, duration }}
-			out:send={{ key: activeScramble, duration }}>
-				<Scramble scramble={activeScramble} scrambleType={event.scrambleType}/>
+			out:send={{ key: activeScramble, duration }}
+			style:font-size='{1.2 - 0.05*i}em'>
+				<Scramble {scramble} scrambleType={event.scrambleType}/>
 			</div>
-			{/if}
-		{/if}
-
-
-		<div class='w-full absolute' 
-		on:click={() => showHistory = false}>
-			{#if showHistory}
-				{#each globalScrambles[event.name].scrambles as scramble, i}
-					<div class='my-5' transition:fly={{ y: (i + 1) * 10, duration: (i + 1) * 200 }}
-					style:transform='scale({1 - 0.05 * (i + 1)})'>
-						<Scramble {scramble} scrambleType={event.scrambleType}/>
-					</div>
-				{/each}
-			{/if} 
-		</div>
+		{/each}
 	</div>
 </Overlay>

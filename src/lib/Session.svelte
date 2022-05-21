@@ -43,6 +43,10 @@
 	]
 }} class='clickable p-2 m-2'> Populate </button>
 
+<button on:click={() => requestNewScramble()}>
+	request new scramble
+</button> 
+
 <div class='flex flex-col h-full justify-center items-center'>
 	<div class='my-6'>
 		<Scrambler bind:requestNewScramble event={selection.event} bind:activeScramble />
