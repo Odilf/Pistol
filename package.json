@@ -13,23 +13,23 @@
   "devDependencies": {
     "@sveltejs/adapter-auto": "next",
     "@sveltejs/kit": "next",
-    "autoprefixer": "^10.4.2",
-    "postcss": "^8.4.5",
-    "postcss-load-config": "^3.1.1",
-    "svelte": "^3.44.0",
-    "svelte-check": "^2.2.6",
-    "svelte-preprocess": "^4.10.1",
-    "tailwindcss": "^3.0.12",
-    "tslib": "^2.3.1",
-    "typescript": "~4.6.2"
+    "autoprefixer": "^10.4.7",
+    "postcss": "^8.4.14",
+    "postcss-load-config": "^3.1.4",
+    "svelte": "^3.48.0",
+    "svelte-check": "^2.7.1",
+    "svelte-preprocess": "^4.10.6",
+    "tailwindcss": "^3.0.24",
+    "tslib": "^2.4.0",
+    "typescript": "~4.6.4"
   },
   "type": "module",
   "dependencies": {
-    "@fontsource/inter": "^4.5.4",
-    "@fontsource/roboto": "^4.5.3",
-    "@fontsource/roboto-mono": "^4.5.3",
-    "cubing": "^0.25.13",
-    "firebase": "^9.6.8",
+    "@fontsource/inter": "^4.5.10",
+    "@fontsource/roboto": "^4.5.7",
+    "@fontsource/roboto-mono": "^4.5.7",
+    "cubing": "^0.25.14",
+    "firebase": "^9.8.1",
     "svelte-local-storage-store": "^0.2.6",
     "tailwind-scrollbar-hide": "^1.1.7"
   }
