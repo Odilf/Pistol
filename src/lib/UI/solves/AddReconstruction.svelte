@@ -11,7 +11,7 @@
 	}
 </script>
 
-<button class='clickable bg-primary text-secondary p-2 rounded shadow'
+<button class='clickable transition bg-primary text-secondary p-2 rounded shadow'
 	on:click={() => reconstructing = !reconstructing}>
 	{reconstructing ?  "Done" : "Add reconstrucion"}
 </button>

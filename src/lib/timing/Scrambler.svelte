@@ -57,7 +57,7 @@
 				index: 0,
 			} 
 		} else {
-			console.log('resseting cache');
+			console.log('resseting scramble cache');
 			$cache = Object.assign({}, globalScrambles)
 		}
 	}
@@ -84,7 +84,6 @@
 				defaultEvents.forEach(async(event) => {
 					const { scrambles } = globalScrambles[event.name]
 					globalScrambles[event.name].scrambles = [...scrambles, await getRandomScramble(event.scrambleType)]
-					console.log('added second to', event.name);
 				})
 			}
 		})

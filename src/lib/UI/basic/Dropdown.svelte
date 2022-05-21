@@ -12,7 +12,7 @@
 </script>
 
 <div class='relative'>
-	<button class='bg-primary text-secondary p-2 rounded clickable' on:click={() => active = !active} bind:this={button}>
+	<button class='bg-primary text-secondary p-2 rounded clickable transition' on:click={() => active = !active} bind:this={button}>
 		{selected}
 	</button>
 
