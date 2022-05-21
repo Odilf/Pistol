@@ -3,7 +3,7 @@ import { db as globalDb } from "./firebase";
 import { createDelayedStore } from "$lib/utils/delayedStore";
 import type { User } from "firebase/auth";
 import { get, limitToLast, onValue, orderByKey, query, ref, set as dbSet, type Database } from "firebase/database";
-import type { Writable } from "svelte/store";
+import { writable, type Writable } from "svelte/store";
 
 export type Top = 'Events' | 'Solves' | 'Settings'
 export type Bottom = `/${string}`
@@ -27,7 +27,8 @@ export function createFirebaseStore<T>(
 	} = dbInfo
 
 	// Dispatches a `set`
-	const { subscribe, set, update } = createDelayedStore<T>(initialValue, delayOptions)
+	const { subscribe, set, update } = writable<T>(initialValue)
+	// createDelayedStore<T>(initialValue, delayOptions)
 
 	let pathQuery = null;
 	let currentPath = '';
@@ -50,9 +51,10 @@ export function createFirebaseStore<T>(
 		get(pathQuery).then(async(snapshot) => {
 			let value = await snapshot.val() as T
 			
-			if (value == null || !bool(value)) {
-				console.log(`Setting ${path} to default (${initialValue})`);
+			if (value == null && bool(value)) {
+				console.log(value, bool(value));
 				
+				console.log(`Setting ${path} to default (${initialValue})`);
 				await dbSet(pathQuery, initialValue)
 			}
 
