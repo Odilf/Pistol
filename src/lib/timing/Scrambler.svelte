@@ -11,7 +11,7 @@
 
 	export let event: Event
 	export function requestNewScramble() {
-		const data = globalScrambles[event.name]
+		const data = globalScrambles[event.abbreviation]
 		data.index += 1
 
 		if (data.scrambles.length <= data.index + 2) {
@@ -42,8 +42,8 @@
 	// Set active scramble
 	$: if (!browser) {
 		activeScramble = ''
-	} else if (globalScrambles[event.name]) {
-		const { scrambles, index } = globalScrambles[event.name]
+	} else if (globalScrambles[event.abbreviation]) {
+		const { scrambles, index } = globalScrambles[event.abbreviation]
 		activeScramble = scrambles ? scrambles[index] : 'caca'
 	}
 	
@@ -74,7 +74,7 @@
 		
 		globalScrambles = {}
 		defaultEvents.forEach(async(event, i) => {
-			globalScrambles[event.name] = {
+			globalScrambles[event.abbreviation] = {
 				scrambles: [await getRandomScramble(event.scrambleType)],
 				index: 0,
 			}
@@ -82,8 +82,8 @@
 			// Janky way to add second scramble after first one
 			if (i === defaultEvents.length - 1) {
 				defaultEvents.forEach(async(event) => {
-					const { scrambles } = globalScrambles[event.name]
-					globalScrambles[event.name].scrambles = [...scrambles, await getRandomScramble(event.scrambleType)]
+					const { scrambles } = globalScrambles[event.abbreviation]
+					globalScrambles[event.abbreviation].scrambles = [...scrambles, await getRandomScramble(event.scrambleType)]
 				})
 			}
 		})
@@ -116,7 +116,7 @@
 
 <Overlay bind:enabled={showHistory} fragile>
 	<div class='text-center'>
-		{#each globalScrambles[event.name].scrambles as scramble, i}
+		{#each globalScrambles[event.abbreviation].scrambles as scramble, i}
 			<div class='mt-5' 
 			in:receive={{ key: activeScramble, duration }}
 			out:send={{ key: activeScramble, duration }}

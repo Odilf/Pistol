@@ -17,7 +17,7 @@
 	let requestNewScramble: () => void;
 	let activeScramble: string
 
-	$: path = `Solves/${selection.event.name}/${selection.session.name}` as const
+	$: path = `Solves/${selection.event.abbreviation}/${selection.session.name}` as const
 
 	$: solvesStore = createFirebaseStore(path, {} as { [date: number]: Solve }, { amount: 10 })
 	$: solves = Object.entries($solvesStore).map(([date, solve]) => {

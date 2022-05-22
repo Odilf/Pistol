@@ -18,14 +18,14 @@
 	// Initialize if empty
 	if (Object.keys($selectedSessions).length < events.length) {
 		events.forEach(event => {
-			$selectedSessions[event.name] = event.sessions[0]
+			$selectedSessions[event.abbreviation] = event.sessions[0]
 		})
 	}
 	
 	export let selection: { event: Event; session: Session; }
 	$: {
 		const event = events[selected]
-		const session = event.sessions[selectedSessions[event.name]] || event.sessions[0]
+		const session = event.sessions[selectedSessions[event.abbreviation]] || event.sessions[0]
 		selection = { event, session }
 	}
 
@@ -85,9 +85,9 @@
 			<div class='font-bold text-lg'>
 				{event.abbreviation}
 			</div>
-			{#if $selectedSessions[event.name]?.name !== 'Main'}
+			{#if $selectedSessions[event.abbreviation] && $selectedSessions[event.abbreviation].name !== 'Main'}
 				<div class='font-light'>
-					{$selectedSessions[event.name].name}
+					{$selectedSessions[event.abbreviation].name}
 				</div>
 			{/if}
 		</button>
@@ -95,7 +95,7 @@
 </div>
 
 <Overlay enabled={editingEvent}>
-	<EventManager bind:event={editingEvent} bind:selectedSession={$selectedSessions[editingEvent.name]}/>
+	<EventManager bind:event={editingEvent} bind:selectedSession={$selectedSessions[editingEvent.abbreviation]}/>
 </Overlay>
 
 {#if overflowing}
