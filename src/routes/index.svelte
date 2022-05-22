@@ -2,16 +2,12 @@
 	import EventTabs from "$lib/navigation/EventTabs.svelte";
 	import Header from "$lib/UI/misc/Header.svelte";
 	import Session from "$lib/Session.svelte";
-	import { defaultEvents, type Event } from "$lib/data/architecture";
+	import { defaultEvents, type Event, type Selection } from "$lib/data/architecture";
 	import { createFirebaseStore } from "$lib/data/firebase-store"
 
+	export let selection: Selection
 	
 	const events = createFirebaseStore<Event[]>('Events', defaultEvents)
-
-	let	selection = {
-		event: $events[0],
-		session: $events[0].sessions[0]
-	}
 </script>
 
 <svelte:head>
@@ -21,7 +17,7 @@
 <main class='absolute inset-0 flex flex-col justify-center items-center bg-primary overflow-scroll'>
 	<Header />
 	
-	<EventTabs bind:events={$events} bind:selection />
+	<EventTabs bind:events={$events} bind:selection/>
 	
 	<Session {selection}/>
 </main>

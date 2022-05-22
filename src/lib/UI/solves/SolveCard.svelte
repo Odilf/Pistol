@@ -8,7 +8,9 @@
 	import type { Writable } from 'svelte/store';
 
 	export let solve: Solve
-	export let solves: Solve[] = null
+	export let solves: {
+		[date: string]: Solve 
+	} = null
 
 	const selection = getContext('selection') as Writable<Selection>
 	$: scrambleType = $selection?.event?.scrambleType
@@ -33,7 +35,9 @@
 
 	{#if solves}			
 		<button class='absolute clickable transition top-0 right-0 m-6' on:click={() => {
-			solves = solves.filter(s => s.date !== solve.date)
+			solves[solve.date.getTime()] = null
+			console.log('deleting', solve);
+			
 		}}>
 			<TrashCan/>
 		</button>

@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { browser } from "$app/env";
-	import type { Event, Session } from "$lib/data/architecture";
+	import type { Event, Session, Selection } from "$lib/data/architecture";
 	import EventManager from "$lib/profile/EventManager.svelte";
 	import Overlay from "$lib/UI/basic/Overlay.svelte";
 	import { isOverflown } from "$lib/utils/overflow";
 	import { afterUpdate } from "svelte";
 	import { writable } from "svelte-local-storage-store";
-	import { fly } from "svelte/transition";
 	
+	export let selection: Selection
 	export let events: Event[]
 	let selected = 0
 
@@ -22,7 +22,6 @@
 		})
 	}
 	
-	export let selection: { event: Event; session: Session; }
 	$: {
 		const event = events[selected]
 		const session = event.sessions[selectedSessions[event.abbreviation]] || event.sessions[0]

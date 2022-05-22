@@ -1,53 +1,42 @@
 <script lang="ts">
-	import { setContext } from 'svelte';
-	import { writable } from 'svelte/store';
 	import { fly } from 'svelte/transition'
-	
 	import Scrambler from './timing/Scrambler.svelte';
 	import SolveList from './timing/SolveList.svelte';
 	import Timer from './timing/Timer.svelte';
 	import { Penalty, Solve, type Selection } from '$lib/data/architecture'
-	import { createFirebaseStore } from '$lib/data/firebase-store'
-	
-	export let selection: Selection
+	import { getSolvesStore } from './utils/solves';
 
-	const selectionStore = writable(selection)
-	setContext('selection', selectionStore)
+	export let selection: Selection
 
 	let requestNewScramble: () => void;
 	let activeScramble: string
 
-	$: path = `Solves/${selection.event.abbreviation}/${selection.session.name}` as const
-
-	$: solvesStore = createFirebaseStore(path, {} as { [date: number]: Solve }, { amount: 10 })
-	$: solves = Object.entries($solvesStore).map(([date, solve]) => {
-		solve.date = new Date(parseInt(date))
-		return solve
-	})
+	$: ({ solves, solvesArray } = getSolvesStore(selection))
 
 	async function handleTime(time: number) {
 		const solve = new Solve(time, activeScramble)
-		$solvesStore[new Date().getTime()] = solve
+		$solves[new Date().getTime()] = solve
 		requestNewScramble()
 	}
 
+	// Keyboard hotkeys
 	let deletedSolves = []
 	function handleKeydown(e: KeyboardEvent) {
 		if (e.code === 'KeyZ' && (e.altKey || e.metaKey)) {
 			if (!e.shiftKey) {
-				if (solves.length > 0) {
-					const solve = solves.at(-1)
-					solvesStore.delete(solve.date.getTime())
+				if ($solvesArray.length > 0) {
+					const solve = $solvesArray.at(-1)
+					$solves[solve.date.getTime()] = null
 					deletedSolves.push(solve)
 				}
 			} else if (deletedSolves.length > 0) {
 				const solve = deletedSolves.at(-1)
-				$solvesStore[solve.date.getTime()] = solve 
+				$solves[solve.date.getTime()] = solve 
 				deletedSolves.pop()
 			}
 		}
 
-		const updateLastSolve = (penalty: Penalty) => $solvesStore[solves.at(-1).date.getTime()].penalty = penalty
+		const updateLastSolve = (penalty: Penalty) => $solves[$solvesArray.at(-1).date.getTime()].penalty = penalty
 		if (e.code === 'Digit1' && (e.altKey)) 
 			updateLastSolve(Penalty.None)
 		else if (e.code === 'Digit2' && (e.altKey)) 
@@ -71,7 +60,7 @@
 
 	{#key selection}
 		<div class='flex-1 max-h-[17rem] overflow-hidden' in:fly={{ y: 20 }}>
-			<SolveList bind:solves/>
+			<SolveList solves={ $solves }/>
 		</div>
 	{/key}
 </div>

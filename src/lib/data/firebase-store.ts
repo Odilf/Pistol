@@ -1,8 +1,7 @@
 import { userStore as globalUserStore } from "$lib/profile";
 import { db as globalDb } from "./firebase";
-import { createDelayedStore } from "$lib/utils/delayedStore";
 import type { User } from "firebase/auth";
-import { get, limitToLast, onValue, orderByKey, query, ref, set as dbSet, type Database } from "firebase/database";
+import { get, limitToLast, orderByKey, query, ref, set as dbSet, type Database } from "firebase/database";
 import { writable, type Writable } from "svelte/store";
 
 export type Top = 'Events' | 'Solves' | 'Preferences'
@@ -18,7 +17,6 @@ export function createFirebaseStore<T>(
 		userStore?: Writable<User>
 		amount?: number
 	} = {}, 
-	delayOptions = {}
 ) {
 	const {
 		db = globalDb,
@@ -58,15 +56,17 @@ export function createFirebaseStore<T>(
 				await dbSet(pathQuery, initialValue)
 			}
 
-			value = cleanup(value)
-			set(value || initialValue)
+			set(cleanup(value) || initialValue)
 		})
 	})
 
 	return {
 		subscribe,
 		set: (value: T) => {
+			console.log();
+			
 			pathQuery && dbSet(pathQuery, value)
+			// set(cleanup(value))
 			set(value)
 		},
 		update,
@@ -86,6 +86,14 @@ function cleanup<T>(value: T): T {
 		// Error because maybe ts knows something I don't?
 		// @ts-expect-error
 		value = value.filter(v => v !== null)
+	}
+
+	if (typeof value === 'object') {
+		for (const key in value) {
+			if (value[key] == null) {
+				delete value[key]
+			}
+		}
 	}
 
 	return value
