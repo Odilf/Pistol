@@ -1,5 +1,4 @@
-import { createDelayedStore } from "$lib/utils/delayedStore";
-import { get, query, ref, set as dbSet, type DatabaseReference, type Query } from 'firebase/database'
+import { get, ref, set as dbSet, type DatabaseReference } from 'firebase/database'
 import { userStore } from "$lib/profile";
 import { db } from "./firebase";
 import type { Path } from "./firebase-store";
@@ -9,15 +8,13 @@ const defaults = {
 	refreshRate: 69,
 	pressDelay: 300,
 	stopTimerWith: 'alphanumeric' as 'alphanumeric' | 'space' | 'anything',
-	decimalScalar: 0.75,
+	decimalScalar: 1,
+	mainTimerDecimalScalar: 0.75,
 } as const
 
 const delay = 500
 
 type Preferences = Partial<typeof defaults>
-
-// Remove if unused, but seems that might be useful
-export type Name = keyof typeof defaults
 
 function createStore(writeCallback = () => null) {
 	const { set, subscribe } = writable(Object.assign({}, defaults) as Preferences)

@@ -5,22 +5,38 @@
 	
 	export let pressDelay: number = $preferences.pressDelay
 	export let refreshRate: number = $preferences.refreshRate 
-	export let stopTimerWith = $preferences.stopTimerWith
+	export let stopWith = $preferences.stopTimerWith
 	let time = 0
 
 	enum State {
-		Released = "released",
-		Pressed = "pressed",
-		Ready = "ready",
-		Running = "running",
-		Finished = "finished"
+		Idle = "idle", // Idle
+		Pressed = "pressed", // After pressing space
+		Ready = "ready", // After the press delay
+		Running = "running", // After releasing space
+		Finished = "finished" // After stopping timer but before releasing it again
 	}
 
-	let state: State = State.Released
+	let state: State = State.Idle
 	let stateTimeout: NodeJS.Timeout
 
+	function isValidKey(e: KeyboardEvent, state: State) {
+		const canStop = stopWith === 'space' ? e.key === ' '
+		: stopWith === 'alphanumeric' ? /^[a-z0-9]$/i.test(e.key) || e.key === ' '
+		: stopWith === 'anything' ? true : console.error('what did i recieve??? check `<Timer/>`')
+
+		console.log('can stop with', stopWith, 'so', canStop, e.key);
+		
+
+		if ([State.Running, State.Finished].includes(state)) {
+
+			return canStop
+		} else {
+			return e.key === ' '
+		}
+	}
+
 	function press() {
-		if (state === State.Released) {
+		if (state === State.Idle) {
 			state = State.Pressed
 
 			stateTimeout = setTimeout(() => {
@@ -38,7 +54,7 @@
 	function release() {
 		if (state === State.Pressed) {
 			clearTimeout(stateTimeout)
-			state = State.Released
+			state = State.Idle
 		}
 
 		if (state === State.Ready) {
@@ -47,13 +63,13 @@
 		}
 
 		if (state === State.Finished) {
-			state = State.Released
+			state = State.Idle
 		}
 	}
 
 	function handleKeydown(e: KeyboardEvent) {
 		if ($isOverlayActive || $holdKeyboardShorcuts) return
-		if (e.key !== ' ') return
+		if (!isValidKey(e, state)) return
 		e.preventDefault()
 		
 		press()
@@ -61,7 +77,7 @@
 
 	function handleKeyup(e: KeyboardEvent) {
 		if ($isOverlayActive) return
-		if (e.key !== ' ') return
+		if (!isValidKey(e, state)) return
 		release()
 	}
 
@@ -99,7 +115,7 @@
 <div class="{state} pointer-none select-none text-[8em] md:text-[10em] transition-all duration-200 font-thin"
 on:touchstart={handelTouchstart} on:touchend={handleTouchend}
 >
-		<TimeDisplay {time} decimalScalar={0.75}/>
+		<TimeDisplay {time} decimalScalar={$preferences.mainTimerDecimalScalar}/>
 </div>
 
 <style lang='postcss'>

@@ -1,8 +1,9 @@
 <script lang="ts">
+	import { preferences } from "$lib/data/preferences";
 	import { snackbar } from "$lib/utils";
 
 	export let time: number
-	export let decimalScalar: number = 1
+	export let decimalScalar: number = $preferences.decimalScalar
 	export let numberOfDecimals: number = null
 
 	$: numberOfDecimals = numberOfDecimals | (time > 3600 ? 0 : 2)
