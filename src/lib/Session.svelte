@@ -60,7 +60,8 @@
 
 	{#key selection}
 		<div class='flex-1 max-h-[17rem] overflow-hidden' in:fly={{ y: 20 }}>
-			<SolveList solves={ $solves }/>
+			<SolveList solves={ $solvesArray } 
+			on:delete={e => $solves[e.detail.solve.date.getTime()] = null}/>
 		</div>
 	{/key}
 </div>

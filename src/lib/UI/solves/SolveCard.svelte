@@ -4,16 +4,16 @@
 	import SolveDisplay from "./SolveDisplay.svelte";
 	import Scramble from "../scramble/Scramble.svelte";
 	import CubeVisualiser from "$lib/UI/basic/CubeVisualiser.svelte";
-	import { getContext } from 'svelte';
+	import { createEventDispatcher, getContext } from 'svelte';
 	import type { Writable } from 'svelte/store';
 
 	export let solve: Solve
-	export let solves: {
-		[date: string]: Solve 
-	} = null
+	export let editable = false
 
 	const selection = getContext('selection') as Writable<Selection>
 	$: scrambleType = $selection?.event?.scrambleType
+
+	const dispatch = createEventDispatcher()
 </script>
 
 <div class='p-6 bg-secondary text-primary rounded relative shadow overflow-visible'>
@@ -33,12 +33,9 @@
 		Solved on {solve.date.toDateString()}
 	</div>		
 
-	{#if solves}			
-		<button class='absolute clickable transition top-0 right-0 m-6' on:click={() => {
-			solves[solve.date.getTime()] = null
-			console.log('deleting', solve);
-			
-		}}>
+	{#if editable}			
+		<button class='absolute clickable transition top-0 right-0 m-6' 
+		on:click={() => dispatch('delete', { solve })}>
 			<TrashCan/>
 		</button>
 	{/if}
