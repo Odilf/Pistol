@@ -5,6 +5,7 @@
 	
 	export let pressDelay: number
 	export let refreshRate: number = $preferences.refreshRate 
+	export let stopTimerWith = $preferences.stopTimerWith
 	let time = 0
 
 	$: console.log('timer thinks refreshRate is', refreshRate);
@@ -54,7 +55,7 @@
 
 	function handleKeydown(e: KeyboardEvent) {
 		if ($isOverlayActive || $holdKeyboardShorcuts) return
-		if (e.key !== " ") return
+		if (e.key !== ' ') return
 		e.preventDefault()
 		
 		press()
@@ -62,7 +63,7 @@
 
 	function handleKeyup(e: KeyboardEvent) {
 		if ($isOverlayActive) return
-		if (e.key !== " ") return
+		if (e.key !== ' ') return
 		release()
 	}
 

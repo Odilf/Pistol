@@ -8,6 +8,7 @@ import { writable } from "svelte/store";
 const defaults = {
 	refreshRate: 69,
 	pressDelay: 300,
+	stopTimerWith: 'alphanumeric' as 'alphanumeric' | 'space' | 'anything' 
 } as const
 
 const delay = 500
@@ -39,7 +40,7 @@ function createStore(writeCallback = () => null) {
 	return {
 		set: (preferences: Preferences) => {
 			const purged = purge(preferences)
-			set(preferences)
+			set(fill(preferences))
 
 			if (canWrite) {
 				dbSet(preferencesRef, purged)
