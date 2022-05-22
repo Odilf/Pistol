@@ -11,16 +11,12 @@
 
 	let newSessionName = ''
 
-	console.log(selectedSession);
-	
-
 	function addSession() {
 		event.sessions = [...event.sessions, new Session(newSessionName)]
 		newSessionName = ''
 	}
 
 	const selection = getContext('selection') as Writable<unknown>
-	console.log('selection from context is', $selection);
 
 	$: valid = event.sessions.every(session => session.name !== newSessionName)
 	

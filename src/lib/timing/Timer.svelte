@@ -24,9 +24,6 @@
 		: stopWith === 'alphanumeric' ? /^[a-z0-9]$/i.test(e.key) || e.key === ' '
 		: stopWith === 'anything' ? true : console.error('what did i recieve??? check `<Timer/>`')
 
-		console.log('can stop with', stopWith, 'so', canStop, e.key);
-		
-
 		if ([State.Running, State.Finished].includes(state)) {
 
 			return canStop

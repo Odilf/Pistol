@@ -13,8 +13,6 @@
 
 	const selectedSessions = writable('sessionSelection', {})
 	
-	$: console.log($selectedSessions[editingEvent?.name]);
-	
 	// Initialize if empty
 	if (Object.keys($selectedSessions).length < events.length) {
 		events.forEach(event => {
