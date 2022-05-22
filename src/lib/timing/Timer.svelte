@@ -1,13 +1,13 @@
 <script lang="ts">
-	// import { settings } from "$lib/data/settings";
-
+	import { preferences } from "$lib/data/preferences";
 	import { holdKeyboardShorcuts, isOverlayActive } from "$lib/data/stores";
 	import TimeDisplay from "$lib/UI/solves/TimeDisplay.svelte"
 	
 	export let pressDelay: number
-	export let refreshRate: number = 69
-	// export let refreshRate: number = $settings.refreshRate
+	export let refreshRate: number = $preferences.refreshRate 
 	let time = 0
+
+	$: console.log('timer thinks refreshRate is', refreshRate);
 
 	enum State {
 		Released = "released",

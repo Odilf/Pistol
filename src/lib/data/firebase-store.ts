@@ -5,7 +5,7 @@ import type { User } from "firebase/auth";
 import { get, limitToLast, onValue, orderByKey, query, ref, set as dbSet, type Database } from "firebase/database";
 import { writable, type Writable } from "svelte/store";
 
-export type Top = 'Events' | 'Solves' | 'Settings'
+export type Top = 'Events' | 'Solves' | 'Preferences'
 export type Bottom = `/${string}`
 export type Path = `${Top}${Bottom | ''}`
 

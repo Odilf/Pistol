@@ -1,11 +1,10 @@
-<!-- <script lang="ts">
+<script lang="ts">
 	import Menu from '$lib/UI/basic/Menu.svelte'
 	import Sidebar from '$lib/UI/misc/Sidebar.svelte'
 	import Login from '$lib/profile/Login.svelte'
 	import Dashboard from '$lib/profile/Dashboard.svelte';
 	import EventManager from '$lib/profile/EventManager.svelte';
-	// import { user } from '$lib/profile'
-	// import { events } from '$lib/data/database';
+	import { userStore as user } from '$lib/profile';
 
 	let showSidebar = false
 
@@ -44,18 +43,16 @@
 
 	<main class='flex h-full'>
 		<Sidebar bind:enabled={showSidebar}>
-			<menu slot='menu' class='text-2xl'>
-				<Menu items={menuItems} bind:selected={selectedItem}/>
+			<menu slot='menu' class='text-2xl flex flex-col items-center justify-center'>
+				<a class='py-2 my-2 clickable transition' sveltekit:prefetch href='/profile'> Profile </a>
+				<a class='py-2 my-2 clickable transition' sveltekit:prefetch href='/profile/dashboard'> Dashboard </a>
+				<a class='py-2 my-2 clickable transition' sveltekit:prefetch href='/profile/preferences'> Preferences </a>
 			</menu>
 			
-			<div class='bg-secondary/10 h-full mx-8 overflow-y-scroll p-2 py-8'>
-				{#if selectedItem === 'Events'}
-					<EventManager userEvents={$events}/>
-				{:else if selectedItem === 'Dashboard'}
-					<Dashboard/>
-				{/if}
+			<div class='bg-secondary/10 h-full mx-8 overflow-y-scroll p-2 py-8 min-h-screen'>
+				<slot/>
 			</div>
 		</Sidebar>
 	</main>
 
-{/if} -->
+{/if}
