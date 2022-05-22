@@ -63,11 +63,8 @@ export function createFirebaseStore<T>(
 	return {
 		subscribe,
 		set: (value: T) => {
-			console.log(value);
-			
 			pathQuery && dbSet(pathQuery, value)
 			set(cleanup(value))
-			// set(value)
 		},
 		update,
 		delete: (key: string | number) => {
