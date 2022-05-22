@@ -14,6 +14,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title> Pistol </title>
+</svelte:head>
+
 <main class='absolute inset-0 flex flex-col justify-center items-center bg-primary overflow-scroll'>
 	<Header />
 	
