@@ -4,11 +4,10 @@
 	export let time: number
 	export let decimalScalar: number = 1
 	export let numberOfDecimals: number = null
-	$: realDecimals = numberOfDecimals | (time > 3600 ? 0 : 2)
-	
-	// $: realDecimals = 2
 
-	$: decimals = (time % 1).toFixed(realDecimals).substring(2, 2 + realDecimals)
+	$: numberOfDecimals = numberOfDecimals | (time > 3600 ? 0 : 2)
+
+	$: decimals = (time % 1).toFixed(numberOfDecimals).substring(2, 2 + numberOfDecimals)
 	$: seconds = Math.floor(time)
 
 	function copyTime() {
@@ -37,7 +36,7 @@
 </script>
 
 <span class='text-[1em] font-mono' on:dblclick={copyTime}>
-	{#if realDecimals}
+	{#if numberOfDecimals}
 		{formatSeconds(seconds)}.<span style:font-size='{decimalScalar}em'>{decimals}</span>
 	{:else}
 		{formatSeconds(seconds)}
