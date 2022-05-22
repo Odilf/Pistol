@@ -3,6 +3,8 @@ import { createFirebaseStore } from "$lib/data/firebase-store"
 import { derived } from "svelte/store"
 
 export function getSolvesStore(selection: Selection) {
+	console.log('selection is', selection);
+	
 	const path = `Solves/${selection.event.abbreviation}/${selection.session.name}` as const
 	const solves = createFirebaseStore(path, {} as { [date: number]: Solve }, { amount: 10 })
 	const solvesArray = derived(solves, solves => {

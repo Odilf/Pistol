@@ -5,9 +5,12 @@
 	import { defaultEvents, type Event, type Selection } from "$lib/data/architecture";
 	import { createFirebaseStore } from "$lib/data/firebase-store"
 
-	export let selection: Selection
-	
 	const events = createFirebaseStore<Event[]>('Events', defaultEvents)
+
+	let selection: Selection = {
+		event: $events[0],
+		session: $events[0].sessions[0]
+	}
 </script>
 
 <svelte:head>

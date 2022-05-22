@@ -55,7 +55,7 @@
 	</div>
 
 	<div class='flex-1 flex items-center'>
-		<Timer pressDelay={300} on:time={e => handleTime(e.detail)}/>
+		<Timer on:time={e => handleTime(e.detail)}/>
 	</div>
 
 	{#key selection}

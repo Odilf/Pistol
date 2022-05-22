@@ -8,7 +8,8 @@ import { writable } from "svelte/store";
 const defaults = {
 	refreshRate: 69,
 	pressDelay: 300,
-	stopTimerWith: 'alphanumeric' as 'alphanumeric' | 'space' | 'anything' 
+	stopTimerWith: 'alphanumeric' as 'alphanumeric' | 'space' | 'anything',
+	decimalScalar: 0.75,
 } as const
 
 const delay = 500

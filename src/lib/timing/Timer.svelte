@@ -3,12 +3,10 @@
 	import { holdKeyboardShorcuts, isOverlayActive } from "$lib/data/stores";
 	import TimeDisplay from "$lib/UI/solves/TimeDisplay.svelte"
 	
-	export let pressDelay: number
+	export let pressDelay: number = $preferences.pressDelay
 	export let refreshRate: number = $preferences.refreshRate 
 	export let stopTimerWith = $preferences.stopTimerWith
 	let time = 0
-
-	$: console.log('timer thinks refreshRate is', refreshRate);
 
 	enum State {
 		Released = "released",

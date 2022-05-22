@@ -2,7 +2,6 @@
 	import type { Solve } from "$lib/data/architecture";
 	import Overlay from "$lib/UI/basic/Overlay.svelte";
 	import SolveDisplay from "$lib/UI/solves/SolveDisplay.svelte";
-	import { arrayView } from "$lib/utils";
 
 	import { flip } from "svelte/animate";	
 	import { fly } from "svelte/transition";	
@@ -11,10 +10,7 @@
 		[date: string]: Solve
 	}
 
-	console.log(solves);
-	
-
-	$: solvesArray = arrayView(solves)
+	$: solvesArray = []
 
 	$: if (!solvesArray.includes(showingSolve)) {
 		showingSolve = null
