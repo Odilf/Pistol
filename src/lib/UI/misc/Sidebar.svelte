@@ -1,6 +1,18 @@
 <script lang="ts">
 	import { clickOutside } from "$lib/utils";
+	import { onDestroy } from "svelte";
+
 	export let enabled = false
+	export let toggleButton: HTMLElement = null
+
+	$: toggleButton?.addEventListener('click', e => {
+		e.preventDefault()
+		enabled = !enabled
+	})
+
+	onDestroy(() => {
+		toggleButton.onclick = null
+	})
 </script>
 
 <div class='absolute bg-secondary h-full w-72 flex flex-col text-primary
