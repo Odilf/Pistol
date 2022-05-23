@@ -21,12 +21,12 @@
 	
 </script>
 
-<h1 class='text-5xl text-center'> Select your main events </h1>
+<h1 class='text-5xl text-center font-light'> Select your main events </h1>
 
 <main class='flex flex-wrap w-full justify-evenly my-4'>
 	{#each sections as { name, accessor }}
-		<div class='my-2 mx-8'>
-			<h2 class='text-3xl font-bold text-center'> {name} </h2>
+		<div class='my-2 mx-8 flex flex-col items-center flex-1	'>
+			<h2 class='text-3xl font-bold text-center mb-2'> {name} </h2>
 			<ul class='flex flex-col items-center'>
 				{#each $events.filter(event => eventTypes[accessor].includes(event.abbreviation)) as event}
 					<li> 
