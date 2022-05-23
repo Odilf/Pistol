@@ -22,7 +22,6 @@
 		})
 	}
 
-	$: console.log({ events, visibleEvents });
 	$: visibleEvents = events.filter(event => !event.options.hidden)
 
 	let container: HTMLDivElement
@@ -41,7 +40,6 @@
 	}
 
 	$: index = visibleEvents.findIndex(event => event.name === selection.event.name)
-	$: console.log(index);
 	
 	const decrease = () => { if (index > 0) { 
 		selection.event = visibleEvents[index - 1] 

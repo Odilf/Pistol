@@ -12,8 +12,6 @@
 		{ name: 'Quiet events', accessor: 'quiet'},
 	]
 
-	$: console.log($events);
-
 	function toggleVisibility(event: Event) {
 		$events[$events.findIndex(ge => ge.name === event.name)].options.hidden =
 			!$events[$events.findIndex(ge => ge.name === event.name)].options.hidden
