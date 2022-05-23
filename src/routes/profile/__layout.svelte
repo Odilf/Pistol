@@ -45,6 +45,7 @@
 		<Sidebar bind:enabled={showSidebar}>
 			<menu slot='menu' class='text-2xl flex flex-col items-center justify-center'>
 				<a class='py-2 my-2 clickable transition' sveltekit:prefetch href='/profile'> Profile </a>
+				<a class='py-2 my-2 clickable transition' sveltekit:prefetch href='/profile/events'> Events </a>
 				<a class='py-2 my-2 clickable transition' sveltekit:prefetch href='/profile/dashboard'> Dashboard </a>
 				<a class='py-2 my-2 clickable transition' sveltekit:prefetch href='/profile/preferences'> Preferences </a>
 			</menu>

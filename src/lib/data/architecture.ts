@@ -67,7 +67,7 @@ export class Event {
 	}
 }
 
-export const defaultEvents: Event[] = [
+export const defaultEvents = [
 	new Event('3x3x3', '3x3'),
 	new Event('2x2x2', '2x2'),
 	new Event('4x4x4', '4x4'),
@@ -88,7 +88,7 @@ export const defaultEvents: Event[] = [
 	new Event('4x4x4 Blindfolded', '4BLD', '4x4'),
 	new Event('5x5x5 Blindfolded', '5BLD', '5x5'),
 	new Event('3x3x3 Multi-Blind', 'MBLD', '3x3'),
-]
+] as const
 
 export interface Selection {
 	event: Event
