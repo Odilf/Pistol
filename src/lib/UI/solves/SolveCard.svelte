@@ -1,6 +1,6 @@
 <script lang="ts">
 	import TrashCan from '$lib/UI/icons/TrashCan.svelte';
-	import type { Solve, Selection, Event } from "$lib/data/architecture";
+	import type { Solve, Selection } from "$lib/data/architecture";
 	import SolveDisplay from "./SolveDisplay.svelte";
 	import Scramble from "../scramble/Scramble.svelte";
 	import CubeVisualiser from "$lib/UI/basic/CubeVisualiser.svelte";
@@ -13,7 +13,10 @@
 	const selection = getContext('selection') as Writable<Selection>
 	$: scrambleType = $selection?.event?.scrambleType
 
-	const dispatch = createEventDispatcher()
+	const dispatch = createEventDispatcher<{ 
+		delete: { solve: Solve }, 
+		edit: { solve: Solve }
+	}>()
 </script>
 
 <div class='p-6 bg-secondary text-primary rounded relative shadow overflow-visible'>
