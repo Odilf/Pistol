@@ -10,7 +10,7 @@
 	export let enabled = true
 	export let fragile = true
 
-	const dispatch = createEventDispatcher()
+	const dispatch = createEventDispatcher<{ close: null }>()
 
 	function handleClick(e: MouseEvent) {
 		if (fragile && e.target === e.currentTarget) {
@@ -28,6 +28,10 @@
 		enabled = false
 		dispatch('close')
 	}
+
+	// $: if (enabled = false) {
+	// 	dispatch('close')
+	// }
 
 	$: $isOverlayActive = enabled
 </script>

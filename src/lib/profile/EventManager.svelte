@@ -44,7 +44,7 @@
 		<li transition:fly|local={{ y: 10 }}
 		animate:flip>
 		<div class='flex justify-between w-full mt-2
-		{selectedSession.name === session.name && 'bg-secondary p-2 rounded text-primary'}'>
+		{selectedSession?.name === session.name && 'bg-secondary p-2 rounded text-primary'}'>
 		<button class='clickable transition' on:click={() => selectedSession = session}>
 			<h2 class='text-2xl font-bold'> {session.name} </h2>
 		</button>

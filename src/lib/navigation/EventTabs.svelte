@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { browser } from "$app/env";
-	import type { Event, Session, Selection } from "$lib/data/architecture";
-	import EventManager from "$lib/profile/EventManager.svelte";
-	import Overlay from "$lib/UI/basic/Overlay.svelte";
+	import type { Event, Selection } from "$lib/data/architecture";
+import EventManager from "$lib/profile/EventManager.svelte";
+import Overlay from "$lib/UI/basic/Overlay.svelte";
 	import { isOverflown } from "$lib/utils/overflow";
 	import { afterUpdate } from "svelte";
 	import { writable } from "svelte-local-storage-store";
@@ -12,6 +12,9 @@
 		event: events[0],
 		session: events[0].sessions[0],
 	}
+
+	$: console.log('events are getting updated from event tabs', events);
+	
 
 	const selectedSessions = writable('sessionSelection', {})
 	

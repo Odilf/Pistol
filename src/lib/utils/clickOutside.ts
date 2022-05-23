@@ -1,7 +1,19 @@
-export function clickOutside(node: Node, callback: (event: MouseEvent) => unknown) {
+export function clickOutside(node: Node, options: {
+	callback: (event: MouseEvent) => unknown,
+	ignore?: EventTarget,
+}) {
+	const {
+		callback,
+		ignore = null
+	} = options
+
 	const handleClick = (event: MouseEvent) => {
 		if (!node.contains(event.target as Node)) {
-			callback(event)
+			if (ignore !== event.target) {
+				callback(event)
+				console.log('calling callback', event.target);
+				
+			}
 		}
 	};
 

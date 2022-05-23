@@ -107,7 +107,7 @@
 		{:else if !showHistory}
 		<div class='max-w-2xl'
 		in:receive={{ key: activeScramble, duration }}
-		out:send={{ key: activeScramble, duration }}>
+		out:send|local={{ key: activeScramble, duration }}>
 			<Scramble scramble={activeScramble} scrambleType={event.scrambleType}/>
 		</div>
 		{/if}

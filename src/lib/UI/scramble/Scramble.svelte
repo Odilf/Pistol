@@ -53,7 +53,7 @@
 	{scramble.length > 120 ? 'text-[1em]' : 'text-[1.5em]'} cursor-pointer
 	{center ? 'mx-auto justify-center' : ''}'>
 		{#each moves as move, i}
-			<span id={(hovering === i) && 'hovering'} class='{hovering >= i ? 'text-blue-400' : ''} mx-[1.5px] transition z-10' 
+			<span id={(hovering === i) && 'hovering'} class='{hovering >= i ? 'text-tertiary' : ''} mx-[1.5px] transition z-10' 
 				on:mouseenter={e => { hovering = i; handleMouseenter(e)}}>
 				{move}
 			</span>

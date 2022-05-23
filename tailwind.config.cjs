@@ -7,16 +7,13 @@ const config = {
 		mono: ['Roboto'],
 	},
     extend: {
-		colors: {
+	colors: {
 			primary: '#E2E8FD',
 			secondary: '#151E3F',
+			tertiary: '#91c2ff',
 		},
 	},
   },
-
-  plugins: [
-	require('tailwind-scrollbar-hide'),
-  ],
 };
 
 module.exports = config;

@@ -62,6 +62,8 @@ export function createFirebaseStore<T>(
 	return {
 		subscribe,
 		set: (value: T) => {
+			console.warn('value from', path, 'changed, to', value);
+			
 			pathQuery && dbSet(pathQuery, value)
 			set(cleanup(value))
 		},

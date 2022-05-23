@@ -4,13 +4,20 @@
 	import Session from "$lib/Session.svelte";
 	import { defaultEvents, type Event, type Selection } from "$lib/data/architecture";
 	import { createFirebaseStore } from "$lib/data/firebase-store"
+	import Welcome from "$lib/UI/misc/Welcome.svelte";
 
-	const events = createFirebaseStore<Event[]>('Events', defaultEvents)
+	const events = createFirebaseStore<Event[]>('Events', [...defaultEvents])
+
+	// events.subscribe(events => {
+	// 	console.warn('events are getting updated!!!!');
+	// })
 
 	let selection: Selection = {
 		event: $events[0],
 		session: $events[0].sessions[0]
 	}
+
+	let hasVisitedBefore: boolean
 </script>
 
 <svelte:head>
@@ -18,9 +25,13 @@
 </svelte:head>
 
 <main class='absolute inset-0 flex flex-col justify-center items-center bg-primary overflow-scroll'>
-	<Header />
+	{#if hasVisitedBefore}	
+		<Header />
 	
-	<EventTabs bind:events={$events} bind:selection/>
+		<EventTabs events={$events} bind:selection/>
 	
-	<Session {selection}/>
+		<Session {selection}/>
+	{:else}
+		<Welcome bind:hasVisitedBefore bind:events={$events}/>
+	{/if}
 </main>

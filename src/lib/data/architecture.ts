@@ -62,13 +62,13 @@ export class Event {
 
 		// Default options
 		this.options = Object.assign({
-			hidden: false
+			hidden: true
 		}, options)
 	}
 }
 
 export const defaultEvents = [
-	new Event('3x3x3', '3x3'),
+	new Event('3x3x3', '3x3', '3x3', { hidden: false }),
 	new Event('2x2x2', '2x2'),
 	new Event('4x4x4', '4x4'),
 	new Event('5x5x5', '5x5'),

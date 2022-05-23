@@ -1,5 +1,9 @@
 <script lang="ts">
-	import { login } from '.'
+	import { login, userStore, signOut } from '.'
+
+	$: loggedIn = !!$userStore
 </script>
 
-<button on:click={() => login()} class='bg-secondary text-primary rounded shadow p-4'> Log in </button>
+<button on:click={() => loggedIn ? signOut() : login()} class='clickable transition'>
+	{loggedIn ? 'Sign out' : 'Log in'}
+</button>
