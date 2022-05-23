@@ -7,9 +7,11 @@
 	import { afterUpdate } from "svelte";
 	import { writable } from "svelte-local-storage-store";
 	
-	export let selection: Selection
 	export let events: Event[]
-	let selected = 0
+	export let selection: Selection = {
+		event: events[0],
+		session: events[0].sessions[0],
+	}
 
 	const selectedSessions = writable('sessionSelection', {})
 	
@@ -19,16 +21,13 @@
 			$selectedSessions[event.abbreviation] = event.sessions[0]
 		})
 	}
-	
-	$: {
-		const event = events[selected]
-		const session = event.sessions[selectedSessions[event.abbreviation]] || event.sessions[0]
-		selection = { event, session }
-	}
+
+	$: console.log({ events, visibleEvents });
+	$: visibleEvents = events.filter(event => !event.options.hidden)
 
 	let container: HTMLDivElement
 	$: buttons = browser && container && container.children
-	$: buttons && buttons.item(selected).scrollIntoView({
+	$: buttons && buttons.item(index)?.scrollIntoView({
 		behavior: "smooth", 
 		block: "center", 
 		inline: "center"
@@ -41,25 +40,29 @@
 		}
 	}
 
-	const decrease = () => (selected > 0) && (selected -= 1)
-	const increase = () => (selected < events.length - 1) && (selected += 1)
+	$: index = visibleEvents.findIndex(event => event.name === selection.event.name)
+	$: console.log(index);
+	
+	const decrease = () => { if (index > 0) { 
+		selection.event = visibleEvents[index - 1] 
+	} }
+	const increase = () => { if (index < visibleEvents.length - 1) { 
+		selection.event = visibleEvents[index + 1] 
+	} }
 
 	let overflowing = false
 	$: afterUpdate(() => {
 		overflowing = isOverflown(container)
 	})
 
-	let editingEvent = null
-	function handleClick(index: number) {
-		if (selected !== index) {
-			selected = index
+	let editingEvent = false
+	function handleClick(event: Event) {
+		if (selection.event !== event) {
+			selection.event = event
 		} else {
-			editingEvent = events[index]
+			editingEvent = true
 		}
 	}
-
-	// For reactivity, apparently
-	$: events[events.indexOf(editingEvent)] = editingEvent
 </script>
 
 <svelte:window on:keydown={handleKeydown} on:resize={() => overflowing = isOverflown(container)}/>
@@ -67,7 +70,7 @@
 <div class='flex items-center w-full'>
 
 {#if overflowing}
-<button class='clickable transition h-10 disabled:opacity-50' on:click={() => decrease()} disabled={selected === 0}>
+<button class='clickable transition h-10 disabled:opacity-50' on:click={() => decrease()} disabled={selection.event === visibleEvents[0]}>
 	<svg xmlns="http://www.w3.org/2000/svg" class="h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width={4}>
 		<path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7" />
 	</svg>
@@ -75,10 +78,10 @@
 {/if}
 
 <div bind:this={container} class='flex rounded p-2 scrollbar-hide bg-secondary text-primary shadow box-content mx-auto overflow-x-scroll'>
-	{#each events as event, i}
+	{#each visibleEvents as event}
 		<button class='p-2 rounded transition px-4 mx-1 hover:scale-105
-		{selected === i ? 'bg-primary text-secondary shadow' : ''} flex flex-col items-center justify-center'
-		on:click={() => handleClick(i)}>
+		{selection.event.name === event.name ? 'bg-primary text-secondary shadow' : ''} flex flex-col items-center justify-center'
+		on:click={() => handleClick(event)}>
 			<div class='font-bold text-lg'>
 				{event.abbreviation}
 			</div>
@@ -91,12 +94,15 @@
 	{/each}	
 </div>
 
-<Overlay enabled={editingEvent}>
-	<EventManager bind:event={editingEvent} bind:selectedSession={$selectedSessions[editingEvent.abbreviation]}/>
+<Overlay bind:enabled={editingEvent}>
+	<EventManager 
+	bind:event={events[events.indexOf(selection.event)]} 
+	bind:selectedSession={selection.session}
+	/>
 </Overlay>
 
 {#if overflowing}
-<button class='clickable transition h-10 disabled:opacity-50' on:click={() => increase()} disabled={selected === events.length - 1}>
+<button class='clickable transition h-10 disabled:opacity-50' on:click={() => increase()} disabled={selection.event === visibleEvents.at(-1)}>
 	<svg xmlns="http://www.w3.org/2000/svg" class="h-full" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width={4}>
 		<path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
 	</svg>

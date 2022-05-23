@@ -26,7 +26,6 @@ export function createFirebaseStore<T>(
 
 	// Dispatches a `set`
 	const { subscribe, set, update } = writable<T>(initialValue)
-	// createDelayedStore<T>(initialValue, delayOptions)
 
 	let pathQuery = null;
 	let currentPath = '';

@@ -33,13 +33,18 @@ export class Session {
 	}
 }
 
+interface EventOptions {
+	hidden: boolean
+}
+
 export class Event {
 	name: string
 	abbreviation: string
 	scrambleType: ScrambleType
 	sessions: Session[]
+	options: EventOptions
 
-	constructor(name: string, abbreviation?: string, scrambleType?: ScrambleType) {
+	constructor(name: string, abbreviation?: string, scrambleType?: ScrambleType, options?: EventOptions) {
 		this.name = name
 
 		this.abbreviation = abbreviation || name
@@ -54,6 +59,11 @@ export class Event {
 			this.scrambleType = scrambleType
 		}
 		this.sessions = [new Session('Main')]
+
+		// Default options
+		this.options = Object.assign({
+			hidden: false
+		}, options)
 	}
 }
 

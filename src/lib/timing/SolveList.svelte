@@ -43,5 +43,5 @@
 </div>
 
 <Overlay on:close={ () => showingSolve = null } enabled={ !!showingSolve }>
-	<SolveCard solve={ showingSolve } editable on:delete />
+	<SolveCard solve={ showingSolve } editable on:delete on:edit />
 </Overlay>

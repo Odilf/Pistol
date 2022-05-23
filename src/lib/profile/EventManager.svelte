@@ -1,9 +1,7 @@
 <script lang="ts">
 	import { Session, type Event } from "$lib/data/architecture";
 	import TrashCan from "$lib/UI/icons/TrashCan.svelte";
-	import { getContext } from "svelte";
 	import { fly } from "svelte/transition";
-	import type { Writable } from 'svelte/store'
 	import { flip } from "svelte/animate";
 
 	export let event: Event
@@ -16,8 +14,6 @@
 		newSessionName = ''
 	}
 
-	const selection = getContext('selection') as Writable<unknown>
-
 	$: valid = event.sessions.every(session => session.name !== newSessionName)
 	
 	function deleteSession(session: Session) {
@@ -29,8 +25,16 @@
 </script>
 
 <div class='max-w-xl w-screen p-8'>
-
-	<h1 class='text-5xl font-black'> {event.name} </h1>
+	<div class='flex justify-between'>
+		<h1 class='text-5xl font-black'> {event.name} </h1>
+		
+		<button class='bg-secondary text-white p-2 rounded shadow clickable transition my-2'
+		on:click={() => {
+			event.options.hidden = !event.options.hidden
+		}}> 
+			{ event.options.hidden ? 'Show' : 'Hide' } 
+		</button>
+	</div>
 
 	<h2 class='text-3xl mt-5 font-light'> Sessions: </h2> 
 	<div id='separator' class='h-[0.1rem] w-full bg-secondary rounded opacity-50'/>
