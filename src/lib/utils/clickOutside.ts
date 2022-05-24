@@ -11,11 +11,9 @@ export function clickOutside(node: Node, options: {
 		if (!node.contains(event.target as Node)) {
 			if (ignore !== event.target) {
 				callback(event)
-				console.log('calling callback', event.target);
-				
 			}
 		}
-	};
+	}
 
 	document.addEventListener("click", handleClick, true);
 
@@ -23,5 +21,5 @@ export function clickOutside(node: Node, options: {
 		destroy() {
 			document.removeEventListener("click", handleClick, true);
 		}
-	};
+	}
 }
