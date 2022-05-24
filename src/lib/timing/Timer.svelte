@@ -109,7 +109,8 @@
 
 <svelte:window on:keydown={handleKeydown} on:keyup={handleKeyup}/>
 
-<div class="{state} pointer-none select-none text-[8em] md:text-[10em] transition-all duration-200 font-thin"
+<div class="{state} pointer-none select-none text-[8em] md:text-[10em] transition-all duration-200 font-thin w-full h-full
+grid place-items-center"
 on:touchstart={handelTouchstart} on:touchend={handleTouchend}
 >
 		<TimeDisplay {time} decimalScalar={$preferences.mainTimerDecimalScalar}/>

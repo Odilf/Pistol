@@ -60,7 +60,7 @@
 		<Scrambler bind:requestNewScramble event={selection.event} bind:activeScramble />
 	</div>
 
-	<div class='flex-1 flex items-center'>
+	<div class='flex-1 flex items-center w-full'>
 		<Timer on:time={e => handleTime(e.detail)}/>
 	</div>
 
