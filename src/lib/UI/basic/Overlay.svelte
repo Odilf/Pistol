@@ -3,7 +3,7 @@
 
 <script lang="ts">
 	import { isOverlayActive } from "$lib/data/stores";
-	import { createEventDispatcher } from "svelte";
+	import { createEventDispatcher, onMount } from "svelte";
 	import { cubicInOut } from "svelte/easing";
 
 	import { fade } from "svelte/transition";
@@ -29,10 +29,7 @@
 		dispatch('close')
 	}
 
-	// $: if (enabled = false) {
-	// 	dispatch('close')
-	// }
-
+	onMount(() => $isOverlayActive = true)
 	$: $isOverlayActive = enabled
 </script>
 
