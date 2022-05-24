@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="300" height="300"><svg width="300" height="300" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="150.5" cy="149.5" r="127.5" fill="#D9D9D9" stroke="black" stroke-width="20"></circle>
+<path d="M109.5 191.5L138.96 162.04C140.913 160.088 144.08 160.217 146.654 161.215C147.3 161.465 147.969 161.66 148.654 161.796C150.987 162.26 153.405 162.022 155.603 161.112C157.8 160.202 159.679 158.66 161 156.682C161.389 156.101 161.723 155.491 162.003 154.857C163.118 152.331 165.266 150 168.027 150H244.5" stroke="black" stroke-width="20" stroke-linecap="round"></path>
+</svg><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
+@media (prefers-color-scheme: dark) { :root { filter: invert(100%); } }
+</style></svg>
