@@ -8,9 +8,6 @@
 
 	const events = createFirebaseStore<Event[]>('Events', [...defaultEvents])
 
-	// events.subscribe(events => {
-	// 	console.warn('events are getting updated!!!!');
-	// })
 
 	let selection: Selection = {
 		event: $events[0],
