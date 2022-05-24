@@ -1,0 +1,43 @@
+{
+    "short_name": "Pistol",
+    "name": "Pistol timer",
+    "start_url": "/",
+    "icons": [
+		{
+			"src": "/icon/favicon.svg",
+			"type": "image/svg+xml",
+			"sizes": "any",
+			"purpose": "maskable"
+		},
+		{
+			"src": "/icon/favicon-196x196.png",
+			"type": "image/png",
+			"sizes": "196x196"
+		},
+		{
+			"src": "/icon/favicon-128x128.png",
+			"type": "image/png",
+			"sizes": "128x128"
+		},
+		{
+			"src": "/icon/favicon-96x96.png",
+			"type": "image/png",
+			"sizes": "96x96"
+		},
+		{
+			"src": "/icon/favicon-32x32.png",
+			"type": "image/png",
+			"sizes": "32x32"
+		},
+		{
+			"src": "/icon/favicon-16x16.png",
+			"type": "image/png",
+			"sizes": "16x16"
+		}
+    ],
+    "background_color": "#E2E8FD",
+    "display": "standalone",
+    "scope": "/",
+    "theme_color": "#E2E8FD",
+    "description": "An open source speedcubing timer that brings a modern aproach and desing."
+}
