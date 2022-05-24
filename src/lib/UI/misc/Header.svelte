@@ -10,9 +10,9 @@
 
 	<div class='flex-1'> </div>
 
-	<div class='mx-2'>
+	<div class='mx-2 clickable transition'>
 		{#if $user}
-			<a class='font-extralight text-2xl clickable transition' href='/profile'> 
+			<a class='font-extralight text-2xl' href='/profile' sveltekit:prefetch> 
 				{$user.displayName} 
 			</a>
 		{:else}
