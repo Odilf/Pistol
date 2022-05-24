@@ -27,10 +27,10 @@
 	function close() {
 		enabled = false
 		dispatch('close')
+		$isOverlayActive = false
 	}
 
-	onMount(() => $isOverlayActive = true)
-	$: $isOverlayActive = enabled
+	$: enabled && ($isOverlayActive = true)
 </script>
 
 <svelte:window on:keydown={handleKeydown}/>
