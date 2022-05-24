@@ -13,9 +13,6 @@ import Overlay from "$lib/UI/basic/Overlay.svelte";
 		session: events[0].sessions[0],
 	}
 
-	$: console.log('events are getting updated from event tabs', events);
-	
-
 	const selectedSessions = writable('sessionSelection', {})
 	
 	// Initialize if empty
