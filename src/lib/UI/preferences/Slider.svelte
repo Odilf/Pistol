@@ -12,7 +12,9 @@
 	} = null
 
 	$: snap && (snap.strength = snap?.strength || (range[1] - range[0])/20)
-	$: value = Math.max(range[0], Math.min(value, range[1]))
+
+	// Clamp value between range
+	$: if (strict) { value = Math.max(range[0], Math.min(value, range[1])) }
 
 	function doSnap() {
 		snap?.marks.forEach(mark => {
