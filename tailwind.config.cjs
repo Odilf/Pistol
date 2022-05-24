@@ -10,7 +10,7 @@ const config = {
 	colors: {
 			primary: '#E2E8FD',
 			secondary: '#151E3F',
-			tertiary: '#91c2ff',
+			tertiary: '#5da4fc',
 		},
 	},
   },

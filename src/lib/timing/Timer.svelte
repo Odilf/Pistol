@@ -121,8 +121,9 @@ on:touchstart={handelTouchstart} on:touchend={handleTouchend}
 	}
 	.ready {
 		color: darkblue;
+		transform: scale(1.02);
 	}
 	.finished {
-		color: wheat;
+		color: burlywood;
 	}
 </style>
