@@ -1,5 +1,5 @@
 
-<main class='mx-auto w-screen max-w-xl pt-8 px-4 flex flex-col justify-center items-center'>
+<main class='mx-auto w-screen max-w-xl py-8 px-4 flex flex-col justify-center items-center'>
 	<a href='/' sveltekit:prefetch class='clickable transition sticky top-6 bg-primary rounded shadow p-2 mr-auto'> Back </a>
 
 	<h1 class='text-8xl font-black mb-8'> Pistol </h1>
