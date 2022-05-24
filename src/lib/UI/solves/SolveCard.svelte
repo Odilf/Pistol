@@ -49,7 +49,7 @@
 	{#if editable}
 	<div class='font-extrabold'>
 		<div> PENALTY: </div>
-		<Select options={['none', '+2', 'DNF']} on:select={() => dispatch('edit', { solve })} bind:value={solve.penalty}/>
+		<Select options={['none', '+2', 'DNF']} ressetable={false} on:select={() => dispatch('edit', { solve })} bind:value={solve.penalty}/>
 	</div>
 	{/if}
 

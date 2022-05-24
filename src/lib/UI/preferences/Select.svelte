@@ -1,6 +1,6 @@
 <script lang="ts">
-import { createEventDispatcher } from "svelte";
-
+	import { createEventDispatcher } from "svelte";
+	import Reset from "../icons/Reset.svelte";
 
 	export let options: string[]
 	export let value: string = options[0]
@@ -15,6 +15,10 @@ import { createEventDispatcher } from "svelte";
 	}
 </script>
 
+{#if name}
+	<span> {name} </span> 
+{/if}
+
 {#each options as option}
 	<button class='clickable transition p-2 m-1 shadow rounded
 	bg-primary text-secondary {value === option ? 'font-bold' : 'opacity-70'}' 
@@ -22,3 +26,9 @@ import { createEventDispatcher } from "svelte";
 		{option}
 	</button>
 {/each}
+
+{#if ressetable}
+	<button class="clickable transition">
+		<Reset/>
+	</button>
+{/if}
