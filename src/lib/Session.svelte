@@ -5,8 +5,14 @@
 	import Timer from './timing/Timer.svelte';
 	import { Penalty, Solve, type Selection } from '$lib/data/architecture'
 	import { getSolvesStore } from './utils/solves';
+	import { writable } from 'svelte/store';
+	import { setContext } from 'svelte';
 
 	export let selection: Selection
+
+	const selectionStore = writable(selection)
+	$: $selectionStore = selection
+	setContext('selection', selectionStore)
 
 	let requestNewScramble: () => void;
 	let activeScramble: string
@@ -61,7 +67,8 @@
 	{#key selection}
 		<div class='flex-1 max-h-[17rem] overflow-hidden' in:fly={{ y: 20 }}>
 			<SolveList solves={ $solvesArray } 
-			on:delete={e => $solves[e.detail.solve.date.getTime()] = null}/>
+			on:delete={e => $solves[e.detail.solve.date.getTime()] = null}
+			on:edit={e => $solves[e.detail.solve.date.getTime()] = e.detail.solve}/>
 		</div>
 	{/key}
 </div>

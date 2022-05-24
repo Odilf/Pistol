@@ -10,7 +10,7 @@
 {:else if solve.penalty === Penalty.Plus2}
 	<TimeDisplay time={solve.time +2}/>+
 {:else}
-	<span class='text-red-800'>
+	<span class='text-red-600'>
 		DNF (<TimeDisplay time={solve.time}/>)
 	</span>
 {/if}
