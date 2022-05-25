@@ -13,7 +13,7 @@
 
 	function copyTime() {
 		const text = time.toFixed(3)
-		navigator.clipboard.writeText(text);
+		navigator?.clipboard?.writeText(text);
 		snackbar(`Copied time to clipboard (${text}s)`)
 	}
 
