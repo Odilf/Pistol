@@ -37,7 +37,7 @@
 
 <style lang='postcss'>
 	p {
-		@apply mb-4;
+		@apply mb-4 w-full text-justify;
 	}
 
 	a {
