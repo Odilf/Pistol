@@ -37,7 +37,7 @@
 
 {#if enabled}
 
-<div class='absolute inset-0 bg-primary/20 backdrop-blur-lg flex flex-row justify-center items-center z-10'
+<div class='fixed inset-0 bg-primary/20 backdrop-blur-lg flex flex-row justify-center items-center z-10'
 class:enabled={'bg-black/0'}
 transition:fade={{ duration: 300, easing: cubicInOut }}
 on:click={handleClick}>
