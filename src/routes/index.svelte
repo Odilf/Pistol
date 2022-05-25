@@ -7,7 +7,7 @@
 	import Welcome from "$lib/UI/misc/Welcome.svelte";
 
 	const events = createFirebaseStore<Event[]>('Events', [...defaultEvents])
-
+	console.log($events);
 
 	let selection: Selection = {
 		event: $events[0],
