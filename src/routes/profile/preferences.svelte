@@ -2,7 +2,7 @@
 	import Slider from '$lib/UI/preferences/Slider.svelte';
 	import { preferences } from "$lib/data/preferences";
 	import Select from '$lib/UI/preferences/Select.svelte';
-import Overlay from '$lib/UI/basic/Overlay.svelte';
+	import Overlay from '$lib/UI/basic/Overlay.svelte';
 
 	let showResetConfirm = false
 </script>
