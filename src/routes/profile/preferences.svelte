@@ -7,34 +7,29 @@ import Overlay from '$lib/UI/basic/Overlay.svelte';
 	let showResetConfirm = false
 </script>
 
-<div class='grid place-items-center md:grid-cols-[1fr_3fr] gap-2'>
-	<span> Refresh rate (ms) </span>
-	<Slider bind:value={$preferences.refreshRate} range={[0, 1000]} snap={{ marks: [69] }}/>
+<div>
+	<h1> Timer settings </h1>
+	<section>
+		<span> Refresh rate (ms) </span>
+		<Slider bind:value={$preferences.refreshRate} range={[0, 1000]} snap={{ marks: [69] }}/>
 
-	<span> Press delay (ms) </span>
-	<Slider bind:value={$preferences.pressDelay} range={[0, 1000]} snap={{ marks: [300, 550, 1000] }}/>
+		<span> Press delay (ms) </span>
+		<Slider bind:value={$preferences.pressDelay} range={[0, 1000]} snap={{ marks: [300, 550, 1000] }}/>
 
-	<span> Decimal scalar </span>
-	<Slider bind:value={$preferences.decimalScalar} range={[0, 1]} step={0.01}/>
+		<span> Decimal scalar </span>
+		<Slider bind:value={$preferences.decimalScalar} range={[0, 1]} step={0.01}/>
 
-	<span> Main timer decimal scalar </span>
-	<Slider bind:value={$preferences.mainTimerDecimalScalar} range={[0, 1]} step={0.01}/>
-	
-	<span> Stop timer with </span>
-	<Select bind:value={$preferences.stopTimerWith} 
-	options={[
-		{ name: 'Only space', value: 'space' },
-		{ name: 'Alphanumeric and space', value: 'alphanumeric' },
-		{ name: 'Anything', value: 'anything' },
-	]}/>
-
-	<span> These are </span>
-	<Select bind:value={$preferences.stopTimerWith} 
-	options={[
-		{ name: 'some', value: 'space' },
-		{ name: 'other', value: 'alphanumeric' },
-		{ name: 'options', value: 'anything' },
-	]}/>
+		<span> Main timer decimal scalar </span>
+		<Slider bind:value={$preferences.mainTimerDecimalScalar} range={[0, 1]} step={0.01}/>
+		
+		<span> Stop timer with </span>
+		<Select bind:value={$preferences.stopTimerWith} 
+		options={[
+			{ name: 'Only space', value: 'space' },
+			{ name: 'Alphanumeric and space', value: 'alphanumeric' },
+			{ name: 'Anything', value: 'anything' },
+		]}/>
+	</section>
 </div>
 
 <div class='w-full flex justify-center my-16'>
@@ -69,5 +64,13 @@ import Overlay from '$lib/UI/basic/Overlay.svelte';
 <style lang='postcss'>
 	span {
 		@apply mt-4 md:my-auto text-center;
+	}
+
+	section {
+		@apply grid place-items-center md:grid-cols-[1fr_3fr] gap-2;
+	}
+
+	h1 {
+		@apply text-3xl font-bold my-4 py-2 border-b-black/50 border-2;
 	}
 </style>
