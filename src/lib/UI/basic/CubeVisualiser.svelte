@@ -70,4 +70,4 @@
 
 </script>
 
-<div bind:this={container} out:fade={{ duration: 100 }}/>
+<div bind:this={container} out:fade|local={{ duration: 100 }}/>
