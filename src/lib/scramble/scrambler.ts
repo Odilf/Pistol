@@ -9,7 +9,7 @@ async function getCubingjsSrambler(): Promise<Scrambler> {
 		const { randomScrambleForEvent } = await import('cubing/scramble') 
 		return randomScrambleForEvent
 	} else {
-		const randomScrambleForEvent = (_) => new Alg('')
+		const randomScrambleForEvent = () => new Alg('')
 		return new Promise(randomScrambleForEvent)
 	}
 }
