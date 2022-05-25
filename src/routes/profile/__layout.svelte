@@ -32,14 +32,14 @@
 	</header>
 
 	<main class='flex h-full relative'>
-		<menu class='fixed z-10 md:sticky top-0 text-2xl bg-primary flex flex-col px-4 w-64 font-black items-center justify-center h-[90vh]
-		transition {showSidebar ? 'shadow-xl' : '-translate-x-full md:translate-x-0'}' use:clickOutside={{ callback: e => {
+		<menu class='fixed z-10 md:sticky top-0 text-2xl bg-primary flex flex-col px-4 w-64 font-black items-center justify-center h-screen
+		transition {showSidebar ? 'shadow-2xl' : '-translate-x-full md:translate-x-0'}' use:clickOutside={{ callback: e => {
 			if (showSidebar) {;
 				e.stopPropagation()
 				showSidebar = false
 			}
 		}}}>
-			<a class='py-2 my-2 clickable transition w-fit' sveltekit:prefetch href='/profile'> PROFILE </a>
+			<a class='py-2 my-2 clickable transition w-fit target:bg-secondary' sveltekit:prefetch href='/profile'> PROFILE </a>
 			<a class='py-2 my-2 clickable transition w-fit' sveltekit:prefetch href='/profile/events'> EVENTS </a>
 			<a class='py-2 my-2 clickable transition w-fit' sveltekit:prefetch href='/profile/preferences'> PREFERENCES </a>
 		</menu>

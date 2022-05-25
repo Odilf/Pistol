@@ -1,6 +1,7 @@
 <script lang="ts">
-import Reset from "../icons/Reset.svelte"
+import { onMount } from "svelte";
 
+	import Reset from "../icons/Reset.svelte"
 	export let value: number
 	export let range: [number, number]
 	export let name: string = null
@@ -13,7 +14,9 @@ import Reset from "../icons/Reset.svelte"
 		strength?: number
 	} = null
 
-	$: snap && (snap.strength = snap?.strength || (range[1] - range[0])/20)
+	$: totalRange = range[1] - range[0]
+
+	$: snap && (snap.strength = snap?.strength || totalRange/20)
 
 	// Clamp value between range
 	$: if (strict) { value = Math.max(range[0], Math.min(value, range[1])) }
@@ -25,22 +28,45 @@ import Reset from "../icons/Reset.svelte"
 			}
 		})
 	}
+
+	let slider: HTMLDivElement
+	$: rect = slider?.getBoundingClientRect()
+	$: displacement = rect?.left + value/totalRange * rect?.width
+	
 </script>
 
-<div class='flex flex-col justify-center items-center p-2 m-2'>
-	<div class='flex items-center w-full justify-evenly'>
-		{#if name}
-			<label for={name} class='text-xl'> {name} </label>
-		{/if}
-		<input class='font-light text-3xl w-32 rounded text-center' type='number' bind:value>
-	</div>
-<div class='flex w-full items-center'>
-	<input name={name} type='range' {step} class="w-full my-auto mb-3 h-2 shadow bg-primary rounded-lg appearance-none cursor-pointer dark:bg-secondary" bind:value min={range[0]} max={range[1]} on:input={() => doSnap()}>
+<svelte:window on:resize={() => rect = slider.getBoundingClientRect()}/>
 
+<div class='flex w-full items-center justify-center'>
+	<slider class='p-2 bg-secondary rounded h-1 w-full relative hover:bg-tertiary transition' bind:this={slider}>
+		<input type='range' class='absolute w-full inset-0 opacity-0 cursor-pointer' bind:value
+		min={range[0]} max={range[1]} {step} {name}
+		on:input={() => doSnap()}>
+	</slider>
+
+	<button id="sliderHead" class='p-2 bg-primary absolute shadow rounded h-10 border-2 border-secondary translate-x-[-50%] pointer-events-none
+	clickable transition'
+	style:left='{displacement}px'>
+		{value}
+	</button>
+
+	
+
+	
+	
 	{#if ressetable}
-		<button class='m-2 clickable transition' on:click={() => value = null}>
+		<button class='m-2 ml-8 clickable transition h-8' on:click={() => value = null}>
 			<Reset/>
 		</button>
 	{/if}
 </div>
-</div>
+
+<style lang='postcss'>
+	slider:hover + button {
+		@apply scale-105;
+	}
+
+	slider:active + button {
+		@apply scale-95 rotate-2 odd:-rotate-2;
+	}
+</style>

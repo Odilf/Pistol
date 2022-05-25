@@ -2,33 +2,35 @@
 	import { createEventDispatcher } from "svelte";
 	import Reset from "../icons/Reset.svelte";
 
-	export let options: string[]
-	export let value: string = options[0]
+	interface Option {
+		name: string,
+		value: unknown
+	}
+
+	export let options: Option[]
+	export let value: unknown = options[0].name
 	export let ressetable = true
-	export let name: string = null
 
-	const dispatch = createEventDispatcher<{ select: { value: string } }>()
+	const dispatch = createEventDispatcher<{ select: { value: unknown } }>()
 
-	function click(option: string) {
-		value = option
+	function click(option: Option) {
+		value = option.value
 		dispatch('select', { value })
 	}
 </script>
 
-{#if name}
-	<span> {name} </span> 
-{/if}
+<menu class='flex w-full items-center'>
+	{#each options as option}
+		<button class='clickable transition-all p-2 mx-1 shadow rounded flex-1 font-bold h-full
+		bg-primary text-secondary {value === option.value ? 'bg-secondary text-primary px-4' : 'opacity-70'}' 
+		on:click={() => click(option)}>
+			{option.name}
+		</button>
+	{/each}
 
-{#each options as option}
-	<button class='clickable transition p-2 m-1 shadow rounded
-	bg-primary text-secondary {value === option ? 'font-bold' : 'opacity-70'}' 
-	on:click={() => click(option)}>
-		{option}
-	</button>
-{/each}
-
-{#if ressetable}
-	<button class="clickable transition">
-		<Reset/>
-	</button>
-{/if}
+	{#if ressetable}
+		<button class="clickable transition m-2 ml-2 h-8" on:click={() => value = null}>
+			<Reset/>
+		</button>
+	{/if}
+</menu>

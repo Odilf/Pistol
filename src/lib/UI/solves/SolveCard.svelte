@@ -47,9 +47,13 @@
 	</div>
 
 	{#if editable}
-	<div class='font-extrabold'>
+	<div class='font-extrabold p-2 bg-primary rounded shadow text-secondary'>
 		<div> PENALTY: </div>
-		<Select options={['none', '+2', 'DNF']} ressetable={false} on:select={() => dispatch('edit', { solve })} bind:value={solve.penalty}/>
+		<Select options={[
+			{ name: 'None', value: 'none'},
+			{ name: '+2', value: '+2'},
+			{ name: 'DNF', value: 'DNF'},
+		]} ressetable={false} on:select={() => dispatch('edit', { solve })} bind:value={solve.penalty}/>
 	</div>
 	{/if}
 
