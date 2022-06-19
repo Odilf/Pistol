@@ -7,13 +7,14 @@
 	import Welcome from "$lib/UI/misc/Welcome.svelte";
 
 	const events = createFirebaseStore<Event[]>('Events', [...defaultEvents])
-	console.log($events);
+	$: console.log($events);
 
 	let selection: Selection = {
 		event: $events[0],
 		session: $events[0].sessions[0]
 	}
 
+	
 	let hasVisitedBefore: boolean
 </script>
 
@@ -25,7 +26,7 @@
 	{#if hasVisitedBefore}	
 		<Header />
 	
-		<EventTabs events={$events} bind:selection/>
+		<EventTabs bind:events={$events} bind:selection />
 	
 		<Session {selection}/>
 	{:else}
