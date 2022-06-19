@@ -2,16 +2,25 @@
 	import { Session, type Event } from "$lib/data/architecture";
 	import TrashCan from "$lib/UI/icons/TrashCan.svelte";
 	import { fly } from "svelte/transition";
-	import { flip } from "svelte/animate";
+	import { createEventDispatcher } from "svelte";
 
 	export let event: Event
 	export let selectedSession: Session = null
 
 	let newSessionName = ''
 
+	const dispatch = createEventDispatcher<{
+		addSession: { event: Event, session: Session },
+		edit: { event: Event },
+	}>()
+
 	function addSession() {
 		event.sessions = [...event.sessions, new Session(newSessionName)]
 		newSessionName = ''
+		dispatch('addSession', { 
+			event, 
+			session: event.sessions.at(-1) 
+		})
 	}
 
 	$: valid = event.sessions.every(session => session.name !== newSessionName)
@@ -36,14 +45,14 @@
 		</button>
 	</div>
 
-	<h2 class='text-3xl mt-5 font-light'> Sessions: </h2> 
-	<div id='separator' class='h-[0.1rem] w-full bg-secondary rounded opacity-50'/>
+	<h2 class='text-3xl mt-5 font-light border-b-2 border-secondary/50'> 
+		Sessions: 
+	</h2> 
 
 	<ul class='list-disc'>
 		{#each event.sessions as session (session.name)}
-		<li transition:fly|local={{ y: 10 }}
-		animate:flip>
-		<div class='flex justify-between w-full mt-2
+		<li transition:fly|local={{ y: 10 }}>
+		<div class='flex justify-between w-full mt-2 transition-all
 		{selectedSession?.name === session.name && 'bg-secondary p-2 rounded text-primary'}'>
 		<button class='clickable transition' on:click={() => selectedSession = session}>
 			<h2 class='text-2xl font-bold'> {session.name} </h2>
