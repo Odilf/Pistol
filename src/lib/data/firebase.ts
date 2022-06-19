@@ -22,9 +22,9 @@ const firebaseConfig: FirebaseOptions = {
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 
-export const db = browser && getDatabase(app);
+export const db = browser ? getDatabase(app) : null;
 
-if (browser) {
+if (browser && db) {
 	if (location.hostname === "localhost") {
 		try {
 			// Point to the RTDB emulator running on localhost.

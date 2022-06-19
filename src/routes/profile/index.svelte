@@ -1,15 +1,10 @@
 <script lang="ts">
 	import { userStore } from "$lib/profile";
-import Login from "$lib/profile/Login.svelte";
-
-	$: ({
-		displayName,
-		photoURL,
-	} = $userStore)
+	import Login from "$lib/profile/Login.svelte";
 </script>
 
-<h1 class='text-8xl font-black'> {displayName} </h1>
+<h1 class='text-8xl font-black'> {$userStore?.displayName} </h1>
 
-<img src={photoURL} alt='user profile'>
+<img src={$userStore?.photoURL} alt='user profile'>
 
 <Login/>

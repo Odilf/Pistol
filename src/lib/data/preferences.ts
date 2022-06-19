@@ -10,11 +10,11 @@ const defaults = {
 	stopTimerWith: 'alphanumeric' as 'alphanumeric' | 'space' | 'anything',
 	decimalScalar: 1,
 	mainTimerDecimalScalar: 0.75,
-} as const
+}
 
 const delay = 500
 
-type Preferences = Partial<typeof defaults>
+type Preferences = typeof defaults
 
 function createStore(writeCallback = () => null) {
 	const { set, subscribe } = writable(Object.assign({}, defaults) as Preferences)
@@ -23,6 +23,8 @@ function createStore(writeCallback = () => null) {
 
 	userStore.subscribe(async(user) => {
 		if (!user) return
+		if (!db) return
+		
 		const path: Path = 'Preferences' // For type checking
 		preferencesRef = ref(db, `User-${user.uid}/${path}`)
 
@@ -32,11 +34,13 @@ function createStore(writeCallback = () => null) {
 		set(fill(value))
 	})
 
+	
+
 	let canWrite = true
 	let writeTimeout: NodeJS.Timeout
 
 	return {
-		set: (preferences: Preferences) => {
+		set: (preferences: Partial<Preferences>) => {
 			const purged = purge(preferences)
 			set(fill(preferences))
 
@@ -54,12 +58,16 @@ function createStore(writeCallback = () => null) {
 			}
 		},
 		subscribe,
+
+		reset: () => {
+			this.set({})
+		},
 	}
 }
 
 export const preferences = createStore()
 
-function purge(preferences: Preferences) {
+function purge(preferences: Partial<Preferences>) {
 	let p = Object.assign({}, preferences)
 
 	for (const name in p) {
@@ -71,7 +79,7 @@ function purge(preferences: Preferences) {
 	return p
 }
 
-function fill(preferences: Preferences) {
+function fill(preferences: Partial<Preferences>) {
 	let p = Object.assign({}, preferences)
 
 	for (const name in defaults) {

@@ -1,25 +1,25 @@
 <script lang="ts">
-	import type { Event } from "$lib/data/architecture";
+	import { defaultEvents, type Event } from "$lib/data/architecture";
 	import { createFirebaseStore } from "$lib/data/firebase-store";
 	import EventManager from "$lib/profile/EventManager.svelte";
 	import Overlay from "$lib/UI/basic/Overlay.svelte";
 	import { eventTypes } from "$lib/utils";
 
-	const events = createFirebaseStore('Events', [] as Event[])
+	const events = createFirebaseStore('Events', [...defaultEvents] as Event[])
 
 	const sections = [
 		{ name: 'Cubes (NxN)', accessor: 'NxN'},
 		{ name: 'Other shapes', accessor: 'shapes'},
 		{ name: '3x3 variations', accessor: 'variations3x3'},
 		{ name: 'Quiet events', accessor: 'quiet'},
-	]
+	] as const
 
 	function toggleVisibility(event: Event) {
 		$events[$events.findIndex(ge => ge.name === event.name)].options.hidden =
 			!$events[$events.findIndex(ge => ge.name === event.name)].options.hidden
 	}
 
-	let editingEvent: Event = null
+	let editingEvent: Event | null = null
 	function edit(event: Event) {
 		editingEvent = event
 	}

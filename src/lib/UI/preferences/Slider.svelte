@@ -1,10 +1,10 @@
 <script lang="ts">
-import { onMount } from "svelte";
-
+	import { createEventDispatcher } from "svelte";
 	import Reset from "../icons/Reset.svelte"
-	export let value: number
+	
+	export let value: number 
 	export let range: [number, number]
-	export let name: string = null
+	export let name: string = '' 
 	export let ressetable = true
 	export let step = 0
 	export let strict = true
@@ -12,21 +12,23 @@ import { onMount } from "svelte";
 	export let snap: {
 		marks: number[],
 		strength?: number
-	} = null
+	} | null = null
+
+	const dispatch = createEventDispatcher<{ reset: null }>()
 
 	$: totalRange = range[1] - range[0]
-
-	$: snap && (snap.strength = snap?.strength || totalRange/20)
 
 	// Clamp value between range
 	$: if (strict) { value = Math.max(range[0], Math.min(value, range[1])) }
 
 	function doSnap() {
-		snap?.marks.forEach(mark => {
-			if (Math.abs(value - mark) < snap.strength) {
-				value = mark
-			}
-		})
+		if (snap && snap.strength) {
+			snap.marks.forEach(mark => {
+				if (Math.abs(value - mark) < (snap?.strength || totalRange/20)) {
+					value = mark
+				}
+			})
+		}
 	}
 
 	let slider: HTMLDivElement
