@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { browser } from "$app/env";
 	import type { Event, Selection } from "$lib/data/architecture";
-import EventManager from "$lib/profile/EventManager.svelte";
-import Overlay from "$lib/UI/basic/Overlay.svelte";
+	import EventManager from "$lib/profile/EventManager.svelte";
+	import Overlay from "$lib/UI/basic/Overlay.svelte";
 	import { isOverflown } from "$lib/utils/overflow";
 	import { afterUpdate } from "svelte";
 	import { writable } from "svelte-local-storage-store";
@@ -89,13 +89,14 @@ import Overlay from "$lib/UI/basic/Overlay.svelte";
 				</div>
 			{/if}
 		</button>
-	{/each}	
+	{/each}
 </div>
 
 <Overlay bind:enabled={editingEvent}>
 	<EventManager 
 	bind:event={events[events.indexOf(selection.event)]} 
 	bind:selectedSession={selection.session}
+	on:edit on:addSession
 	/>
 </Overlay>
 
