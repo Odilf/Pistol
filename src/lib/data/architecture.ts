@@ -27,6 +27,10 @@ export class Solve {
 
 export class Session {
 	name: string
+	stats?: {
+		total?: number,
+		average?: { [amount: number ]: number },
+	}
 
 	constructor(name: string) {
 		this.name = name
